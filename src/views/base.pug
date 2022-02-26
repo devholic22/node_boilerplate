@@ -10,10 +10,14 @@ html(lang="en")
         span.header-title 
             a(href="/") Boilerplate
         ul.header-lists 
-            li.header-lists__list 
-                a(href="/login") Log in
-            li.header-lists__list 
-                a(href="/join") Sign up
+            if !loggedIn
+                li.header-lists__list 
+                    a(href="/login") Log in
+                li.header-lists__list 
+                    a(href="/join") Sign up
+            else
+                li.header-lists__list 
+                    a(href="/logout") Log out
             li.header-lists__list 
                 a(href="") Search
         block content

@@ -1,6 +1,7 @@
 import User from "../models/User";
 
 export const home = (req, res) => {
+  console.log("HOME SESSION", req.session);
   return res.render("home");
 };
 
@@ -29,6 +30,26 @@ export const postJoin = async (req, res) => {
   return res.redirect("/login");
 };
 
-export const login = (req, res) => {
+export const getLogin = (req, res) => {
   return res.render("login");
+};
+
+export const postLogin = async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email, password });
+  if (!user) {
+    console.log("aaaaaa");
+    return res.render("login", {
+      errorMsg: "🙅 username/password does not correct!"
+    });
+  }
+  req.session.loggedIn = true;
+  req.session.user = user;
+  console.log("AFTER LOGIN", req.session);
+  return res.redirect("/");
+};
+
+export const logout = (req, res) => {
+  req.session.destroy();
+  return res.redirect("/");
 };
