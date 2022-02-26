@@ -1,0 +1,30 @@
+{
+  "name": "node_boilerplate",
+  "version": "1.0.0",
+  "description": "Node.js 작업 시 주로 사용하는 패키지들을 모아두는 레포지토리입니다.   프론트엔드 처리 부분은 일단 Pug를 사용했습니다.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devholic22/node_boilerplate.git"
+  },
+  "author": "Hyunjoon Choi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/devholic22/node_boilerplate/issues"
+  },
+  "homepage": "https://github.com/devholic22/node_boilerplate#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "morgan": "^1.10.0",
+    "pug": "^3.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.11",
+    "nodemon": "^2.0.15"
+  }
+}
