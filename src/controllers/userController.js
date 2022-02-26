@@ -5,3 +5,7 @@ export const home = (req, res) => {
 export const join = (req, res) => {
   return res.render("join");
 };
+
+export const login = (req, res) => {
+  return res.render("login");
+};

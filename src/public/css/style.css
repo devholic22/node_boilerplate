@@ -1,3 +1,23 @@
+@import "./reset.css";
+
+/* components */
+@import "./header.css";
+@import "./components/userForm.css";
+
 body {
-  background-color: beige;
+  padding: 10px;
+}
+a,
+a:visited,
+a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+input:focus {
+  outline: none;
+}
+button {
+  outline: none;
+  border: none;
+  cursor: pointer;
 }
