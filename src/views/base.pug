@@ -10,6 +10,8 @@ html(lang="en")
         span.header-title 
             a(href="/") Boilerplate
         ul.header-lists 
+            li.header-lists__list 
+                a(href="") Search
             if !loggedIn
                 li.header-lists__list 
                     a(href="/login") Log in
@@ -17,9 +19,9 @@ html(lang="en")
                     a(href="/join") Sign up
             else
                 li.header-lists__list
+                    a(href="/board/upload") Write Content
+                li.header-lists__list
                     a(href="/my-profile") MY Profile
                 li.header-lists__list 
                     a(href="/logout") Log out
-            li.header-lists__list 
-                a(href="") Search
         block content

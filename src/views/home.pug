@@ -1,2 +1,7 @@
 include base
+include mixins/board
 block content
+    each board in boards
+        +boards(board)
+    else
+        span.nothing 🙅 Sorry nothing found.

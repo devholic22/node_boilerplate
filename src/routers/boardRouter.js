@@ -1,8 +1,8 @@
 import express from "express";
-import { upload } from "../controllers/boardController";
+import { getUpload, postUpload } from "../controllers/boardController";
 
 const boardRouter = express.Router();
 
-boardRouter.get("/upload", upload);
+boardRouter.route("/upload").get(getUpload).post(postUpload);
 
 export default boardRouter;

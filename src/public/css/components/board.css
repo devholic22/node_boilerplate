@@ -1,0 +1,18 @@
+.board-box {
+  margin-top: 10px;
+  background-color: cornflowerblue;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  border-radius: 5px;
+}
+.board-box__title {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+.board-box__time {
+  margin-bottom: 10px;
+}
+.board-box__content {
+  height: 100px;
+}

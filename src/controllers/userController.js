@@ -1,8 +1,9 @@
+import Board from "../models/Board";
 import User from "../models/User";
 
-export const home = (req, res) => {
-  console.log("HOME SESSION", req.session);
-  return res.render("home");
+export const home = async (req, res) => {
+  const boards = await Board.find({});
+  return res.render("home", { boards });
 };
 
 export const join = (req, res) => {

@@ -1,5 +1,6 @@
 import "./db";
 import User from "./models/User";
+import Board from "./models/Board";
 import express from "express";
 import morgan from "morgan";
 import { logInMiddleware } from "./middlewares";
