@@ -7,10 +7,15 @@
   background-color: gray;
   font-size: 30px;
   border-radius: 5px;
+  height: 400px;
 }
 .user-contaier__title {
   margin-bottom: 20px;
   color: white;
+}
+.user-container__error {
+  margin-top: 20px;
+  font-size: 15px;
 }
 .user-container__form {
   display: flex;

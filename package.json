@@ -18,6 +18,7 @@
   "homepage": "https://github.com/devholic22/node_boilerplate#readme",
   "dependencies": {
     "express": "^4.17.3",
+    "mongoose": "^6.2.3",
     "morgan": "^1.10.0",
     "pug": "^3.0.2"
   },

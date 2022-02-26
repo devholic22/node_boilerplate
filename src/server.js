@@ -1,3 +1,5 @@
+import "./db";
+import User from "./models/User";
 import express from "express";
 import morgan from "morgan";
 
@@ -12,8 +14,9 @@ app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
 
 app.use(morgan("dev"));
-
 app.use(express.static(__dirname + "/public"));
+app.use(express.urlencoded({ extended: true }));
+
 app.use("/", globalRouter);
 app.use("/board", boardRouter);
 app.use("/user", userRouter);

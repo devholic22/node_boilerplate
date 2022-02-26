@@ -1,7 +1,7 @@
 @import "./reset.css";
 
 /* components */
-@import "./header.css";
+@import "./components/header.css";
 @import "./components/userForm.css";
 
 body {
