@@ -53,3 +53,7 @@ export const logout = (req, res) => {
   req.session.destroy();
   return res.redirect("/");
 };
+
+export const myProfile = (req, res) => {
+  return res.render("my-profile");
+};
