@@ -7,6 +7,7 @@ import globalRouter from "./routers/globalRouter";
 import boardRouter from "./routers/boardRouter";
 import userRouter from "./routers/userRouter";
 import session from "express-session";
+import MongoStore from "connect-mongo";
 
 const app = express();
 const PORT = 4000;
@@ -22,7 +23,10 @@ app.use(
   session({
     secret: "hello",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: "mongodb://127.0.0.1:27017/nodeTemplate"
+    })
   })
 );
 app.use(logInMiddleware);

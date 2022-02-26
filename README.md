@@ -14,6 +14,7 @@ Node.js 작업 시 주로 사용하는 패키지들을 모아두는 레포지토
 - pug
 - mongoose
 - express-session
+- connect-mongo
 
 ## requirement file
 
