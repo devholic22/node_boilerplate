@@ -1,0 +1,17 @@
+.user-boards {
+  width: 60%;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: azure;
+  border-radius: 10px;
+  padding-top: 5px;
+}
+.user-boards__title {
+  margin-bottom: 20px;
+}
+.user-boards__list {
+  font-size: 20px;
+  margin-bottom: 10px;
+}

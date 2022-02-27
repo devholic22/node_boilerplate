@@ -32,8 +32,8 @@ app.use(
 );
 app.use(logInMiddleware);
 app.use("/", globalRouter);
-app.use("/board", boardRouter);
-app.use("/user", userRouter);
+app.use("/boards", boardRouter);
+app.use("/users", userRouter);
 
 const handleListening = () => {
   console.log(`✅ Server listening on: http://localhost:${PORT}`);

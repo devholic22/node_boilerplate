@@ -1,4 +1,5 @@
 import Board from "../models/Board";
+import User from "../models/User";
 
 export const getUpload = (req, res) => {
   return res.render("upload");
@@ -6,10 +7,17 @@ export const getUpload = (req, res) => {
 
 export const postUpload = async (req, res) => {
   const { title, content } = req.body;
+  const {
+    user: { _id }
+  } = req.session;
   const board = await Board.create({
     title,
-    content
+    content,
+    owner: _id
   });
-  console.log(board);
+  const user = await User.findById(_id);
+  user.boards.push(board.id);
+  user.save();
+  req.session.user = user;
   return res.redirect("/");
 };

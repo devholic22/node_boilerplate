@@ -6,6 +6,8 @@
 @import "./components/boardForm.css";
 @import "./components/board.css";
 
+@import "./user-board.css";
+
 body {
   padding: 10px;
 }

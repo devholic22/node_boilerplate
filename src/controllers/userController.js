@@ -2,7 +2,7 @@ import Board from "../models/Board";
 import User from "../models/User";
 
 export const home = async (req, res) => {
-  const boards = await Board.find({});
+  const boards = await Board.find({}).populate("owner");
   return res.render("home", { boards });
 };
 
@@ -55,6 +55,14 @@ export const logout = (req, res) => {
   return res.redirect("/");
 };
 
-export const myProfile = (req, res) => {
-  return res.render("my-profile");
+export const myProfile = async (req, res) => {
+  const { user: _id } = req.session;
+  const user = await User.findById(_id).populate("boards");
+  return res.render("my-profile", { user });
+};
+
+export const userProfile = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id).populate("boards");
+  return res.render("user-profile", { user });
 };

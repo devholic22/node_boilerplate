@@ -3,3 +3,12 @@ mixin boards(board)
         span.board-box__title=board.title
         span.board-box__time=board.createdAt
         span.board-box__content=board.content
+        div.board-box__profile
+            if loggedInUser && board.owner._id == loggedInUser._id
+                a(href="/my-profile") 
+                    img(src=`${board.owner.avatarUrl}`).board-box__img
+                    span.board-box__owner Writed by #{board.owner.name}
+            else
+                a(href=`/users/${board.owner._id}`)
+                    img(src=`${board.owner.avatarUrl}`).board-box__img
+                    span.board-box__owner Writed by #{board.owner.name}
