@@ -21,3 +21,9 @@ export const postUpload = async (req, res) => {
   req.session.user = user;
   return res.redirect("/");
 };
+
+export const watch = async (req, res) => {
+  const { id } = req.params;
+  const board = await Board.findById(id).populate("owner");
+  return res.render("watch", { board });
+};

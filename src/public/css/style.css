@@ -7,6 +7,7 @@
 @import "./components/board.css";
 
 @import "./user-board.css";
+@import "./show-contents.css";
 
 body {
   padding: 10px;

@@ -1,6 +1,7 @@
 mixin boards(board)
     div.board-box
-        span.board-box__title=board.title
+        span.board-box__title
+            a(href=`/boards/${board._id}`)=board.title
         span.board-box__time=board.createdAt
         span.board-box__content=board.content
         div.board-box__profile

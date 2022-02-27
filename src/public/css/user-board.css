@@ -14,4 +14,7 @@
 .user-boards__list {
   font-size: 20px;
   margin-bottom: 10px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }

@@ -15,4 +15,5 @@ block content
         span.user-boards__title My Contents
         ul.user-boards__lists
             each board in user.boards
-                li.user-boards__list=board.title
+                li.user-boards__list 
+                    a(href=`/boards/${board._id}`)=board.title

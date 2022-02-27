@@ -1,0 +1,33 @@
+.show-contents {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  background-color: beige;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 15px;
+}
+.show-contents__title {
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+.show-contents__profile a {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.show-contents__img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.show-contents__owner {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.show-contents__content {
+  height: 200px;
+  font-size: 20px;
+}
