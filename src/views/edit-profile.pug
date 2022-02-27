@@ -1,0 +1,13 @@
+include base
+block content
+    div.user-container
+       div.user-container__profile
+        div.user-container__imgbox
+            img.user-container__img(src=user.avatarUrl)
+        div.user-container__info
+            form.user-container__form(method="POST")
+                span.user-container__strong Name
+                input.user-container__input(type="text", placeholder="Name", name="name", value=user.name, required)
+                span.user-container__strong Email
+                input.user-container__input(type="email", placeholder="Email", name="email", value=user.email, required)
+                button.user-container__edit Save

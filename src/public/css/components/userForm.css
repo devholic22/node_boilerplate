@@ -2,12 +2,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 50px 10px 100px 10px;
+  padding: 50px 10px 50px 10px;
   margin-top: 30px;
   background-color: gray;
   font-size: 30px;
   border-radius: 5px;
-  height: 400px;
 }
 .user-contaier__title {
   margin-bottom: 20px;
@@ -55,10 +54,10 @@
 .user-container__namebox {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .user-container__strong {
-  margin-bottom: 5px;
+  margin: 8px 0px;
 }
 .user-container__small {
   background-color: white;
@@ -66,4 +65,17 @@
   border-radius: 5px;
   padding: 3px;
   font-size: 20px;
+}
+.user-container__form {
+  display: flex;
+  flex-direction: column;
+}
+.user-container__edit {
+  background-color: aqua;
+  font-size: 15px;
+  padding: 5px;
+  border-radius: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
 }

@@ -1,6 +1,5 @@
 .user-boards {
   width: 60%;
-  height: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;

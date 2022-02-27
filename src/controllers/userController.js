@@ -39,14 +39,12 @@ export const postLogin = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email, password });
   if (!user) {
-    console.log("aaaaaa");
     return res.render("login", {
       errorMsg: "🙅 username/password does not correct!"
     });
   }
   req.session.loggedIn = true;
   req.session.user = user;
-  console.log("AFTER LOGIN", req.session);
   return res.redirect("/");
 };
 
@@ -58,6 +56,7 @@ export const logout = (req, res) => {
 export const myProfile = async (req, res) => {
   const { user: _id } = req.session;
   const user = await User.findById(_id).populate("boards");
+  console.log(user);
   return res.render("my-profile", { user });
 };
 
@@ -65,4 +64,26 @@ export const userProfile = async (req, res) => {
   const { id } = req.params;
   const user = await User.findById(id).populate("boards");
   return res.render("user-profile", { user });
+};
+
+export const getEditProfile = async (req, res) => {
+  const { user: _id } = req.session;
+  const user = await User.findById(_id);
+  return res.render("edit-profile", { user });
+};
+
+export const postEditProfile = async (req, res) => {
+  const { user: _id } = req.session;
+  const { name, email } = req.body;
+  const updatedUser = await User.findByIdAndUpdate(
+    _id,
+    {
+      name,
+      email
+    },
+    { new: true }
+  );
+  req.session.user = updatedUser;
+  res.locals.loggedInUser = req.session.user;
+  return res.redirect("/");
 };
