@@ -1,0 +1,8 @@
+include base
+block content
+    div.board-container
+        span.board-container__title ✂️ Edit Content
+        form(method="POST").board-container__form
+            input(type="text", placeholder="Title", name="title", value=board.title, required).board-container__input 
+            textarea(placeholder="Contents", name="content", cols="30", rows="10").board-container__textarea=board.content
+            button.board-container__button Write Contents

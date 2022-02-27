@@ -7,3 +7,7 @@ block content
                 img.show-contents__img(src=`${board.owner.avatarUrl}`)
                 span.show-contents__owner=board.owner.name
         span.show-contents__content=board.content
+        if board.owner._id == loggedInUser._id
+            div.show-contents__btns
+                a(href=`${board._id}/edit`) ✂️ Edit contents
+                a(href=`${board._id}/delete`) 🗑 Delete contents

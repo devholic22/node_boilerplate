@@ -1,6 +1,13 @@
 import express from "express";
 import { onlyLoggedIn } from "../middlewares";
-import { getUpload, postUpload, watch } from "../controllers/boardController";
+import {
+  deleteBoard,
+  getUpload,
+  postUpload,
+  watch,
+  getEdit,
+  postEdit
+} from "../controllers/boardController";
 
 const boardRouter = express.Router();
 
@@ -9,4 +16,9 @@ boardRouter
   .get(onlyLoggedIn, getUpload)
   .post(onlyLoggedIn, postUpload);
 boardRouter.get("/:id", watch);
+boardRouter
+  .route("/:id/edit")
+  .get(onlyLoggedIn, getEdit)
+  .post(onlyLoggedIn, postEdit);
+boardRouter.get("/:id/delete", deleteBoard);
 export default boardRouter;
