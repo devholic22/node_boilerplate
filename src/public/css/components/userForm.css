@@ -66,6 +66,10 @@
   padding: 3px;
   font-size: 20px;
 }
+.user-container__info {
+  display: flex;
+  flex-direction: column;
+}
 .user-container__form {
   display: flex;
   flex-direction: column;
@@ -77,5 +81,12 @@
   border-radius: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
+  text-align: center;
+}
+.user-container__removeBtn {
+  background-color: bisque;
+  font-size: 15px;
+  padding: 5px;
+  border-radius: 5px;
   text-align: center;
 }

@@ -42,9 +42,8 @@ export const deleteBoard = async (req, res) => {
     return res.redirect("/");
   }
   const deleteBoard = await Board.findByIdAndDelete(id);
-  user.boards = user.boards.filter((board) => {
-    board != deleteBoard;
-  });
+  user.boards = user.boards.filter((board) => String(board) != deleteBoard._id);
+  console.log("AAAAAAAA", user.boards);
   user.save();
   req.session.user = user;
   return res.redirect("/");

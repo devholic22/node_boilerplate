@@ -9,7 +9,8 @@ import {
   logout,
   myProfile,
   getEditProfile,
-  postEditProfile
+  postEditProfile,
+  deleteUser
 } from "../controllers/userController";
 
 const globalRouter = express.Router();
@@ -23,4 +24,6 @@ globalRouter
   .route("/edit-profile")
   .get(onlyLoggedIn, getEditProfile)
   .post(onlyLoggedIn, postEditProfile);
+globalRouter.get("/delete-user", deleteUser);
+
 export default globalRouter;

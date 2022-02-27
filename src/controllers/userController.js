@@ -87,3 +87,11 @@ export const postEditProfile = async (req, res) => {
   res.locals.loggedInUser = req.session.user;
   return res.redirect("/");
 };
+
+export const deleteUser = async (req, res) => {
+  const { user: _id } = req.session;
+  await Board.remove({ owner: _id });
+  await User.findByIdAndDelete(_id);
+  req.session.destroy();
+  return res.redirect("/");
+};
