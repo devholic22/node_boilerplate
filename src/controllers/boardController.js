@@ -15,6 +15,7 @@ export const postUpload = async (req, res) => {
     content,
     owner: _id
   });
+  console.log("UPLOADED: ", board);
   const user = await User.findById(_id);
   user.boards.push(board.id);
   user.save();
