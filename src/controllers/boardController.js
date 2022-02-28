@@ -15,7 +15,6 @@ export const postUpload = async (req, res) => {
     content,
     owner: _id
   });
-  console.log("UPLOADED: ", board);
   const user = await User.findById(_id);
   user.boards.push(board.id);
   user.save();
@@ -69,5 +68,18 @@ export const postEdit = async (req, res) => {
     title,
     content
   });
+  return res.redirect("/");
+};
+
+export const boardLike = async (req, res) => {
+  const { id } = req.params;
+  const { user } = req.session;
+  const board = await Board.findById(id);
+  if (!board.likeOwner.includes(String(user._id))) {
+    board.likeOwner.push(String(user._id));
+  } else {
+    board.likeOwner = board.likeOwner.filter((id) => id != user._id);
+  }
+  board.save();
   return res.redirect("/");
 };

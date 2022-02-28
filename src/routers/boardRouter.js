@@ -6,7 +6,8 @@ import {
   postUpload,
   watch,
   getEdit,
-  postEdit
+  postEdit,
+  boardLike
 } from "../controllers/boardController";
 
 const boardRouter = express.Router();
@@ -21,4 +22,6 @@ boardRouter
   .get(onlyLoggedIn, getEdit)
   .post(onlyLoggedIn, postEdit);
 boardRouter.get("/:id/delete", deleteBoard);
+boardRouter.post("/:id/like", boardLike);
+
 export default boardRouter;

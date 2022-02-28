@@ -41,11 +41,13 @@
   margin-top: 15px;
   margin-right: 10px;
 }
-
+.board-box__like-box button {
+  background-color: aliceblue;
+  font-size: 15px;
+  margin-bottom: 1px;
+}
 .board-box__like {
   margin-left: 10px;
-  display: flex;
-  align-items: flex-end;
 }
 .board-box__img {
   width: 40px;

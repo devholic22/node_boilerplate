@@ -5,7 +5,7 @@ const boardSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now() },
   content: { type: String, required: true },
   owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
-  like: { type: Number, default: 0, required: true }
+  likeOwner: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }]
 });
 
 const Board = mongoose.model("Board", boardSchema);
