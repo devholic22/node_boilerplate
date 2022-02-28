@@ -9,6 +9,8 @@
 @import "./user-board.css";
 @import "./show-contents.css";
 
+@import "./like-modal.css";
+
 body {
   padding: 10px;
 }

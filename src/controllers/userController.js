@@ -2,7 +2,7 @@ import Board from "../models/Board";
 import User from "../models/User";
 
 export const home = async (req, res) => {
-  const boards = await Board.find({}).populate("owner");
+  const boards = await Board.find({}).populate("owner").populate("likeOwner");
   return res.render("home", { boards });
 };
 

@@ -30,24 +30,21 @@
   align-items: center;
   padding: 5px;
 }
-.board-box__like-box {
-  display: flex;
-  align-items: flex-end;
-  font-size: 20px;
-  background-color: aliceblue;
-  border-radius: 10px;
-  height: 100%;
-  padding: 5px 10px;
-  margin-top: 15px;
-  margin-right: 10px;
-}
+.board-box__like-box,
 .board-box__like-box button {
   background-color: aliceblue;
-  font-size: 15px;
-  margin-bottom: 1px;
 }
-.board-box__like {
-  margin-left: 10px;
+.board-box__like-box {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin-top: 10px;
+  margin-right: 5px;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+.board-box__like-box button {
+  font-size: 17px;
 }
 .board-box__img {
   width: 40px;

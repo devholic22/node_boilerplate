@@ -21,7 +21,7 @@ boardRouter
   .route("/:id/edit")
   .get(onlyLoggedIn, getEdit)
   .post(onlyLoggedIn, postEdit);
-boardRouter.get("/:id/delete", deleteBoard);
-boardRouter.post("/:id/like", boardLike);
+boardRouter.get("/:id/delete", onlyLoggedIn, deleteBoard);
+boardRouter.post("/:id/like", onlyLoggedIn, boardLike);
 
 export default boardRouter;
