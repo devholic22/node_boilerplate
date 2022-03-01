@@ -14,10 +14,35 @@ mixin boards(board)
                     img(src=`${board.owner.avatarUrl}`).board-box__img
                     span.board-box__owner Writed by #{board.owner.name}
             div.board-box__like-box
-                form(method="POST", action=`boards/${board._id}/like`).board-box__like-form
-                    button 
-                        i.far.fa-heart
-                button.board-box__like=board.likeOwner.length
+                if loggedInUser
+                    form(method="POST", action=`boards/${board._id}/like`).board-box__like-form
+                        if loggedInUser.likes.includes(String(board._id))
+                            button 
+                                i.fas.fa-heart
+                        else
+                            button 
+                                i.far.fa-heart
+                    button.board-box__like=board.likeOwner.length
+                else
+                    div.board-box__like-form
+                        button
+                            i.far.fa-heart
+                    span.board-box__like=board.likeOwner.length
+            div.board-box__like-box
+                if loggedInUser
+                    form(method="POST", action=`boards/${board._id}/scrap`).board-box__like-form
+                        if loggedInUser.scraps.includes(String(board._id))
+                            button 
+                                i.fas.fa-bookmark
+                        else
+                            button 
+                                i.far.fa-bookmark
+                    span.board-box__bookmark=board.scrapOwner.length
+                else
+                    div.board-box__like-form
+                        button
+                            i.far.fa-bookmark
+                    span.board-box__bookmark=board.scrapOwner.length
             div.like-modal
                 div.like-modal__content
                     span.modal-title like peoples

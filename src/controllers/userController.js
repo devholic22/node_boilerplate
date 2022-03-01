@@ -95,3 +95,10 @@ export const deleteUser = async (req, res) => {
   req.session.destroy();
   return res.redirect("/");
 };
+
+export const userScrap = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findOne({ id });
+  const scraps = user.scraps;
+  return res.redirect("/");
+};

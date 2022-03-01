@@ -43,7 +43,6 @@ export const deleteBoard = async (req, res) => {
   }
   const deleteBoard = await Board.findByIdAndDelete(id);
   user.boards = user.boards.filter((board) => String(board) != deleteBoard._id);
-  console.log("AAAAAAAA", user.boards);
   user.save();
   req.session.user = user;
   return res.redirect("/");
@@ -73,13 +72,51 @@ export const postEdit = async (req, res) => {
 
 export const boardLike = async (req, res) => {
   const { id } = req.params;
-  const { user } = req.session;
+  const {
+    user: { _id }
+  } = req.session;
+  const user = await User.findById(_id);
   const board = await Board.findById(id);
-  if (!board.likeOwner.includes(String(user._id))) {
-    board.likeOwner.push(String(user._id));
+
+  if (!board.likeOwner.includes(String(_id))) {
+    board.likeOwner.push(String(_id));
   } else {
-    board.likeOwner = board.likeOwner.filter((id) => id != user._id);
+    board.likeOwner = board.likeOwner.filter((id) => id != _id);
   }
   board.save();
+
+  if (!user.likes.includes(String(id))) {
+    user.likes.push(String(id));
+  } else {
+    user.likes = user.likes.filter((boardId) => boardId != id);
+  }
+  user.save();
+  req.session.user = user;
+
+  return res.redirect("/");
+};
+
+export const boardScrap = async (req, res) => {
+  const {
+    user: { _id }
+  } = req.session;
+  const { id } = req.params;
+  const user = await User.findById(_id);
+  const board = await Board.findById(id);
+
+  if (!board.scrapOwner.includes(String(_id))) {
+    board.scrapOwner.push(String(_id));
+  } else {
+    board.scrapOwner = board.scrapOwner.filter((id) => id != _id);
+  }
+  board.save();
+
+  if (!user.scraps.includes(String(id))) {
+    user.scraps.push(String(id));
+  } else {
+    user.scraps = user.scraps.filter((boardId) => boardId != id);
+  }
+  user.save();
+  req.session.user = user;
   return res.redirect("/");
 };

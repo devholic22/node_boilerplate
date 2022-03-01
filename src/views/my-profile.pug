@@ -11,8 +11,11 @@ block content
             div.user-container__namebox
                 span.user-container__strong Email
                 span.user-container__small=user.email
-       span.user-container__edit
-        a(href="/edit-profile") Edit Profile
+       div.user-container-btns
+        span.user-container__edit
+            a(href="/edit-profile") Edit Profile
+        span.user-container__scrap
+            a(href=`/users/${user._id}/scrap`) My Scrap
        div.user-boards
         span.user-boards__title My Contents
         ul.user-boards__lists

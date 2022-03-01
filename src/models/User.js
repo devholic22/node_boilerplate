@@ -9,7 +9,9 @@ const userSchema = new mongoose.Schema({
     default:
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
   },
-  boards: [{ type: mongoose.Schema.Types.ObjectId, ref: "Board" }]
+  boards: [{ type: mongoose.Schema.Types.ObjectId, ref: "Board" }],
+  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Board" }],
+  scraps: [{ type: mongoose.Schema.Types.ObjectId, ref: "Board" }]
 });
 
 const User = mongoose.model("User", userSchema);

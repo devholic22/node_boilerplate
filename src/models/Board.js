@@ -5,7 +5,8 @@ const boardSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now() },
   content: { type: String, required: true },
   owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
-  likeOwner: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }]
+  likeOwner: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  scrapOwner: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }]
 });
 
 const Board = mongoose.model("Board", boardSchema);

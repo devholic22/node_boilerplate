@@ -22,13 +22,13 @@
 .board-box__bottom {
   background-color: gray;
   display: flex;
-  justify-content: space-between;
 }
 .board-box__bottom a {
   border-radius: 5px;
   display: flex;
   align-items: center;
   padding: 5px;
+  width: 90%;
 }
 .board-box__like-box,
 .board-box__like-box button {
@@ -45,6 +45,10 @@
 }
 .board-box__like-box button {
   font-size: 17px;
+}
+.board-box__bookmark {
+  font-size: 17px;
+  padding: 1px 6px;
 }
 .board-box__img {
   width: 40px;
