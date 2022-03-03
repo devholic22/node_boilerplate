@@ -4,6 +4,6 @@ import { userProfile, userScrap } from "../controllers/userController";
 const userRouter = express.Router();
 
 userRouter.get("/:id", userProfile);
-userRouter.get("/:id/scrap", userScrap);
+userRouter.get("/:id/scraps", userScrap);
 
 export default userRouter;

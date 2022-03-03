@@ -100,7 +100,16 @@ export const deleteUser = async (req, res) => {
 
 export const userScrap = async (req, res) => {
   const { id } = req.params;
-  const user = await User.findOne({ id });
-  const scraps = user.scraps;
-  return res.redirect("/");
+  const scraps = [];
+  const user = await User.findById(id).populate("scraps");
+
+  // 중요 포인트 //
+  for (const scrap of user.scraps) {
+    const sorted = await Board.findById(scrap._id)
+      .populate("owner")
+      .populate("likeOwner");
+    scraps.push(sorted);
+  }
+  console.log(scraps);
+  return res.render("scraps", { boards: scraps });
 };

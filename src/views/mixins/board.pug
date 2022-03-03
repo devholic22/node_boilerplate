@@ -5,12 +5,12 @@ mixin boards(board)
         span.board-box__time=board.createdAt
         span.board-box__content=board.content
         div.board-box__bottom
-            a(href=`users/${board.owner._id}`) 
+            a(href=`/users/${board.owner._id}`) 
                 img(src=`${board.owner.avatarUrl}`).board-box__img
                 span.board-box__owner Writed by #{board.owner.name}
             div.board-box__like-box
                 if loggedInUser
-                    form(method="POST", action=`boards/${board._id}/like`).board-box__like-form
+                    form(method="POST", action=`/boards/${board._id}/like`).board-box__like-form
                         if loggedInUser.likes.includes(String(board._id))
                             button 
                                 i.fas.fa-heart
@@ -25,7 +25,7 @@ mixin boards(board)
                     span.board-box__like=board.likeOwner.length
             div.board-box__like-box
                 if loggedInUser
-                    form(method="POST", action=`boards/${board._id}/scrap`).board-box__like-form
+                    form(method="POST", action=`/boards/${board._id}/scrap`).board-box__like-form
                         if loggedInUser.scraps.includes(String(board._id))
                             button 
                                 i.fas.fa-bookmark
