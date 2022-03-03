@@ -5,14 +5,9 @@ mixin boards(board)
         span.board-box__time=board.createdAt
         span.board-box__content=board.content
         div.board-box__bottom
-            if loggedInUser && board.owner._id == loggedInUser._id
-                a(href="/my-profile") 
-                    img(src=`${board.owner.avatarUrl}`).board-box__img
-                    span.board-box__owner Writed by #{board.owner.name}
-            else
-                a(href=`/users/${board.owner._id}`)
-                    img(src=`${board.owner.avatarUrl}`).board-box__img
-                    span.board-box__owner Writed by #{board.owner.name}
+            a(href=`users/${board.owner._id}`) 
+                img(src=`${board.owner.avatarUrl}`).board-box__img
+                span.board-box__owner Writed by #{board.owner.name}
             div.board-box__like-box
                 if loggedInUser
                     form(method="POST", action=`boards/${board._id}/like`).board-box__like-form

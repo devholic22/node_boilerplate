@@ -21,7 +21,7 @@ html(lang="en")
                 li.header-lists__list
                     a(href="/boards/upload") Write Content
                 li.header-lists__list
-                    a(href="/my-profile") MY Profile
+                    a(href=`/users/${loggedInUser._id}`) MY Profile
                 li.header-lists__list 
                     a(href="/logout") Log out
         block content

@@ -53,6 +53,21 @@ export const logout = (req, res) => {
   return res.redirect("/");
 };
 
+export const userProfile = async (req, res) => {
+  const { id } = req.params;
+  const {
+    user: { _id }
+  } = req.session;
+  if (String(id) !== String(_id)) {
+    const user = await User.findById(id).populate("boards");
+    return res.render("user-profile", { user });
+  } else {
+    const user = await User.findById(_id).populate("boards");
+    console.log(user);
+    return res.render("user-profile", { user });
+  }
+};
+
 export const getEditProfile = async (req, res) => {
   const { user: _id } = req.session;
   const user = await User.findById(_id);
