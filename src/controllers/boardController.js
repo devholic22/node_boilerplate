@@ -118,5 +118,7 @@ export const boardScrap = async (req, res) => {
   }
   user.save();
   req.session.user = user;
-  return res.redirect("/");
+  // 문제점: user's scrap page에서 scrap request를 보내면 바로 메인 페이지로 리다이렉트가 된다.
+  // 실시간으로 변한 것을 보여주기 위해 user's scrap page를 다시 보내줄 수 있을까?
+  return res.redirect(req.headers.referer);
 };

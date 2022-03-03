@@ -110,6 +110,6 @@ export const userScrap = async (req, res) => {
       .populate("likeOwner");
     scraps.push(sorted);
   }
-  console.log(scraps);
+
   return res.render("scraps", { boards: scraps });
 };
