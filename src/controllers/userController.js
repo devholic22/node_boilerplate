@@ -3,7 +3,20 @@ import User from "../models/User";
 
 export const home = async (req, res) => {
   const boards = await Board.find({}).populate("owner").populate("likeOwner");
-  return res.render("home", { boards });
+  if (res.locals.loggedIn) {
+    const {
+      user: { _id }
+    } = req.session;
+    const user = await User.findById(_id);
+    console.log(user);
+    const sorted = boards.filter(
+      (board) => !user.blockUsers.includes(board.owner._id)
+    );
+    console.log(boards);
+    return res.render("home", { boards: sorted });
+  } else {
+    return res.render("home", { boards });
+  }
 };
 
 export const join = (req, res) => {
@@ -112,4 +125,18 @@ export const userScrap = async (req, res) => {
   }
 
   return res.render("scraps", { boards: scraps });
+};
+
+export const userBlock = async (req, res) => {
+  const { id } = req.params;
+  const {
+    user: { _id }
+  } = req.session;
+  if (String(id) !== String(_id)) {
+    const user = await User.findById(_id);
+    const blockUser = await User.findById(id);
+    user.blockUsers.push(blockUser);
+    user.save();
+  }
+  return res.redirect("/");
 };

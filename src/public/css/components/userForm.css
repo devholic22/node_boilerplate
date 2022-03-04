@@ -28,6 +28,12 @@
   border-radius: 10px;
   margin-bottom: 20px;
 }
+.user-container__block button {
+  background-color: azure;
+  padding: 5px;
+  border-radius: 5px;
+  color: red;
+}
 .user-container__button {
   border-radius: 5px;
   padding: 10px;
