@@ -3,7 +3,7 @@ block content
     div.user-container
        div.user-container__profile
         div.user-container__imgbox
-            img.user-container__img(src=user.avatarUrl)
+            img.user-container__img(src=`/${user.avatarUrl}`)
         div.user-container__info
             div.user-container__namebox
                 span.user-container__strong Name
@@ -78,7 +78,7 @@ block content
                     each followUser in user.followUsers
                         a(href=`/users/${followUser._id}`)
                             div.follow-modal__list
-                                img(src=`${followUser.avatarUrl}`).followUser__img
+                                img(src=`/${followUser.avatarUrl}`).followUser__img
                                 span=followUser.name
         div.following-modal
             div.following-modal__content
@@ -88,6 +88,6 @@ block content
                     each followingUser in user.followingUsers
                         a(href=`/users/${followingUser._id}`)
                             div.following-modal__list
-                                img(src=`${followingUser.avatarUrl}`).followingUser__img
+                                img(src=`/${followingUser.avatarUrl}`).followingUser__img
                                 span=followingUser.name
     script(src="/js/follow.js") 

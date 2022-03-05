@@ -21,7 +21,7 @@ html(lang="en")
                 li.header-lists__list
                     a(href="/boards/upload") Write Content
                 a(href=`/users/${loggedInUser._id}`)
-                    img(src=`${loggedInUser.avatarUrl}`).userImg
+                    img(src=`/${loggedInUser.avatarUrl}`).userImg
                 li.header-lists__list 
                     a(href="/logout") Log out
         block content

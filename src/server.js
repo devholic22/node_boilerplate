@@ -18,8 +18,8 @@ app.set("views", process.cwd() + "/src/views");
 
 app.use(morgan("dev"));
 app.use(express.static(__dirname + "/public"));
+app.use("/uploads", express.static("uploads"));
 app.use(express.urlencoded({ extended: true }));
-
 app.use(
   session({
     secret: "hello",

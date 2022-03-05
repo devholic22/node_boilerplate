@@ -1,3 +1,5 @@
+import multer from "multer";
+
 export const logInMiddleware = (req, res, next) => {
   res.locals.loggedIn = Boolean(req.session.loggedIn);
   res.locals.loggedInUser = req.session.user;
@@ -15,3 +17,5 @@ export const onlyLoggedIn = (req, res, next) => {
   }
   next();
 };
+
+export const avatarUpload = multer({ dest: "uploads/avatars" });

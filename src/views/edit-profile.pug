@@ -4,6 +4,9 @@ block content
        div.user-container__profile
         div.user-container__imgbox
             img.user-container__img(src=user.avatarUrl)
+            form(method="POST", enctype="multipart/form-data").change-avatar
+                input(type="file", name="avatar", accept="image/png, img/jpeg")
+                button.user-container__edit Save
         div.user-container__info
             form.user-container__form(method="POST")
                 span.user-container__strong Name

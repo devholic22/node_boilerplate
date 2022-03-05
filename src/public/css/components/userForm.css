@@ -54,14 +54,14 @@
 .user-container__imgbox {
   display: flex;
   justify-content: center;
-  align-items: center;
+  flex-direction: column;
 }
 .user-container__img {
   width: 120px;
   height: 120px;
   border: 3px solid black;
   border-radius: 10px;
-  margin-right: 30px;
+  margin-right: 50px;
 }
 .user-container__namebox {
   display: flex;
@@ -131,4 +131,9 @@
   padding: 5px;
   border-radius: 5px;
   text-align: center;
+}
+.change-avatar {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
 }

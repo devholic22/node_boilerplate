@@ -1,5 +1,5 @@
 import express from "express";
-import { onlyAnon, onlyLoggedIn } from "../middlewares";
+import { onlyAnon, onlyLoggedIn, avatarUpload } from "../middlewares";
 import {
   getJoin,
   postJoin,
@@ -21,7 +21,7 @@ globalRouter.get("/logout", onlyLoggedIn, logout);
 globalRouter
   .route("/edit-profile")
   .get(onlyLoggedIn, getEditProfile)
-  .post(onlyLoggedIn, postEditProfile);
+  .post(onlyLoggedIn, avatarUpload.single("avatar"), postEditProfile);
 globalRouter.get("/delete-user", deleteUser);
 
 export default globalRouter;

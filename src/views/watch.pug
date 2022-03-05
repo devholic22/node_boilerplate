@@ -4,7 +4,7 @@ block content
         span.show-contents__title=board.title 
         div.show-contents__profile
             a(href=`/users/${board.owner._id}`)
-                img.show-contents__img(src=`${board.owner.avatarUrl}`)
+                img.show-contents__img(src=`/${board.owner.avatarUrl}`)
                 span.show-contents__owner=board.owner.name
         span.show-contents__content=board.content
         if loggedInUser && board.owner._id == loggedInUser._id
