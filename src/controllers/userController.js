@@ -55,14 +55,23 @@ export const userProfile = async (req, res) => {
       user: { _id }
     } = req.session;
     if (String(id) != String(_id)) {
-      const user = await User.findById(id).populate("boards");
+      const user = await User.findById(id)
+        .populate("boards")
+        .populate("followUsers")
+        .populate("followingUsers");
+      console.log(user);
       return res.render("user-profile", { user });
     } else {
-      const user = await User.findById(_id).populate("boards");
+      const user = await User.findById(_id)
+        .populate("boards")
+        .populate("followUsers")
+        .populate("followingUsers");
+      console.log(user);
       return res.render("user-profile", { user });
     }
   } else {
     const user = await User.findById(id).populate("boards");
+    console.log(user);
     return res.render("user-profile", { user });
   }
 };
@@ -138,4 +147,44 @@ export const blockedUser = async (req, res) => {
   const { id } = req.params;
   const user = await User.findById(id).populate("blockUsers");
   return res.render("blocked-user", { users: user.blockUsers });
+};
+
+export const followFunction = async (req, res) => {
+  const { id } = req.params;
+  const {
+    user: { _id }
+  } = req.session;
+
+  const user = await User.findById(id);
+  const wantedUser = await User.findById(_id);
+
+  if (user.needFollowAsk) {
+    if (user.followList.includes(String(wantedUser._id))) {
+      user.followList = user.followList.filter(
+        (list) => String(list) != String(wantedUser._id)
+      );
+      wantedUser.followingUsers = wantedUser.followingUsers.filter(
+        (list) => list != String(user._id)
+      );
+    } else {
+      user.followList.push(String(wantedUser._id));
+      wantedUser.followingUsers.push(String(user._id));
+    }
+  } else {
+    if (user.followUsers.includes(String(wantedUser._id))) {
+      user.followUsers = user.followUsers.filter(
+        (list) => String(list) != String(wantedUser._id)
+      );
+      wantedUser.followingUsers = wantedUser.followingUsers.filter(
+        (list) => list != String(user._id)
+      );
+    } else {
+      user.followUsers.push(String(wantedUser._id));
+      wantedUser.followingUsers.push(String(user._id));
+    }
+  }
+  user.save();
+  wantedUser.save();
+  req.session.user = wantedUser;
+  return res.redirect(req.headers.referer);
 };

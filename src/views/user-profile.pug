@@ -11,6 +11,9 @@ block content
             div.user-container__namebox
                 span.user-container__strong Email
                 span.user-container__small=user.email
+            div.user-boards__info
+                span.user-follow__number follow: #{user.followUsers.length}
+                span.user-following__number following: #{user.followingUsers.length}
        if loggedInUser
         if user._id == loggedInUser._id
             div.user-container-btns
@@ -21,12 +24,17 @@ block content
                 span.user-container__blocked-user
                     a(href=`/users/${user._id}/block-users`) Blocked Users
         else
-            if loggedInUser.blockUsers.includes(String(user._id))
-                div.user-container-btns
+            div.user-container-btns
+                if !user.followUsers.find(x => String(x._id) === String(loggedInUser._id))
+                    form(method="POST", action=`/users/${user._id}/follow`).user-container__follow
+                        button Add Follow
+                else
+                    form(method="POST", action=`/users/${user._id}/follow`).user-container__follow
+                        button Unfollow
+                if loggedInUser.blockUsers.includes(user)
                     form(method="POST", action=`/users/${user._id}/block`).user-container__block
                         button Block Clear
-            else
-                div.user-container-btns
+                else
                     form(method="POST", action=`/users/${user._id}/block`).user-container__block
                         button Block User
        div.user-boards
@@ -35,3 +43,24 @@ block content
             each board in user.boards
                 li.user-boards__list 
                     a(href=`/boards/${board._id}`)=board.title
+        div.follow-modal
+            div.follow-modal__content
+                span.modal-title follow peoples
+                span.modal-close &times;
+                ul.follow-modal__lists
+                    each followUser in user.followUsers
+                        a(href=`/users/${followUser._id}`)
+                            div.follow-modal__list
+                                img(src=`${followUser.avatarUrl}`).followUser__img
+                                span=followUser.name
+        div.following-modal
+            div.following-modal__content
+                span.modal-title following peoples
+                span.modal-close &times;
+                ul.following-modal__lists
+                    each followingUser in user.followingUsers
+                        a(href=`/users/${followingUser._id}`)
+                            div.following-modal__list
+                                img(src=`${followingUser.avatarUrl}`).followingUser__img
+                                span=followingUser.name
+    script(src="/js/follow.js") 

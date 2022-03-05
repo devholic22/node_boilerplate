@@ -7,6 +7,14 @@
   border-radius: 10px;
   padding-top: 5px;
 }
+.user-boards__info {
+  font-size: 15px;
+  display: flex;
+  justify-content: space-around;
+}
+.user-boards__info span {
+  cursor: pointer;
+}
 .user-boards__title {
   margin-bottom: 20px;
 }

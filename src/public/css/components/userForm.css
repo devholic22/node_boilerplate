@@ -34,6 +34,12 @@
   border-radius: 5px;
   color: red;
 }
+.user-container__follow button {
+  background-color: azure;
+  padding: 5px;
+  border-radius: 5px;
+  color: black;
+}
 .user-container__button {
   border-radius: 5px;
   padding: 10px;
@@ -82,7 +88,13 @@
 }
 .user-container-btns {
   display: flex;
+  flex-direction: row;
   margin-bottom: 10px;
+}
+.user-container-btns form {
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
 }
 .user-container__edit {
   background-color: aqua;

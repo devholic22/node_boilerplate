@@ -12,7 +12,12 @@ const userSchema = new mongoose.Schema({
   boards: [{ type: mongoose.Schema.Types.ObjectId, ref: "Board" }],
   likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Board" }],
   scraps: [{ type: mongoose.Schema.Types.ObjectId, ref: "Board" }],
-  blockUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }]
+  protection: { type: Boolean, default: false },
+  needFollowAsk: { type: Boolean, default: false },
+  blockUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  followList: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  followUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  followingUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }]
 });
 
 const User = mongoose.model("User", userSchema);
