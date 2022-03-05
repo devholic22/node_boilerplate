@@ -39,16 +39,33 @@ block content
                         button Block User
        div.user-boards
         span.user-boards__title My Contents
-        if loggedInUser && user._id == loggedInUser._id
-            ul.user-boards__lists
-                each board in user.boards
-                    li.user-boards__list 
-                        a(href=`/boards/${board._id}`)=board.title
+        if loggedInUser
+            if user._id == loggedInUser._id
+                ul.user-boards__lists
+                    each board in user.boards
+                        li.user-boards__list 
+                            a(href=`/boards/${board._id}`)=board.title
+            else
+                if user.protection
+                    if user.followUsers.find(x => String(x._id) === String(loggedInUser._id))
+                        ul.user-boards__lists
+                            each board in user.boards
+                                li.user-boards__list 
+                                    a(href=`/boards/${board._id}`)=board.title
+                    else
+                        i.fa.fa-lock
+                        span.lock-message You need to follow first
+                else
+                    ul.user-boards__lists
+                        each board in user.boards
+                            li.user-boards__list 
+                                a(href=`/boards/${board._id}`)=board.title
         else
-            if user.protection && !user.followUsers.find(x => String(x._id) === String(loggedInUser._id))
+            if Boolean(user.protection) === true
+                span=Boolean(user.protection)
                 i.fa.fa-lock
                 span.lock-message You need to follow first
-            else
+            else 
                 ul.user-boards__lists
                     each board in user.boards
                         li.user-boards__list 

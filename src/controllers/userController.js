@@ -59,18 +59,19 @@ export const userProfile = async (req, res) => {
         .populate("boards")
         .populate("followUsers")
         .populate("followingUsers");
-      console.log(user);
       return res.render("user-profile", { user });
     } else {
       const user = await User.findById(_id)
         .populate("boards")
         .populate("followUsers")
         .populate("followingUsers");
-      console.log(user);
       return res.render("user-profile", { user });
     }
   } else {
-    const user = await User.findById(id).populate("boards");
+    const user = await User.findById(id)
+      .populate("boards")
+      .populate("followUsers")
+      .populate("followingUsers");
     console.log(user);
     return res.render("user-profile", { user });
   }
@@ -90,10 +91,11 @@ export const postEditProfile = async (req, res) => {
     {
       name,
       email,
-      protection: Boolean(protection)
+      protection
     },
     { new: true }
   );
+  console.log(updatedUser);
   req.session.user = updatedUser;
   res.locals.loggedInUser = req.session.user;
   return res.redirect("/");

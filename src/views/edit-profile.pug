@@ -13,18 +13,18 @@ block content
                 span.user-container__strong Protection
                 label.radio-inline
                     div.radio-inline__box
-                        if user.protection
-                            input(type='radio', name='protection', value="yes", checked).radio-text
+                        if Boolean(user.protection)
+                            input(type='radio', name='protection', value="true", checked).radio-text
                             | Yes
                         else
-                            input(type='radio', name='protection', value="yes").radio-text
+                            input(type='radio', name='protection', value="true").radio-text
                             | Yes
                     div.radio-inline__box
-                        if user.protecion
-                            input(type='radio', name='protection', value="no").radio-text
+                        if Boolean(user.protection)
+                            input(type='radio', name='protection', value="false").radio-text
                             | No
                         else
-                            input(type='radio', name='protection', value="no", checked).radio-text
+                            input(type='radio', name='protection', value="false", checked).radio-text
                             | No
                 button.user-container__edit Save
             span.user-container__removeBtn 
