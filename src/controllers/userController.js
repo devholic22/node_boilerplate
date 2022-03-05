@@ -84,12 +84,13 @@ export const getEditProfile = async (req, res) => {
 
 export const postEditProfile = async (req, res) => {
   const { user: _id } = req.session;
-  const { name, email } = req.body;
+  const { name, email, protection } = req.body;
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
       name,
-      email
+      email,
+      protection: Boolean(protection)
     },
     { new: true }
   );

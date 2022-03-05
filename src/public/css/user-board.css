@@ -25,3 +25,14 @@
   display: flex;
   justify-content: center;
 }
+.lock-message {
+  font-size: 18px;
+  margin-top: 10px;
+}
+.radio-inline {
+  display: flex;
+}
+.radio-inline__box {
+  margin-right: 20px;
+  font-size: 18px;
+}

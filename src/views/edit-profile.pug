@@ -10,6 +10,22 @@ block content
                 input.user-container__input(type="text", placeholder="Name", name="name", value=user.name, required)
                 span.user-container__strong Email
                 input.user-container__input(type="email", placeholder="Email", name="email", value=user.email, required)
+                span.user-container__strong Protection
+                label.radio-inline
+                    div.radio-inline__box
+                        if user.protection
+                            input(type='radio', name='protection', value="yes", checked).radio-text
+                            | Yes
+                        else
+                            input(type='radio', name='protection', value="yes").radio-text
+                            | Yes
+                    div.radio-inline__box
+                        if user.protecion
+                            input(type='radio', name='protection', value="no").radio-text
+                            | No
+                        else
+                            input(type='radio', name='protection', value="no", checked).radio-text
+                            | No
                 button.user-container__edit Save
             span.user-container__removeBtn 
                 a(href="/delete-user") Delete User
