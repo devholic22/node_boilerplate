@@ -101,6 +101,16 @@
   border-radius: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
+  margin-right: 10px;
+  text-align: center;
+}
+.user-container__blocked-user {
+  background-color: aliceblue;
+  font-size: 15px;
+  padding: 5px;
+  border-radius: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   text-align: center;
 }
 .user-container__removeBtn {

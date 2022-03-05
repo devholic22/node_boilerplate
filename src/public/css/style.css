@@ -10,6 +10,7 @@
 @import "./show-contents.css";
 
 @import "./like-modal.css";
+@import "./blocked-user.css";
 
 body {
   padding: 10px;

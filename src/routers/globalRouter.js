@@ -1,7 +1,6 @@
 import express from "express";
 import { onlyAnon, onlyLoggedIn } from "../middlewares";
 import {
-  home,
   getJoin,
   postJoin,
   getLogin,
@@ -11,6 +10,7 @@ import {
   postEditProfile,
   deleteUser
 } from "../controllers/userController";
+import { home } from "../controllers/boardController";
 
 const globalRouter = express.Router();
 

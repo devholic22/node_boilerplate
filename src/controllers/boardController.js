@@ -1,6 +1,22 @@
 import Board from "../models/Board";
 import User from "../models/User";
 
+export const home = async (req, res) => {
+  const boards = await Board.find({}).populate("owner").populate("likeOwner");
+  if (res.locals.loggedIn) {
+    const {
+      user: { _id }
+    } = req.session;
+    const user = await User.findById(_id);
+    const sorted = boards.filter(
+      (board) => !user.blockUsers.includes(board.owner._id)
+    );
+    return res.render("home", { boards: sorted });
+  } else {
+    return res.render("home", { boards });
+  }
+};
+
 export const getUpload = (req, res) => {
   return res.render("upload");
 };

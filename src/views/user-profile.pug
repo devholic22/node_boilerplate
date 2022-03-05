@@ -11,16 +11,24 @@ block content
             div.user-container__namebox
                 span.user-container__strong Email
                 span.user-container__small=user.email
-       if user._id == loggedInUser._id
-        div.user-container-btns
-            span.user-container__edit
-                a(href="/edit-profile") Edit Profile
-            span.user-container__scrap
-                a(href=`/users/${user._id}/scraps`) My Scrap
-       if loggedInUser && (user._id != loggedInUser._id)
-        div.user-container-btns
-            form(method="POST", action=`/users/${user._id}/block`).user-container__block
-                button Block User
+       if loggedInUser
+        if user._id == loggedInUser._id
+            div.user-container-btns
+                span.user-container__edit
+                    a(href="/edit-profile") Edit Profile
+                span.user-container__scrap
+                    a(href=`/users/${user._id}/scraps`) My Scrap
+                span.user-container__blocked-user
+                    a(href=`/users/${user._id}/block-users`) Blocked Users
+        else
+            if loggedInUser.blockUsers.includes(String(user._id))
+                div.user-container-btns
+                    form(method="POST", action=`/users/${user._id}/block`).user-container__block
+                        button Block Clear
+            else
+                div.user-container-btns
+                    form(method="POST", action=`/users/${user._id}/block`).user-container__block
+                        button Block User
        div.user-boards
         span.user-boards__title My Contents
         ul.user-boards__lists

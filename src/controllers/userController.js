@@ -1,24 +1,6 @@
 import Board from "../models/Board";
 import User from "../models/User";
 
-export const home = async (req, res) => {
-  const boards = await Board.find({}).populate("owner").populate("likeOwner");
-  if (res.locals.loggedIn) {
-    const {
-      user: { _id }
-    } = req.session;
-    const user = await User.findById(_id);
-    console.log(user);
-    const sorted = boards.filter(
-      (board) => !user.blockUsers.includes(board.owner._id)
-    );
-    console.log(boards);
-    return res.render("home", { boards: sorted });
-  } else {
-    return res.render("home", { boards });
-  }
-};
-
 export const join = (req, res) => {
   return res.render("join");
 };
@@ -68,15 +50,19 @@ export const logout = (req, res) => {
 
 export const userProfile = async (req, res) => {
   const { id } = req.params;
-  const {
-    user: { _id }
-  } = req.session;
-  if (String(id) !== String(_id)) {
-    const user = await User.findById(id).populate("boards");
-    return res.render("user-profile", { user });
+  if (res.locals.loggedIn) {
+    const {
+      user: { _id }
+    } = req.session;
+    if (String(id) != String(_id)) {
+      const user = await User.findById(id).populate("boards");
+      return res.render("user-profile", { user });
+    } else {
+      const user = await User.findById(_id).populate("boards");
+      return res.render("user-profile", { user });
+    }
   } else {
-    const user = await User.findById(_id).populate("boards");
-    console.log(user);
+    const user = await User.findById(id).populate("boards");
     return res.render("user-profile", { user });
   }
 };
@@ -135,8 +121,21 @@ export const userBlock = async (req, res) => {
   if (String(id) !== String(_id)) {
     const user = await User.findById(_id);
     const blockUser = await User.findById(id);
-    user.blockUsers.push(blockUser);
+    if (user.blockUsers.includes(String(blockUser._id))) {
+      user.blockUsers = user.blockUsers.filter(
+        (id) => String(id) != String(blockUser._id)
+      );
+    } else {
+      user.blockUsers.push(String(blockUser._id));
+    }
     user.save();
+    req.session.user = user;
   }
   return res.redirect("/");
+};
+
+export const blockedUser = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id).populate("blockUsers");
+  return res.render("blocked-user", { users: user.blockUsers });
 };

@@ -1,0 +1,10 @@
+include base
+block content
+    ul.blocked-user__lists
+        each user in users
+            li.blocked-user__list
+                a(href=`/users/${user._id}`)
+                    img(src=user.avatarUrl).blocked-user__img
+                    span=user.name
+        else
+            span.nothing 🙅 Sorry nothing found.
