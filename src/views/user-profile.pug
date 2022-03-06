@@ -23,20 +23,38 @@ block content
                     a(href=`/users/${user._id}/scraps`) My Scrap
                 span.user-container__blocked-user
                     a(href=`/users/${user._id}/block-users`) Blocked Users
+                div.user-container__follow-list__user
+                    a(href=`/users/${user._id}/follow-list`) Follow request users
+                    if user.followList.length >= 1
+                        span.follow-list__number=user.followList.length
         else
             div.user-container-btns
-                if !user.followUsers.find(x => String(x._id) === String(loggedInUser._id))
-                    form(method="POST", action=`/users/${user._id}/follow`).user-container__follow
-                        button Add Follow
+                if !loggedInUser.blockUsers.includes(String(user._id))
+                    if user.needFollowAsk
+                        if user.followList.find(x => String(x._id) === String(loggedInUser._id))
+                            form(method="POST", action=`/users/${user._id}/follow`).user-container__follow
+                                button Remove Follow request
+                        else
+                            if user.followUsers.find(x => String(x._id) === String(loggedInUser._id))
+                                form(method="POST", action=`/users/${user._id}/follow`).user-container__follow
+                                    button Unfollow
+                            else
+                                form(method="POST", action=`/users/${user._id}/follow`).user-container__follow
+                                    button Add Follow
+                                form(method="POST", action=`/users/${user._id}/block`).user-container__block
+                                    button Block User
+                    else
+                        if user.followUsers.find(x => String(x._id) === String(loggedInUser._id))
+                            form(method="POST", action=`/users/${user._id}/follow`).user-container__follow
+                                button Unfollow
+                        else
+                            form(method="POST", action=`/users/${user._id}/follow`).user-container__follow
+                                button Add Follow
+                            form(method="POST", action=`/users/${user._id}/block`).user-container__block
+                                button Block User
                 else
-                    form(method="POST", action=`/users/${user._id}/follow`).user-container__follow
-                        button Unfollow
-                if loggedInUser.blockUsers.includes(user)
                     form(method="POST", action=`/users/${user._id}/block`).user-container__block
                         button Block Clear
-                else
-                    form(method="POST", action=`/users/${user._id}/block`).user-container__block
-                        button Block User
        div.user-boards
         span.user-boards__title My Contents
         if loggedInUser
@@ -62,7 +80,6 @@ block content
                                 a(href=`/boards/${board._id}`)=board.title
         else
             if Boolean(user.protection) === true
-                span=Boolean(user.protection)
                 i.fa.fa-lock
                 span.lock-message You need to follow first
             else 

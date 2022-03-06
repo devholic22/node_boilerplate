@@ -72,7 +72,6 @@ export const userProfile = async (req, res) => {
       .populate("boards")
       .populate("followUsers")
       .populate("followingUsers");
-    console.log(user);
     return res.render("user-profile", { user });
   }
 };
@@ -85,22 +84,38 @@ export const getEditProfile = async (req, res) => {
 
 export const postEditProfile = async (req, res) => {
   const { user: _id } = req.session;
-  const { name, email, protection } = req.body;
-  const avatarUrl = req.file.path;
-  const updatedUser = await User.findByIdAndUpdate(
-    _id,
-    {
-      name,
-      email,
-      protection,
-      avatarUrl
-    },
-    { new: true }
-  );
-  console.log(updatedUser);
-  req.session.user = updatedUser;
-  res.locals.loggedInUser = req.session.user;
-  return res.redirect("/");
+  const { name, email, protection, needFollowAsk } = req.body;
+  if (req.file) {
+    const avatarUrl = req.file.path;
+    const updatedUser = await User.findByIdAndUpdate(
+      _id,
+      {
+        name,
+        email,
+        protection,
+        needFollowAsk,
+        avatarUrl
+      },
+      { new: true }
+    );
+    req.session.user = updatedUser;
+    res.locals.loggedInUser = req.session.user;
+    return res.redirect("/");
+  } else {
+    const updatedUser = await User.findByIdAndUpdate(
+      _id,
+      {
+        name,
+        email,
+        protection,
+        needFollowAsk
+      },
+      { new: true }
+    );
+    req.session.user = updatedUser;
+    res.locals.loggedInUser = req.session.user;
+    return res.redirect("/");
+  }
 };
 
 export const deleteUser = async (req, res) => {
@@ -145,7 +160,7 @@ export const userBlock = async (req, res) => {
     user.save();
     req.session.user = user;
   }
-  return res.redirect("/");
+  return res.redirect(req.headers.referer);
 };
 
 export const blockedUser = async (req, res) => {
@@ -164,16 +179,21 @@ export const followFunction = async (req, res) => {
   const wantedUser = await User.findById(_id);
 
   if (user.needFollowAsk) {
-    if (user.followList.includes(String(wantedUser._id))) {
-      user.followList = user.followList.filter(
+    if (user.followUsers.includes(String(wantedUser._id))) {
+      user.followUsers = user.followUsers.filter(
         (list) => String(list) != String(wantedUser._id)
       );
       wantedUser.followingUsers = wantedUser.followingUsers.filter(
         (list) => list != String(user._id)
       );
     } else {
-      user.followList.push(String(wantedUser._id));
-      wantedUser.followingUsers.push(String(user._id));
+      if (!user.followList.includes(String(wantedUser._id))) {
+        user.followList.push(String(wantedUser._id));
+      } else {
+        user.followList = user.followList.filter(
+          (list) => String(list) != String(wantedUser._id)
+        );
+      }
     }
   } else {
     if (user.followUsers.includes(String(wantedUser._id))) {
@@ -191,5 +211,35 @@ export const followFunction = async (req, res) => {
   user.save();
   wantedUser.save();
   req.session.user = wantedUser;
+  return res.redirect(req.headers.referer);
+};
+
+export const followList = async (req, res) => {
+  const {
+    user: { _id }
+  } = req.session;
+  const user = await User.findById(_id).populate("followList");
+  console.log(user.followList);
+  return res.render("follow-list", { users: user.followList });
+};
+export const followConfirm = async (req, res) => {
+  const { confirm } = req.body;
+  const { id } = req.params;
+  const user = await User.findById(id);
+  const {
+    user: { _id }
+  } = req.session;
+  const listOwner = await User.findById(_id);
+
+  if (confirm === "Accept") {
+    listOwner.followUsers.push(String(user._id));
+    user.followingUsers.push(String(listOwner._id));
+  }
+  listOwner.followList = listOwner.followList.filter(
+    (list) => list != String(user._id)
+  );
+  user.save();
+  listOwner.save();
+  req.session.user = listOwner;
   return res.redirect(req.headers.referer);
 };

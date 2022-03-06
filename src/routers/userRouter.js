@@ -4,7 +4,9 @@ import {
   userScrap,
   userBlock,
   blockedUser,
-  followFunction
+  followFunction,
+  followList,
+  followConfirm
 } from "../controllers/userController";
 
 const userRouter = express.Router();
@@ -14,5 +16,7 @@ userRouter.get("/:id/scraps", userScrap);
 userRouter.post("/:id/block", userBlock);
 userRouter.get("/:id/block-users", blockedUser);
 userRouter.post("/:id/follow", followFunction);
+userRouter.get("/:id/follow-list", followList);
+userRouter.post("/:id/follow-confirm", followConfirm);
 
 export default userRouter;

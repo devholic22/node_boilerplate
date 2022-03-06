@@ -13,7 +13,7 @@ block content
                 input.user-container__input(type="text", placeholder="Name", name="name", value=user.name, required)
                 span.user-container__strong Email
                 input.user-container__input(type="email", placeholder="Email", name="email", value=user.email, required)
-                span.user-container__strong Protection
+                span.user-container__strong Protection (See only follow users)
                 label.radio-inline
                     div.radio-inline__box
                         if Boolean(user.protection)
@@ -28,6 +28,22 @@ block content
                             | No
                         else
                             input(type='radio', name='protection', value="false", checked).radio-text
+                            | No
+                span.user-container__strong Need check when user follow want
+                label.radio-inline
+                    div.radio-inline__box
+                        if Boolean(user.needFollowAsk)
+                            input(type='radio', name='needFollowAsk', value="true", checked).radio-text
+                            | Yes
+                        else
+                            input(type='radio', name='needFollowAsk', value="true").radio-text
+                            | Yes
+                    div.radio-inline__box
+                        if Boolean(user.needFollowAsk)
+                            input(type='radio', name='needFollowAsk', value="false").radio-text
+                            | No
+                        else
+                            input(type='radio', name='needFollowAsk', value="false", checked).radio-text
                             | No
                 button.user-container__edit Save
             span.user-container__removeBtn 

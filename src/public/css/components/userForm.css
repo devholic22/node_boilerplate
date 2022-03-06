@@ -116,13 +116,15 @@
   margin-right: 10px;
   text-align: center;
 }
-.user-container__blocked-user {
+.user-container__blocked-user,
+.user-container__follow-list__user {
   background-color: aliceblue;
   font-size: 15px;
   padding: 5px;
   border-radius: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
+  margin-right: 10px;
   text-align: center;
 }
 .user-container__removeBtn {
@@ -136,4 +138,7 @@
   margin-top: 20px;
   display: flex;
   flex-direction: column;
+}
+.user-container__follow-list__user {
+  position: relative;
 }

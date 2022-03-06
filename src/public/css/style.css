@@ -14,6 +14,7 @@
 @import "./following-modal.css";
 
 @import "./blocked-user.css";
+@import "./follow-list.css";
 
 body {
   padding: 10px;
