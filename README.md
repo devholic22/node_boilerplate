@@ -52,7 +52,7 @@ Node.js 작업 시 주로 사용하는 패키지들을 모아두는 레포지토
 - [ ] 홈 보드, 유저가 올린 보드 Pagenation
 - [ ] 보드 댓글 기능
 - [ ] 댓글에 대한 좋아요, 댓글 기능
-- [ ] 팔로우, 좋아요, 댓글, 채팅 request 시 owner에게 alert
+- [ ] 팔로우, 좋아요, 댓글, 채팅 request 시 owner에게 alert (현재 부분적으로 팔로우만 표현 / css로만 했음)
 - [ ] 해시태그 추가 및 해시태그로 검색
 - [ ] 시간, 숫자에 대한 view formatting
 - [ ] 댓글에 특정 username 언급 시 강조 및 해당 user profile로 이동될 수 있도록 링크 추가
