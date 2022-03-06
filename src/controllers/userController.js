@@ -1,9 +1,6 @@
 import Board from "../models/Board";
 import User from "../models/User";
-
-export const join = (req, res) => {
-  return res.render("join");
-};
+import bcrypt from "bcrypt";
 
 export const getJoin = (req, res) => {
   return res.render("join");
@@ -21,7 +18,7 @@ export const postJoin = async (req, res) => {
   await User.create({
     name,
     email,
-    password
+    password: await User.passwordHash(password)
   });
   return res.redirect("/login");
 };
@@ -32,10 +29,18 @@ export const getLogin = (req, res) => {
 
 export const postLogin = async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email, password });
+  const user = await User.findOne({ email });
   if (!user) {
     return res.render("login", {
-      errorMsg: "🙅 username/password does not correct!"
+      errorMsg: "🙅 This username does not exist."
+    });
+  }
+  const isPasswordCorrect = Boolean(
+    bcrypt.compareSync(password, user.password)
+  );
+  if (!isPasswordCorrect) {
+    return res.render("login", {
+      errorMsg: "🙅 Password doesn't correct."
     });
   }
   req.session.loggedIn = true;
@@ -115,6 +120,42 @@ export const postEditProfile = async (req, res) => {
     req.session.user = updatedUser;
     res.locals.loggedInUser = req.session.user;
     return res.redirect("/");
+  }
+};
+
+export const getChangePassword = async (req, res) => {
+  const {
+    user: { _id }
+  } = req.session;
+  const user = await User.findById(_id);
+  return res.render("change-password", { user });
+};
+
+export const postChangePassword = async (req, res) => {
+  const {
+    user: { _id }
+  } = req.session;
+  const user = await User.findById(_id);
+  const { password, password2 } = req.body;
+  const isPasswordCorrect = Boolean(
+    bcrypt.compareSync(password, user.password)
+  );
+  if (!isPasswordCorrect) {
+    return res.render("change-password", {
+      errorMsg: "🙅 Origin password doesn't correct!"
+    });
+  } else {
+    const isPasswordExist = Boolean(password === password2);
+    if (isPasswordExist) {
+      return res.render("change-password", {
+        errorMsg: "🙅 Origin password same with new password!"
+      });
+    } else {
+      user.password = await User.passwordHash(password2);
+      user.save();
+      req.session.destroy();
+      return res.redirect("/");
+    }
   }
 };
 

@@ -8,7 +8,9 @@ import {
   logout,
   getEditProfile,
   postEditProfile,
-  deleteUser
+  deleteUser,
+  getChangePassword,
+  postChangePassword
 } from "../controllers/userController";
 import { home } from "../controllers/boardController";
 
@@ -23,5 +25,8 @@ globalRouter
   .get(onlyLoggedIn, getEditProfile)
   .post(onlyLoggedIn, avatarUpload.single("avatar"), postEditProfile);
 globalRouter.get("/delete-user", deleteUser);
-
+globalRouter
+  .route("/change-password")
+  .get(getChangePassword)
+  .post(postChangePassword);
 export default globalRouter;

@@ -18,6 +18,8 @@ block content
         if user._id == loggedInUser._id
             div.user-container-btns
                 span.user-container__edit
+                    a(href="/change-password") Change password
+                span.user-container__edit
                     a(href="/edit-profile") Edit Profile
                 span.user-container__scrap
                     a(href=`/users/${user._id}/scraps`) My Scrap

@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
@@ -17,6 +18,11 @@ const userSchema = new mongoose.Schema({
   followList: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   followUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   followingUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }]
+});
+
+userSchema.static("passwordHash", async function (password) {
+  password = await bcrypt.hash(password, 5);
+  return password;
 });
 
 const User = mongoose.model("User", userSchema);
