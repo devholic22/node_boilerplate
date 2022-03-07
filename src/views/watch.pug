@@ -1,6 +1,6 @@
 include base
 block content
-    div.show-contents
+    div.show-contents(data-id=board._id)
         span.show-contents__title=board.title 
         div.show-contents__profile
             a(href=`/users/${board.owner._id}`)
@@ -11,3 +11,12 @@ block content
             div.show-contents__btns
                 a(href=`${board._id}/edit`) ✂️ Edit contents
                 a(href=`${board._id}/delete`) 🗑 Delete contents
+        form.show-contents__comment-form
+            input(type="text", placeholder="Write a comment...", required).form-text
+            button.form-button Submit
+        ul.comments-lists
+            each comment in comments
+                li.comments-lists__list
+                    img(src=`/${comment.owner.avatarUrl}`).comment-img
+                    span.comment-text=comment.text
+    script(src="/js/comment.js") 

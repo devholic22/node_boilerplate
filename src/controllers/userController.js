@@ -260,7 +260,6 @@ export const followList = async (req, res) => {
     user: { _id }
   } = req.session;
   const user = await User.findById(_id).populate("followList");
-  console.log(user.followList);
   return res.render("follow-list", { users: user.followList });
 };
 export const followConfirm = async (req, res) => {

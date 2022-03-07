@@ -1,5 +1,6 @@
 import Board from "../models/Board";
 import User from "../models/User";
+import Comment from "../models/Comment";
 
 export const home = async (req, res) => {
   const boards = await Board.find({}).populate("owner").populate("likeOwner");
@@ -41,7 +42,8 @@ export const postUpload = async (req, res) => {
 export const watch = async (req, res) => {
   const { id } = req.params;
   const board = await Board.findById(id).populate("owner");
-  return res.render("watch", { board });
+  const comments = await Comment.find({ board }).populate("owner");
+  return res.render("watch", { board, comments });
 };
 
 export const deleteBoard = async (req, res) => {
@@ -137,4 +139,23 @@ export const boardScrap = async (req, res) => {
   // 문제점: user's scrap page에서 scrap request를 보내면 바로 메인 페이지로 리다이렉트가 된다.
   // 실시간으로 변한 것을 보여주기 위해 user's scrap page를 다시 보내줄 수 있을까?
   return res.redirect(req.headers.referer);
+};
+
+export const createComment = async (req, res) => {
+  const { id } = req.params;
+  const { value } = req.body;
+  const { user } = req.session;
+
+  const board = await Board.findById(id);
+  if (!board) {
+    return res.sendStatus(404);
+  }
+  const comment = await Comment.create({
+    text: value,
+    owner: user,
+    board: id
+  });
+  board.comments.push(comment);
+  board.save();
+  return res.sendStatus(201);
 };

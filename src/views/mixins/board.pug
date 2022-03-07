@@ -6,7 +6,7 @@ mixin boards(board)
         span.board-box__content=board.content
         div.board-box__bottom
             a(href=`/users/${board.owner._id}`) 
-                img(src=`${board.owner.avatarUrl}`).board-box__img
+                img(src=`/${board.owner.avatarUrl}`).board-box__img
                 span.board-box__owner Writed by #{board.owner.name}
             div.board-box__like-box
                 if loggedInUser
@@ -46,5 +46,5 @@ mixin boards(board)
                         each likeOwner in board.likeOwner
                             a(href=`/users/${likeOwner._id}`)
                                 div.like-modal__list
-                                    img(src=`${likeOwner.avatarUrl}`).likeOwner__img
+                                    img(src=`/${likeOwner.avatarUrl}`).likeOwner__img
                                     li=likeOwner.name
