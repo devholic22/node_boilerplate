@@ -3,11 +3,11 @@ const form = document.querySelector(".show-contents__comment-form");
 const text = document.querySelector(".form-text");
 const btn = document.querySelector(".form-button");
 
-const handleSubmit = (event) => {
+const handleSubmit = async (event) => {
   event.preventDefault();
   const value = text.value;
   const boardId = content.dataset.id;
-  fetch(`/api/boards/${boardId}/comment`, {
+  await fetch(`/api/boards/${boardId}/comment`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -15,6 +15,7 @@ const handleSubmit = (event) => {
     body: JSON.stringify({ value }) // only string
   });
   text.value = "";
+  window.location.reload();
 };
 
 form.addEventListener("submit", handleSubmit);

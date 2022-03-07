@@ -14,9 +14,15 @@ block content
         form.show-contents__comment-form
             input(type="text", placeholder="Write a comment...", required).form-text
             button.form-button Submit
-        ul.comments-lists
-            each comment in comments
-                li.comments-lists__list
+    ul.comments-lists
+        each comment in comments
+            li.comments-lists__list
+                a(href=`/users/${comment.owner._id}`)
                     img(src=`/${comment.owner.avatarUrl}`).comment-img
-                    span.comment-text=comment.text
+                div.comment-text
+                    div.comment-text__top
+                        a(href=`/users/${comment.owner._id}`)
+                            span.comment-name=comment.owner.name
+                        span.comment-time=comment.createdAt
+                    span.comment-value=comment.text
     script(src="/js/comment.js") 
