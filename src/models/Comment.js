@@ -7,7 +7,7 @@ const commentSchema = new mongoose.Schema({
   createdAt: { type: Date, required: true, default: Date.now() },
   likeOwner: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   parentComment: { type: mongoose.Schema.Types.ObjectId, ref: "Comment" },
-  childComment: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }]
+  childComments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }]
 });
 const Comment = mongoose.model("Comment", commentSchema);
 

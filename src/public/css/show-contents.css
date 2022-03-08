@@ -70,7 +70,6 @@
 .comments-lists__list {
   display: flex;
   background-color: white;
-  width: 50%;
   margin-bottom: 20px;
 }
 .comment-img {
@@ -80,9 +79,10 @@
   margin-right: 10px;
 }
 .comment-text {
-  padding: 5px;
+  background-color: #f0f0f0;
+  padding: 8px;
   border-radius: 5px;
-  width: 400px;
+  width: 600px;
   display: flex;
   flex-direction: column;
 }
@@ -135,11 +135,12 @@
 .small-comment__form {
   display: flex;
   align-items: center;
+  margin-top: 10px;
 }
 .small-comment__input {
   border: none;
   border-bottom: 1px solid gray;
-  width: 250px;
+  width: 80%;
   margin-right: 10px;
 }
 .small-comment__submit {
@@ -153,10 +154,22 @@
   cursor: pointer;
 }
 .child-comment__div {
-  background-color: #f0f0f0;
-  padding: 10px;
   border-radius: 7px;
-  margin-top: 5px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+.child-comment__img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.child-comment__box {
+  background-color: #f0f0f0;
+  padding: 8px;
+  width: 450px;
+  border-radius: 5px;
 }
 .child-comment__text {
   margin-right: 10px;
@@ -167,4 +180,6 @@
 }
 .child-comment__btns {
   margin-top: 10px;
+  display: flex;
+  align-items: center;
 }

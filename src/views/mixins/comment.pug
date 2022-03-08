@@ -20,13 +20,27 @@ mixin comments(comment)
                     if String(comment.owner._id) === String(loggedInUser._id)
                         form(method="POST", action=`/api/comments/${comment._id}/delete`) 
                             input(type="submit", value="❌").comment-delete
-            each child in comment.childComment
+            each child in comment.childComments
                 div.child-comment__div
-                    div.child-comment__top
-                        span.child-comment__time=child.createdAt
-                    span.child-comment__text=child.text
-                    div.child-comment__btns
-                        span=child.likeOwner.length
+                    a(href=`/users/${child.owner._id}`)
+                        img.child-comment__img(src=`/${child.owner.avatarUrl}`)
+                    div.child-comment__box
+                        div.child-comment__top
+                            a(href=`/users/${child.owner._id}`)
+                                span.comment-name=child.owner.name
+                            span.comment-time=child.createdAt
+                        span.child-comment__text=child.text
+                        div.child-comment__btns
+                            form(method="POST", action=`/api/comments/${child._id}/like`)
+                                button.comment-like__btn 
+                                    if !child.likeOwner.includes(String(loggedInUser._id))
+                                        i.far.fa-heart.comment-like
+                                    else
+                                        i.fas.fa-heart.comment-like
+                            span=child.likeOwner.length
+                            if String(child.owner._id) === String(loggedInUser._id)
+                                form(method="POST", action=`/api/comments/${child._id}/delete`) 
+                                    input(type="submit", value="❌").comment-delete
             div.small-comment__append
                 span.small-comment 답글 달기
                 form.small-comment__form

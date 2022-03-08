@@ -44,7 +44,8 @@ export const watch = async (req, res) => {
   const board = await Board.findById(id).populate("owner");
   const comments = await Comment.find({ board })
     .populate("owner")
-    .populate("childComment");
+    .populate({ path: "childComments", model: "Comment", populate: "owner" });
+  console.log(comments);
   return res.render("watch", { board, comments });
 };
 
@@ -157,23 +158,36 @@ export const createComment = async (req, res) => {
     owner: user,
     board: id
   });
-  board.comments.push(comment);
+  board.comments.push(comment._id);
   board.save();
   return res.sendStatus(201);
 };
 
 export const deleteComment = async (req, res) => {
   const { id } = req.params;
-  const comment = await Comment.findByIdAndDelete(id);
-  const board = await Board.findById(String(comment.board));
-  board.comments = board.comments.filter((value) => String(value) != id);
-  board.save();
+  const comment = await Comment.findById(id);
+  const isExist = comment.parentComment;
+  if (Boolean(isExist)) {
+    // 부모 코멘트가 있음 (대댓글임)
+    const parent = await Comment.findOne({ childComments: id });
+    parent.childComments = parent.childComments.filter(
+      (child) => String(child) != id
+    );
+    parent.save();
+  } else {
+    // 부모 코멘트가 없음 (자신이 부모 코멘트임)
+    await Comment.find({ parentComment: comment }).deleteMany();
+    const board = await Board.findById(String(comment.board));
+    board.comments = board.comments.filter((value) => String(value) != id);
+    board.save();
+  }
+  comment.deleteOne();
+  await Comment.findByIdAndDelete(id);
   return res.redirect(req.headers.referer);
 };
 
 export const likeComment = async (req, res) => {
   const { id } = req.params;
-  console.log(req.params);
   const { user } = req.session;
   const comment = await Comment.findById(id);
   if (!comment.likeOwner.includes(user._id)) {
@@ -195,7 +209,7 @@ export const createSmallComment = async (req, res) => {
     owner: user._id,
     parentComment: comment._id
   });
-  comment.childComment.push(String(smallComment._id));
+  comment.childComments.push(smallComment._id);
   comment.save();
   return res.sendStatus(201);
 };
