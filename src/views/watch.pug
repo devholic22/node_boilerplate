@@ -1,4 +1,5 @@
 include base
+include mixins/comment
 block content
     div.show-contents(data-id=board._id)
         span.show-contents__title=board.title 
@@ -16,13 +17,5 @@ block content
             button.form-button Submit
     ul.comments-lists
         each comment in comments
-            li.comments-lists__list
-                a(href=`/users/${comment.owner._id}`)
-                    img(src=`/${comment.owner.avatarUrl}`).comment-img
-                div.comment-text
-                    div.comment-text__top
-                        a(href=`/users/${comment.owner._id}`)
-                            span.comment-name=comment.owner.name
-                        span.comment-time=comment.createdAt
-                    span.comment-value=comment.text
-    script(src="/js/comment.js") 
+            +comments(comment) 
+        script(src="/js/comment.js") 

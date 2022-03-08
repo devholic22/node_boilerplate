@@ -42,7 +42,9 @@ export const postUpload = async (req, res) => {
 export const watch = async (req, res) => {
   const { id } = req.params;
   const board = await Board.findById(id).populate("owner");
-  const comments = await Comment.find({ board }).populate("owner");
+  const comments = await Comment.find({ board })
+    .populate("owner")
+    .populate("childComment");
   return res.render("watch", { board, comments });
 };
 
@@ -157,5 +159,43 @@ export const createComment = async (req, res) => {
   });
   board.comments.push(comment);
   board.save();
+  return res.sendStatus(201);
+};
+
+export const deleteComment = async (req, res) => {
+  const { id } = req.params;
+  const comment = await Comment.findByIdAndDelete(id);
+  const board = await Board.findById(String(comment.board));
+  board.comments = board.comments.filter((value) => String(value) != id);
+  board.save();
+  return res.redirect(req.headers.referer);
+};
+
+export const likeComment = async (req, res) => {
+  const { id } = req.params;
+  console.log(req.params);
+  const { user } = req.session;
+  const comment = await Comment.findById(id);
+  if (!comment.likeOwner.includes(user._id)) {
+    comment.likeOwner.push(user._id);
+  } else {
+    comment.likeOwner = comment.likeOwner.filter((owner) => owner != user._id);
+  }
+  comment.save();
+  return res.redirect(req.headers.referer);
+};
+
+export const createSmallComment = async (req, res) => {
+  const { id } = req.params;
+  const { value } = req.body;
+  const { user } = req.session;
+  const comment = await Comment.findById(id);
+  const smallComment = await Comment.create({
+    text: value,
+    owner: user._id,
+    parentComment: comment._id
+  });
+  comment.childComment.push(String(smallComment._id));
+  comment.save();
   return res.sendStatus(201);
 };
