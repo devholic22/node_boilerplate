@@ -45,8 +45,9 @@ export const watch = async (req, res) => {
   const comments = await Comment.find({ board })
     .populate("owner")
     .populate({ path: "childComments", model: "Comment", populate: "owner" });
-  console.log(comments);
-  return res.render("watch", { board, comments });
+  let sum = comments.length;
+  comments.forEach((comment) => (sum += comment.childComments.length));
+  return res.render("watch", { board, comments, sum });
 };
 
 export const deleteBoard = async (req, res) => {

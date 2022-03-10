@@ -12,6 +12,9 @@ block content
             div.show-contents__btns
                 a(href=`${board._id}/edit`) ✂️ Edit contents
                 a(href=`${board._id}/delete`) 🗑 Delete contents
+        div.msg-info
+            i.far.fa-comments.msg-logo
+            span=sum
         form.show-contents__comment-form
             input(type="text", placeholder="Write a comment...", required).form-text
             button.form-button Submit

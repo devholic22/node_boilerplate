@@ -72,6 +72,9 @@
   background-color: white;
   margin-bottom: 20px;
 }
+.comments-lists__list a {
+  height: 40px;
+}
 .comment-img {
   width: 40px;
   height: 40px;
@@ -125,6 +128,7 @@
 }
 .small-comment__append {
   margin-top: 10px;
+  cursor: pointer;
 }
 .child-comment__top {
   margin-bottom: 5px;
@@ -182,4 +186,11 @@
   margin-top: 10px;
   display: flex;
   align-items: center;
+}
+.msg-info {
+  margin-top: 5px;
+  font-size: 20px;
+}
+.msg-logo {
+  margin-right: 10px;
 }
