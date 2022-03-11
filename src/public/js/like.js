@@ -1,4 +1,4 @@
-const btns = document.querySelectorAll(".board-box__like");
+const btns = document.querySelectorAll(".board__info--btns--btn span");
 const spans = document.querySelectorAll(".modal-close");
 
 const btnModalClick = (event) => {

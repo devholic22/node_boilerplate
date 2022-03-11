@@ -1,50 +1,50 @@
 mixin boards(board)
-    div.board-box
-        span.board-box__title
-            a(href=`/boards/${board._id}`)=board.title
-        span.board-box__time=board.createdAt
-        span.board-box__content=board.content
-        div.board-box__bottom
+    div.board__list--board
+        div.board__contents
+            span.board__contents--title
+                a(href=`/boards/${board._id}`)=board.title
+            span.board__contents--time=board.createdAt
+            span.board-contents--content #{board.content} asdasdsadsadsadsadsadsadsadasdsadasasdsadsadasdsadsadsadsadsadsadsadasdasdsadasdasd
+        div.board__info
             a(href=`/users/${board.owner._id}`) 
-                img(src=`/${board.owner.avatarUrl}`).board-box__img
-                span.board-box__owner Writed by #{board.owner.name}
-            div.board-box__like-box
-                if loggedInUser
-                    form(method="POST", action=`/boards/${board._id}/like`).board-box__like-form
-                        if loggedInUser.likes.includes(String(board._id))
-                            button 
-                                i.fas.fa-heart
-                        else
-                            button 
-                                i.far.fa-heart
-                    button.board-box__like=board.likeOwner.length
-                else
-                    div.board-box__like-form
+                img(src=`/${board.owner.avatarUrl}`).board__info--img
+                span.board__info--name=board.owner.name
+            div.board__info--btns
+                div.board__info--btns--btn
+                    if loggedInUser
+                        form(method="POST", action=`/boards/${board._id}/like`)
+                            if loggedInUser.likes.includes(String(board._id))
+                                button 
+                                    i.fas.fa-heart
+                            else
+                                button 
+                                    i.far.fa-heart
+                        span=board.likeOwner.length
+                    else
                         button
                             i.far.fa-heart
-                    span.board-box__like=board.likeOwner.length
-            div.board-box__like-box
-                if loggedInUser
-                    form(method="POST", action=`/boards/${board._id}/scrap`).board-box__like-form
-                        if loggedInUser.scraps.includes(String(board._id))
-                            button 
-                                i.fas.fa-bookmark
-                        else
-                            button 
-                                i.far.fa-bookmark
-                    span.board-box__bookmark=board.scrapOwner.length
-                else
-                    div.board-box__like-form
+                        span=board.likeOwner.length
+                div.board__info--btns--btn
+                    if loggedInUser
+                        form(method="POST", action=`/boards/${board._id}/scrap`)
+                            if loggedInUser.scraps.includes(String(board._id))
+                                button 
+                                    i.fas.fa-bookmark
+                            else
+                                button 
+                                    i.far.fa-bookmark
+                        span=board.scrapOwner.length
+                    else
                         button
                             i.far.fa-bookmark
-                    span.board-box__bookmark=board.scrapOwner.length
-            div.like-modal
-                div.like-modal__content
-                    span.modal-title like peoples
-                    span.modal-close &times;
-                    ul.like-modal__lists 
-                        each likeOwner in board.likeOwner
-                            a(href=`/users/${likeOwner._id}`)
-                                div.like-modal__list
-                                    img(src=`/${likeOwner.avatarUrl}`).likeOwner__img
-                                    li=likeOwner.name
+                        span=board.scrapOwner.length
+                    div.like-modal
+                        div.like-modal__content
+                            span.modal-title like peoples
+                            span.modal-close &times;
+                        ul.like-modal__lists 
+                            each likeOwner in board.likeOwner
+                                a(href=`/users/${likeOwner._id}`)
+                                    div.like-modal__list
+                                        img(src=`/${likeOwner.avatarUrl}`).likeOwner__img
+                                        li=likeOwner.name

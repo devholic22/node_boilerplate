@@ -1,58 +1,79 @@
-.board-box {
-  margin-top: 10px;
-  background-color: darkgray;
+.board__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+}
+
+.board__list--board {
+  border: 1px solid #dbdbdb;
+  border-radius: 5px;
+  background-color: white;
+  padding: 8px;
+  margin: 0px 10px;
+  margin-bottom: 15px;
+  width: 460px;
+  height: 300px;
+  position: relative;
+}
+.board__contents {
   display: flex;
   flex-direction: column;
-  padding-top: 5px;
-  border-radius: 5px;
-}
-.board-box__title {
-  font-size: 30px;
-  margin-bottom: 10px;
-  margin-left: 5px;
-}
-.board-box__time {
-  margin-bottom: 10px;
-  margin-left: 5px;
-}
-.board-box__content {
-  height: 100px;
-  margin-left: 5px;
-}
-.board-box__bottom {
-  background-color: gray;
-  display: flex;
-}
-.board-box__bottom a {
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
   padding: 5px;
-  width: 90%;
 }
-.board-box__like-box,
-.board-box__like-box button {
-  background-color: aliceblue;
+.board__contents--title {
+  font-size: 25px;
 }
-.board-box__like-box {
+.board__contents--time {
+  margin: 10px 0px;
+  color: gray;
+}
+.board-contents--content {
+  overflow-wrap: break-word;
+}
+.board__info {
+  background-color: #f0f0f0;
+  padding: 5px;
+  box-sizing: border-box;
+  position: absolute;
+  width: 100%;
+  height: 60px;
+  left: 0px;
+  bottom: 0px;
+  border-top: 1px solid #dbdbdb;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.board__info a {
   display: flex;
   align-items: center;
-  height: 100%;
-  margin-top: 10px;
-  margin-right: 5px;
-  padding: 5px 10px;
-  border-radius: 10px;
 }
-.board-box__like-box button {
-  font-size: 17px;
-}
-.board-box__bookmark {
-  font-size: 17px;
-  padding: 1px 6px;
-}
-.board-box__img {
+.board__info--img {
   width: 40px;
   height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.board__info--btns {
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+}
+.board__info--btns--btn {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
   margin-right: 10px;
   border-radius: 5px;
+}
+.board__info--btns--btn form button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 20px;
+  margin-right: 5px;
+}
+.board__info--btns--btn span {
+  cursor: pointer;
 }
