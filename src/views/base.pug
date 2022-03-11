@@ -7,22 +7,24 @@ html(lang="en")
         link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css")
         link(rel="stylesheet", href="/css/style.css")
         title Boilerplate
-    body 
-        span.header-title 
-            a(href="/") Boilerplate
-        ul.header-lists 
-            li.header-lists__list 
-                a(href="") Search
-            if !loggedIn
-                li.header-lists__list 
-                    a(href="/login") Log in
-                li.header-lists__list 
-                    a(href="/join") Sign up
-            else
-                li.header-lists__list
-                    a(href="/boards/upload") Write Content
-                a(href=`/users/${loggedInUser._id}`)
-                    img(src=`/${loggedInUser.avatarUrl}`).userImg
-                li.header-lists__list 
-                    a(href="/logout") Log out
+    body
+        header.header 
+            span.header__title 
+                a(href="/") 📚 Boilerplate
+            ul.header__btns 
+                li.header__btns--btn
+                    a(href="") Search
+                if !loggedIn
+                    li.header__btns--btn 
+                        a(href="/login") Log in
+                    li.header__btns--btn 
+                        a(href="/join") Sign up
+                else
+                    li.header__btns--btn
+                        a(href="/boards/upload") Write Content
+                    li.header__btns--btn--img
+                        a(href=`/users/${loggedInUser._id}`)
+                            img(src=`/${loggedInUser.avatarUrl}`).header__btns--img
+                    li.header__btns--btn 
+                        a(href="/logout") Log out
         block content

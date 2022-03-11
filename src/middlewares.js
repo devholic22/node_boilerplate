@@ -1,5 +1,6 @@
 import multer from "multer";
 import User from "./models/User";
+import Board from "./models/Board";
 
 export const logInMiddleware = (req, res, next) => {
   res.locals.loggedIn = Boolean(req.session.loggedIn);
@@ -36,6 +37,19 @@ export const isUserIdExist = async (req, res, next) => {
     const { id } = req.params;
     const user = await User.findById(id);
     if (!user) {
+      return res.redirect("/");
+    }
+    next();
+  } catch (error) {
+    return res.redirect("/");
+  }
+};
+
+export const isBoardIdExist = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const board = await Board.findById(id);
+    if (!board) {
       return res.redirect("/");
     }
     next();

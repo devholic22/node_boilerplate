@@ -1,5 +1,5 @@
 import express from "express";
-import { onlyLoggedIn } from "../middlewares";
+import { onlyLoggedIn, isBoardIdExist } from "../middlewares";
 import {
   deleteBoard,
   getUpload,
@@ -17,7 +17,7 @@ boardRouter
   .route("/upload")
   .get(onlyLoggedIn, getUpload)
   .post(onlyLoggedIn, postUpload);
-boardRouter.get("/:id", watch);
+boardRouter.get("/:id", isBoardIdExist, watch);
 boardRouter
   .route("/:id/edit")
   .get(onlyLoggedIn, getEdit)

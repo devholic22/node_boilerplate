@@ -16,9 +16,11 @@
 @import "./blocked-user.css";
 @import "./follow-list.css";
 
-body {
-  padding: 10px;
+html {
+  background-color: white;
+  padding-top: 100px;
 }
+
 a,
 a:visited,
 a:hover {
