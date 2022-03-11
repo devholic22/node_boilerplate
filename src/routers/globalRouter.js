@@ -27,6 +27,6 @@ globalRouter
 globalRouter.get("/delete-user", deleteUser);
 globalRouter
   .route("/change-password")
-  .get(getChangePassword)
-  .post(postChangePassword);
+  .get(onlyLoggedIn, getChangePassword)
+  .post(onlyLoggedIn, postChangePassword);
 export default globalRouter;
