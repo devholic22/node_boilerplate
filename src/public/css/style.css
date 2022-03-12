@@ -1,10 +1,13 @@
 @import "./reset.css";
+@import "./variables.css";
 
 /* components */
 @import "./components/header.css";
+@import "./components/board.css";
+@import "./components/anon-form.css";
+
 @import "./components/userForm.css";
 @import "./components/boardForm.css";
-@import "./components/board.css";
 
 @import "./user-board.css";
 @import "./show-contents.css";

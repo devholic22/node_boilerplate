@@ -4,7 +4,7 @@ mixin boards(board)
             span.board__contents--title
                 a(href=`/boards/${board._id}`)=board.title
             span.board__contents--time=board.createdAt
-            span.board-contents--content #{board.content} asdasdsadsadsadsadsadsadsadasdsadasasdsadsadasdsadsadsadsadsadsadsadasdasdsadasdasd
+            span.board-contents--content=board.content
         div.board__info
             a(href=`/users/${board.owner._id}`) 
                 img(src=`/${board.owner.avatarUrl}`).board__info--img

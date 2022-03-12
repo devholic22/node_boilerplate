@@ -1,10 +1,10 @@
 include base
 block content 
-    div.user-container
-        span.user-contaier__title Log In
-        form(method="POST").user-container__form
-            input(type="email" placeholder="Email" name="email" required).user-container__input
-            input(type="password" placeholder="Password" name="password" required).user-container__input
-            button.user-container__button Log In!
+    div.anon__container
+        span.anon__container--title Log In
+        form(method="POST")
+            input(type="email" placeholder="Email" name="email" required).anon__container--input
+            input(type="password" placeholder="Password" name="password" required).anon__container--input
+            button.anon__container--btn Log In!
         if errorMsg
-            span.user-container__error=errorMsg
+            span.anon__container--error=errorMsg

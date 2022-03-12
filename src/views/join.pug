@@ -1,12 +1,12 @@
 include base
 block content 
-    div.user-container
-        span.user-contaier__title Join
-        form(method="POST").user-container__form
-            input(type="text" placeholder="Name" name="name" required).user-container__input
-            input(type="email" placeholder="Email" name="email" required).user-container__input
-            input(type="password" placeholder="Password" name="password" required).user-container__input
-            input(type="password" placeholder="Confirm Password" name="password2" required).user-container__input
-            button.user-container__button Join
+    div.anon__container
+        span.anon__container--title Join
+        form(method="POST")
+            input(type="text" placeholder="Name" name="name" required).anon__container--input
+            input(type="email" placeholder="Email" name="email" required).anon__container--input
+            input(type="password" placeholder="Password" name="password" required).anon__container--input
+            input(type="password" placeholder="Confirm Password" name="password2" required).anon__container--input
+            button.anon__container--btn Join
         if errorMsg
-            span.user-container__error=errorMsg
+            span.anon__container--error=errorMsg
