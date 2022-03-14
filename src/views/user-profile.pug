@@ -1,19 +1,18 @@
 include base
 block content
-    div.user-container
-       div.user-container__profile
-        div.user-container__imgbox
-            img.user-container__img(src=`/${user.avatarUrl}`)
-        div.user-container__info
-            div.user-container__namebox
-                span.user-container__strong Name
-                span.user-container__small=user.name
-            div.user-container__namebox
-                span.user-container__strong Email
-                span.user-container__small=user.email
-            div.user-boards__info
-                span.user-follow__number follow: #{user.followUsers.length}
-                span.user-following__number following: #{user.followingUsers.length}
+    div.profile__box
+       div.profile__box--info
+        div
+            img.profile__box--info--img(src=`/${user.avatarUrl}`)
+        div.profile__box--info--text
+            span.profile__box--info--text--name=user.name
+            if loggedInUser && user._id == loggedInUser._id
+                span.profile__box--info--text--btn Edit profile
+            div
+                span.profile__box--info--text--number boards #{user.boards.length}
+                span.profile__box--info--text--number follow #{user.followUsers.length}
+                span.profile__box--info--text--number following #{user.followingUsers.length}
+            span=user.email
        if loggedInUser
         if user._id == loggedInUser._id
             div.user-container-btns

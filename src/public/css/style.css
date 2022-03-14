@@ -6,6 +6,9 @@
 @import "./components/board.css";
 @import "./components/anon-form.css";
 
+/* screens */
+@import "./screens/profile.css";
+
 @import "./components/userForm.css";
 @import "./components/boardForm.css";
 
