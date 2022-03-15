@@ -1,24 +1,25 @@
 include base
 include mixins/comment
 block content
-    div.show-contents(data-id=board._id)
-        span.show-contents__title=board.title 
-        div.show-contents__profile
+    div.watch(data-id=board._id)
+        span.watch__title=board.title
+        span.watch__date=board.createdAt
+        div.watch__owner
             a(href=`/users/${board.owner._id}`)
-                img.show-contents__img(src=`/${board.owner.avatarUrl}`)
-                span.show-contents__owner=board.owner.name
-        span.show-contents__content=board.content
+                img.watch__owner--img(src=`/${board.owner.avatarUrl}`)
+                span.watch__owner--name=board.owner.name
+        span.watch__contents=board.content
         if loggedInUser && board.owner._id == loggedInUser._id
-            div.show-contents__btns
+            div.watch__btns
                 a(href=`${board._id}/edit`) ✂️ Edit contents
                 a(href=`${board._id}/delete`) 🗑 Delete contents
-        div.msg-info
-            i.far.fa-comments.msg-logo
-            span=sum
-        form.show-contents__comment-form
-            input(type="text", placeholder="Write a comment...", required).form-text
-            button.form-button Submit
-    ul.comments-lists
+        div.watch__contents--else
+            i.far.fa-comments
+            span.watch__contents--else--number=sum
+        form.watch__comment--form
+            input(type="text", placeholder="Write a comment...", required).watch__comment--input
+            button.watch__comment--button Submit
+    ul.comments__lists
         each comment in comments
             +comments(comment) 
         script(src="/js/comment.js") 

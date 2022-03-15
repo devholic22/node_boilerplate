@@ -1,17 +1,17 @@
 mixin comments(comment)
-    li.comments-lists__list(data-id=comment._id)
+    li.comments__lists--list(data-id=comment._id)
         a(href=`/users/${comment.owner._id}`)
-            img(src=`/${comment.owner.avatarUrl}`).comment-img
-        div.comment-box
-            div.comment-text
-                div.comment-text__top
+            img(src=`/${comment.owner.avatarUrl}`)
+        div.comment__box
+            div.comment__box--text
+                div.comment__box--text--info
                     a(href=`/users/${comment.owner._id}`)
-                        span.comment-name=comment.owner.name
-                    span.comment-time=comment.createdAt
-                span.comment-value=comment.text
-                div.comment-btns
+                        span.comment__box--text--info--name=comment.owner.name
+                    span.comment__box--text--info--date=comment.createdAt
+                span.comment__box--text--value=comment.text
+                div.comment__box--btns
                     form(method="POST", action=`/api/comments/${comment._id}/like`)
-                        button.comment-like__btn 
+                        button.comment__box--btns--like
                             if !comment.likeOwner.includes(String(loggedInUser._id))
                                 i.far.fa-heart.comment-like
                             else
@@ -19,20 +19,20 @@ mixin comments(comment)
                     span=comment.likeOwner.length
                     if String(comment.owner._id) === String(loggedInUser._id)
                         form(method="POST", action=`/api/comments/${comment._id}/delete`) 
-                            input(type="submit", value="❌").comment-delete
+                            input(type="submit", value="❌").comment__box--btns--delete
             each child in comment.childComments
-                div.child-comment__div
+                div.comment__box--child
                     a(href=`/users/${child.owner._id}`)
-                        img.child-comment__img(src=`/${child.owner.avatarUrl}`)
-                    div.child-comment__box
-                        div.child-comment__top
+                        img.comment__box--child--img(src=`/${child.owner.avatarUrl}`)
+                    div.comment__box--child--box
+                        div.comment__box--child--info
                             a(href=`/users/${child.owner._id}`)
-                                span.comment-name=child.owner.name
-                            span.comment-time=child.createdAt
-                        span.child-comment__text=child.text
-                        div.child-comment__btns
+                                span.comment__box--child--info--name=child.owner.name
+                            span.comment__box--child--info--date=child.createdAt
+                        span.comment__box--child--value=child.text
+                        div.comment__box--btns
                             form(method="POST", action=`/api/comments/${child._id}/like`)
-                                button.comment-like__btn 
+                                button.comment__box--btns--like
                                     if !child.likeOwner.includes(String(loggedInUser._id))
                                         i.far.fa-heart.comment-like
                                     else
@@ -40,7 +40,8 @@ mixin comments(comment)
                             span=child.likeOwner.length
                             if String(child.owner._id) === String(loggedInUser._id)
                                 form(method="POST", action=`/api/comments/${child._id}/delete`) 
-                                    input(type="submit", value="❌").comment-delete
+                                    input(type="submit", value="❌").comment__box--btns--delete
+                
             div.small-comment__append
                 span.small-comment 답글 달기
                 form.small-comment__form

@@ -6,15 +6,11 @@
 @import "./components/board.css";
 @import "./components/anon-form.css";
 @import "./components/board-form.css";
+@import "./components/comment.css";
 
 /* screens */
 @import "./screens/profile.css";
-
-@import "./components/userForm.css";
-@import "./components/boardForm.css";
-
-@import "./user-board.css";
-@import "./show-contents.css";
+@import "./screens/watch.css";
 
 @import "./like-modal.css";
 @import "./follow-modal.css";

@@ -1,0 +1,67 @@
+.comments__lists {
+  margin: 0px 60px;
+  display: flex;
+  justify-content: center;
+}
+.comments__lists--list,
+.comment__box--child {
+  display: flex;
+}
+.comment__box--child {
+  justify-content: flex-end;
+}
+.comments__lists--list a {
+  height: 40px;
+}
+.comments__lists--list img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.comment__box {
+  padding: 8px;
+}
+.comment__box--text {
+  width: 400px;
+  word-break: break-all;
+}
+.comment__box--text,
+.comment__box--child--box {
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+.comment__box--text--info--name,
+.comment__box--child--info--name {
+  margin-right: 5px;
+}
+.comment__box--text--info--date,
+.comment__box--child--info--date {
+  font-size: 12px;
+  color: gray;
+}
+.comment__box--text--value,
+.comment__box--child--value {
+  display: flex;
+  margin: 5px 0px;
+}
+.comment__box--btns {
+  display: flex;
+  align-items: center;
+}
+.comment__box--btns--like {
+  border: none;
+  cursor: pointer;
+  font-size: 19px;
+}
+.comment__box--btns--delete {
+  border: none;
+  cursor: pointer;
+  font-size: 19px;
+}
+.comment__box--child--box {
+  width: 300px;
+  word-break: break-all;
+}
