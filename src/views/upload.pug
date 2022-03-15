@@ -1,8 +1,8 @@
 include base
 block content
-    div.board-container
-        span.board-container__title ✍️ Write Content
-        form(method="POST").board-container__form
-            input(type="text", placeholder="Title", name="title", required).board-container__input 
-            textarea(placeholder="Contents", name="content", cols="30", rows="10").board-container__textarea
-            button.board-container__button Write Contents
+    div.board__form
+        span.board__form--title ✍️ Write Content
+        form(method="POST").board__form--form
+            input(type="text", placeholder="Title", name="title", required).board__form--form--input
+            textarea(placeholder="Contents", name="content", cols="30", rows="10").board__form--form--textarea
+            button.board__form--form--btn Write Contents

@@ -5,6 +5,7 @@
 @import "./components/header.css";
 @import "./components/board.css";
 @import "./components/anon-form.css";
+@import "./components/board-form.css";
 
 /* screens */
 @import "./screens/profile.css";
