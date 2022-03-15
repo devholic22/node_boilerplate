@@ -1,4 +1,5 @@
 include base
+include mixins/board
 block content
     div.profile__box
        div.profile__box--info
@@ -7,7 +8,8 @@ block content
         div.profile__box--info--text
             span.profile__box--info--text--name=user.name
             if loggedInUser && user._id == loggedInUser._id
-                span.profile__box--info--text--btn Edit profile
+                span.profile__box--info--text--btn 
+                    a(href="/edit-profile") Edit profile
             div
                 span.profile__box--info--text--number boards #{user.boards.length}
                 span.profile__box--info--text--number follow #{user.followUsers.length}
@@ -15,21 +17,19 @@ block content
             span=user.email
        if loggedInUser
         if user._id == loggedInUser._id
-            div.user-container-btns
-                span.user-container__edit
+            div.profile__box--btns
+                span.profile__box--btns--btn
                     a(href="/change-password") Change password
-                span.user-container__edit
-                    a(href="/edit-profile") Edit Profile
-                span.user-container__scrap
+                span.profile__box--btns--btn
                     a(href=`/users/${user._id}/scraps`) My Scrap
-                span.user-container__blocked-user
+                span.profile__box--btns--btn
                     a(href=`/users/${user._id}/block-users`) Blocked Users
-                div.user-container__follow-list__user
+                div.profile__box--btns--div
                     a(href=`/users/${user._id}/follow-list`) Follow request users
                     if user.followList.length >= 1
                         span.follow-list__number=user.followList.length
         else
-            div.user-container-btns
+            div.profile__box--btns--anon
                 if !loggedInUser.blockUsers.includes(String(user._id))
                     if user.needFollowAsk
                         if user.followList.find(x => String(x._id) === String(loggedInUser._id))
@@ -56,14 +56,18 @@ block content
                 else
                     form(method="POST", action=`/users/${user._id}/block`).user-container__block
                         button Block Clear
-       div.user-boards
-        span.user-boards__title My Contents
+    div.profile__box--boards
         if loggedInUser
             if user._id == loggedInUser._id
-                ul.user-boards__lists
-                    each board in user.boards
-                        li.user-boards__list 
-                            a(href=`/boards/${board._id}`)=board.title
+                each board in user.boards
+                    div.profile__box--boards--board
+                        a(href=`/boards/${board._id}`)
+                            span=board.title
+                        div.profile__box--boards--board--numbers
+                            i.far.fa-heart
+                            span=board.likeOwner.length
+                            i.far.fa-bookmark
+                            span=board.scrapOwner.length
             else
                 if user.protection
                     if user.followUsers.find(x => String(x._id) === String(loggedInUser._id))
@@ -72,7 +76,7 @@ block content
                                 li.user-boards__list 
                                     a(href=`/boards/${board._id}`)=board.title
                     else
-                        i.fa.fa-lock
+                        img(src="/assets/lost.svg")
                         span.lock-message You need to follow first
                 else
                     ul.user-boards__lists
@@ -81,7 +85,7 @@ block content
                                 a(href=`/boards/${board._id}`)=board.title
         else
             if Boolean(user.protection) === true
-                i.fa.fa-lock
+                img(src="/assets/lost.svg")
                 span.lock-message You need to follow first
             else 
                 ul.user-boards__lists

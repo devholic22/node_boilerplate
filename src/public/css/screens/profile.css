@@ -27,10 +27,95 @@
   font-size: 30px;
   margin-bottom: 20px;
 }
+.profile__box--info--text--btn {
+  margin-bottom: 15px;
+}
+.profile__box--info--text--btn a {
+  background-color: #f0f0f0;
+  padding: 5px;
+  border-radius: 5px;
+}
 .profile__box--info--text div {
   margin-bottom: 10px;
 }
 .profile__box--info--text--number {
   margin-right: 20px;
   font-weight: 600;
+}
+.profile__box--btns {
+  display: flex;
+}
+.profile__box--btns--btn,
+.profile__box--btns--div {
+  background-color: #f0f0f0;
+  padding: 5px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+.profile__box--btns--div {
+  position: relative;
+}
+.follow-list__number {
+  background-color: tomato;
+  color: white;
+  font-size: 15px;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: noti-move 1s ease-in 0s infinite;
+}
+
+@keyframes noti-move {
+  0% {
+    top: -8px;
+  }
+  50% {
+    top: -5px;
+  }
+  100% {
+    top: -8px;
+  }
+}
+.profile__box--btns--anon {
+  display: flex;
+}
+.profile__box--btns--anon form button {
+  border: none;
+  border-radius: 5px;
+  margin-right: 10px;
+  padding: 5px;
+  cursor: pointer;
+}
+.profile__box--boards {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0px 50px;
+  margin-top: 30px;
+  padding: 20px 0px;
+  border: var(--default-border);
+  border-radius: 5px;
+}
+.profile__box--boards img {
+  width: 250px;
+  height: 250px;
+}
+.profile__box--boards--board {
+  display: flex;
+  justify-content: space-between;
+  background-color: antiquewhite;
+  border-radius: 5px;
+  width: 300px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+.profile__box--boards--board--numbers i,
+.profile__box--boards--board--numbers span {
+  margin-left: 5px;
 }

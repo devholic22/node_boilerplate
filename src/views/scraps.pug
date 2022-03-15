@@ -1,8 +1,9 @@
 include base
 include mixins/board
 block content
-    each board in boards
-        +boards(board)
-    else
-        span.nothing 🙅 Sorry nothing found.
+    div.board__list
+        each board in boards
+            +boards(board)
+        else
+            span.nothing 🙅 Sorry nothing found.
     script(src="/js/like.js") 
