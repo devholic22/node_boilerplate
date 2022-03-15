@@ -31,7 +31,18 @@
 }
 .watch__contents {
   word-break: break-all;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
+}
+.watch__btns {
+  display: flex;
+  flex-direction: column;
+}
+.watch__btns a {
+  margin-bottom: 5px;
+  background-color: white;
+  width: 130px;
+  padding: 5px;
+  border-radius: 5px;
 }
 .watch__contents--else--number {
   margin-left: 5px;

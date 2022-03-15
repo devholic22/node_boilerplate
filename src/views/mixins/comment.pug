@@ -43,8 +43,8 @@ mixin comments(comment)
                                     input(type="submit", value="❌").comment__box--btns--delete
                 
             div.small-comment__append
-                span.small-comment 답글 달기
-                form.small-comment__form
-                    input.small-comment__input(type="text", placeholder="Write a comment...", required)
-                    button.small-comment__submit Submit
-                    span.small-comment__delete ❌
+                span.small-comment__append--title 답글 달기
+                form.small-comment__append--form
+                    input(type="text", placeholder="Write a comment...", required)
+                    button Submit
+                    span ❌

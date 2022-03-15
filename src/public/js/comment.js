@@ -1,10 +1,10 @@
-const content = document.querySelector(".show-contents");
-const form = document.querySelector(".show-contents__comment-form");
-const text = document.querySelector(".form-text");
-const btn = document.querySelector(".form-button");
+const content = document.querySelector(".watch");
+const form = document.querySelector(".watch__comment--form");
+const text = document.querySelector(".watch__comment--input");
+const btn = document.querySelector(".watch__comment--button");
 
-const smallLink = document.querySelectorAll(".small-comment");
-const smallForm = document.querySelectorAll(".small-comment__form");
+const smallLink = document.querySelectorAll(".small-comment__append--title");
+const smallForm = document.querySelectorAll(".small-comment__append--form");
 
 for (const form of smallForm) {
   form.style.display = "none";
@@ -47,13 +47,13 @@ const handleSmallClick = (event) => {
   const link = event.target;
   link.style.display = "none";
   const form = event.target.parentElement.parentElement.querySelector(
-    ".small-comment__form"
+    ".small-comment__append--form"
   );
   form.style.display = "";
   form.addEventListener("submit", handleSmallSubmit);
 
   const deleteBtn = event.target.parentElement.parentElement.querySelector(
-    ".small-comment__delete"
+    ".small-comment__append--form span"
   );
   deleteBtn.addEventListener("click", handleSmallDeleteClick);
 };
@@ -67,7 +67,8 @@ const handleSmallDeleteClick = (event) => {
   event.preventDefault();
   const form = event.target.parentElement;
   form.style.display = "none";
-  const showBtn = form.parentElement.querySelector(".small-comment");
-  console.log(showBtn);
+  const showBtn = form.parentElement.querySelector(
+    ".small-comment__append--title"
+  );
   showBtn.style.display = "";
 };

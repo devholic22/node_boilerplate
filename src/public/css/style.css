@@ -16,9 +16,6 @@
 @import "./follow-modal.css";
 @import "./following-modal.css";
 
-@import "./blocked-user.css";
-@import "./follow-list.css";
-
 html {
   background-color: white;
   padding-top: 100px;
