@@ -10,14 +10,18 @@ mixin comments(comment)
                     span.comment__box--text--info--date=comment.createdAt
                 span.comment__box--text--value=comment.text
                 div.comment__box--btns
-                    form(method="POST", action=`/api/comments/${comment._id}/like`)
+                    if loggedIn
+                        form(method="POST", action=`/api/comments/${comment._id}/like`)
+                            button.comment__box--btns--like
+                                if comment.likeOwner.includes(String(loggedInUser._id))
+                                    i.fas.fa-heart.comment-like
+                                else
+                                    i.far.fa-heart.comment-like
+                    else
                         button.comment__box--btns--like
-                            if !comment.likeOwner.includes(String(loggedInUser._id))
-                                i.far.fa-heart.comment-like
-                            else
-                                i.fas.fa-heart.comment-like
+                            i.far.fa-heart.comment-like
                     span=comment.likeOwner.length
-                    if String(comment.owner._id) === String(loggedInUser._id)
+                    if loggedIn && String(comment.owner._id) === String(loggedInUser._id)
                         form(method="POST", action=`/api/comments/${comment._id}/delete`) 
                             input(type="submit", value="❌").comment__box--btns--delete
             each child in comment.childComments
@@ -31,20 +35,24 @@ mixin comments(comment)
                             span.comment__box--child--info--date=child.createdAt
                         span.comment__box--child--value=child.text
                         div.comment__box--btns
-                            form(method="POST", action=`/api/comments/${child._id}/like`)
+                            if loggedIn
+                                form(method="POST", action=`/api/comments/${child._id}/like`)
+                                    button.comment__box--btns--like
+                                        if !child.likeOwner.includes(String(loggedInUser._id))
+                                            i.far.fa-heart.comment-like
+                                        else
+                                            i.fas.fa-heart.comment-like
+                            else
                                 button.comment__box--btns--like
-                                    if !child.likeOwner.includes(String(loggedInUser._id))
-                                        i.far.fa-heart.comment-like
-                                    else
-                                        i.fas.fa-heart.comment-like
+                                    i.far.fa-heart.comment-like
                             span=child.likeOwner.length
-                            if String(child.owner._id) === String(loggedInUser._id)
+                            if loggedIn && String(child.owner._id) === String(loggedInUser._id)
                                 form(method="POST", action=`/api/comments/${child._id}/delete`) 
                                     input(type="submit", value="❌").comment__box--btns--delete
-                
-            div.small-comment__append
-                span.small-comment__append--title 답글 달기
-                form.small-comment__append--form
-                    input(type="text", placeholder="Write a comment...", required)
-                    button Submit
-                    span ❌
+            if loggedIn    
+                div.small-comment__append
+                    span.small-comment__append--title 답글 달기
+                    form.small-comment__append--form
+                        input(type="text", placeholder="Write a comment...", required)
+                        button Submit
+                        span ❌

@@ -191,6 +191,9 @@ export const likeComment = async (req, res) => {
   const { id } = req.params;
   const { user } = req.session;
   const comment = await Comment.findById(id);
+  if (!user) {
+    return res.redirect("/");
+  }
   if (!comment.likeOwner.includes(user._id)) {
     comment.likeOwner.push(user._id);
   } else {
