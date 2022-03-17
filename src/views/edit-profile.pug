@@ -1,50 +1,50 @@
 include base
 block content
-    div.user-container
-       div.user-container__profile
-        div.user-container__imgbox
-            img.user-container__img(src=user.avatarUrl)
-            form(method="POST", enctype="multipart/form-data").change-avatar
+    div.edit-profile
+       div.edit-profile__form
+        div.edit-profile__form--img
+            img(src=user.avatarUrl)
+            form.edit-profile__form--img--form(method="POST", enctype="multipart/form-data")
                 input(type="file", name="avatar", accept="image/png, img/jpeg")
-                button.user-container__edit Save
-        div.user-container__info
-            form.user-container__form(method="POST")
-                span.user-container__strong Name
-                input.user-container__input(type="text", placeholder="Name", name="name", value=user.name, required)
-                span.user-container__strong Email
-                input.user-container__input(type="email", placeholder="Email", name="email", value=user.email, required)
-                span.user-container__strong Protection (See only follow users)
-                label.radio-inline
-                    div.radio-inline__box
+                button.edit-profile__btn Save
+        div.edit-profile__form--text
+            form.edit-profile__form--text--form(method="POST")
+                span Name
+                input(type="text", placeholder="Name", name="name", value=user.name, required)
+                span Email
+                input(type="email", placeholder="Email", name="email", value=user.email, required)
+                span Protection (See only follow users)
+                label.edit-profile__form--text--label
+                    div
                         if Boolean(user.protection)
-                            input(type='radio', name='protection', value="true", checked).radio-text
+                            input(type='radio', name='protection', value="true", checked)
                             | Yes
                         else
-                            input(type='radio', name='protection', value="true").radio-text
+                            input(type='radio', name='protection', value="true")
                             | Yes
-                    div.radio-inline__box
+                    div
                         if Boolean(user.protection)
-                            input(type='radio', name='protection', value="false").radio-text
+                            input(type='radio', name='protection', value="false")
                             | No
                         else
-                            input(type='radio', name='protection', value="false", checked).radio-text
+                            input(type='radio', name='protection', value="false", checked)
                             | No
-                span.user-container__strong Need check when user follow want
-                label.radio-inline
-                    div.radio-inline__box
+                span Need check when user follow want
+                label.edit-profile__form--text--label
+                    div
                         if Boolean(user.needFollowAsk)
-                            input(type='radio', name='needFollowAsk', value="true", checked).radio-text
+                            input(type='radio', name='needFollowAsk', value="true", checked)
                             | Yes
                         else
-                            input(type='radio', name='needFollowAsk', value="true").radio-text
+                            input(type='radio', name='needFollowAsk', value="true")
                             | Yes
-                    div.radio-inline__box
+                    div
                         if Boolean(user.needFollowAsk)
-                            input(type='radio', name='needFollowAsk', value="false").radio-text
+                            input(type='radio', name='needFollowAsk', value="false")
                             | No
                         else
-                            input(type='radio', name='needFollowAsk', value="false", checked).radio-text
+                            input(type='radio', name='needFollowAsk', value="false", checked)
                             | No
-                button.user-container__edit Save
-            span.user-container__removeBtn 
+                button.edit-profile__btn Save
+            span.edit-profile__btn--delete
                 a(href="/delete-user") Delete User

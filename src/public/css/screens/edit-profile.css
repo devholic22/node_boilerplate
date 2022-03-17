@@ -1,0 +1,66 @@
+.edit-profile {
+  border: var(--default-border);
+  border-radius: 5px;
+  margin: 0px 80px;
+  padding: 10px;
+}
+.edit-profile__form--img {
+  width: 50%;
+  height: 200px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: var(--default-border);
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+.edit-profile__form--img img {
+  width: 80px;
+  height: 80px;
+  border: var(--default-border);
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+.edit-profile__form--img--form {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-profile__btn {
+  border: var(--default-border);
+  cursor: pointer;
+  margin-top: 20px;
+  border-radius: 5px;
+  padding: 5px;
+}
+.edit-profile__form--text--form {
+  background-color: antiquewhite;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: var(--default-border);
+  border-radius: 5px;
+}
+.edit-profile__form--text--form span {
+  font-size: 20px;
+}
+.edit-profile__form--text--form input {
+  margin: 10px 0px;
+  padding: 5px;
+  border: var(--default-border);
+  border-radius: 5px;
+}
+.edit-profile__form--text--label div input {
+  margin-right: 10px;
+}
+.edit-profile__btn--delete {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  border: var(--default-border);
+  border-radius: 5px;
+  background-color: red;
+  color: white;
+  font-weight: 600;
+  width: 100px;
+  padding: 10px;
+}

@@ -11,6 +11,7 @@
 /* screens */
 @import "./screens/profile.css";
 @import "./screens/watch.css";
+@import "./screens/edit-profile.css";
 
 @import "./like-modal.css";
 @import "./follow-modal.css";
