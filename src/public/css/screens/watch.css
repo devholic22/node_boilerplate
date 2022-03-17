@@ -64,3 +64,17 @@
 .watch__comment--button {
   cursor: pointer;
 }
+.watch__comment--input--block {
+  margin-right: 10px;
+  width: 200px;
+  border: var(--default-border);
+  border-radius: 5px;
+  padding: 5px;
+}
+.watch__comment--button--blocked {
+  opacity: 0.6;
+  cursor: not-allowed;
+  border: var(--default-border);
+  border-radius: 5px;
+  padding: 5px;
+}

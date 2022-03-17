@@ -17,8 +17,12 @@ block content
             i.far.fa-comments
             span.watch__contents--else--number=sum
         form.watch__comment--form
-            input(type="text", placeholder="Write a comment...", required).watch__comment--input
-            button.watch__comment--button Submit
+            if loggedIn
+                input(type="text", placeholder="Write a comment...", required).watch__comment--input
+                button.watch__comment--button Submit
+            else
+                input(type="text", placeholder="You must login...", disabled).watch__comment--input--block
+                button.watch__comment--button--blocked Submit
     ul.comments__lists
         each comment in comments
             +comments(comment) 
