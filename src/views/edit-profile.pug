@@ -1,20 +1,19 @@
 include base
 block content
-    div.edit-profile
-       div.edit-profile__form
-        div.edit-profile__form--img
+    div.user-form
+        div.user-form__img
             img(src=user.avatarUrl)
-            form.edit-profile__form--img--form(method="POST", enctype="multipart/form-data")
+            form.user-form__img--form(method="POST", enctype="multipart/form-data")
                 input(type="file", name="avatar", accept="image/png, img/jpeg")
-                button.edit-profile__btn Save
-        div.edit-profile__form--text
-            form.edit-profile__form--text--form(method="POST")
+                button.user-form__img--btn Save
+        div.user-form__text
+            form.user-form__text--form(method="POST")
                 span Name
                 input(type="text", placeholder="Name", name="name", value=user.name, required)
                 span Email
                 input(type="email", placeholder="Email", name="email", value=user.email, required)
                 span Protection (See only follow users)
-                label.edit-profile__form--text--label
+                label.user-form__text--form--label
                     div
                         if Boolean(user.protection)
                             input(type='radio', name='protection', value="true", checked)
@@ -30,7 +29,7 @@ block content
                             input(type='radio', name='protection', value="false", checked)
                             | No
                 span Need check when user follow want
-                label.edit-profile__form--text--label
+                label.user-form__text--form--label
                     div
                         if Boolean(user.needFollowAsk)
                             input(type='radio', name='needFollowAsk', value="true", checked)
@@ -45,6 +44,6 @@ block content
                         else
                             input(type='radio', name='needFollowAsk', value="false", checked)
                             | No
-                button.edit-profile__btn Save
-            span.edit-profile__btn--delete
+                button.user-form__img--btn Save
+            span.user-form__btn--delete
                 a(href="/delete-user") Delete User

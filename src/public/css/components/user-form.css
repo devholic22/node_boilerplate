@@ -1,10 +1,10 @@
-.edit-profile {
+.user-form {
   border: var(--default-border);
   border-radius: 5px;
   margin: 0px 80px;
   padding: 10px;
 }
-.edit-profile__form--img {
+.user-form__img {
   width: 50%;
   height: 200px;
   padding: 10px;
@@ -13,26 +13,26 @@
   border-radius: 5px;
   margin-bottom: 10px;
 }
-.edit-profile__form--img img {
+.user-form__img img {
   width: 80px;
   height: 80px;
   border: var(--default-border);
   border-radius: 5px;
   margin-bottom: 20px;
 }
-.edit-profile__form--img--form {
+.user-form__img--form {
   display: flex;
   flex-direction: column;
 }
 
-.edit-profile__btn {
+.user-form__img--btn {
   border: var(--default-border);
   cursor: pointer;
   margin-top: 20px;
   border-radius: 5px;
   padding: 5px;
 }
-.edit-profile__form--text--form {
+.user-form__text--form {
   background-color: antiquewhite;
   display: flex;
   flex-direction: column;
@@ -40,19 +40,19 @@
   border: var(--default-border);
   border-radius: 5px;
 }
-.edit-profile__form--text--form span {
+.user-form__text--form span {
   font-size: 20px;
 }
-.edit-profile__form--text--form input {
+.user-form__text--form input {
   margin: 10px 0px;
   padding: 5px;
   border: var(--default-border);
   border-radius: 5px;
 }
-.edit-profile__form--text--label div input {
+.user-form__text--form--label div input {
   margin-right: 10px;
 }
-.edit-profile__btn--delete {
+.user-form__btn--delete {
   display: flex;
   justify-content: center;
   margin-top: 10px;
