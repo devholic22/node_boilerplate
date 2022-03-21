@@ -9,13 +9,13 @@
 @import "./components/comment.css";
 @import "./components/user-form.css";
 @import "./components/user-list.css";
+@import "./components/like-modal.css";
 
 /* screens */
 @import "./screens/profile.css";
 @import "./screens/watch.css";
 @import "./screens/change-password.css";
 
-@import "./like-modal.css";
 @import "./follow-modal.css";
 @import "./following-modal.css";
 

@@ -1,5 +1,5 @@
-const btns = document.querySelectorAll(".board__info--btns--btn span");
-const spans = document.querySelectorAll(".modal-close");
+const btns = document.querySelectorAll(".like-length");
+const spans = document.querySelectorAll(".like-modal__content--close");
 
 const btnModalClick = (event) => {
   const modalObj =

@@ -4,7 +4,7 @@ block content
         div.user-form__img
             img(src=user.avatarUrl)
             form.user-form__img--form(method="POST", enctype="multipart/form-data")
-                input(type="file", name="avatar", accept="image/png, img/jpeg")
+                input(type="file", name="avatar", accept="image/png, img/jpeg" required)
                 button.user-form__img--btn Save
         div.user-form__text
             form.user-form__text--form(method="POST")

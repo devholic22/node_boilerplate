@@ -16,14 +16,16 @@
   padding: 10px;
   border: 1px solid #888;
   border-radius: 10px;
-  width: 80%;
+  width: 400px;
+  min-height: 200px;
 }
-.modal-title {
+.like-modal__content--title {
   font-size: 20px;
   display: flex;
   justify-content: center;
 }
-.modal-close {
+
+.like-modal__content--close {
   color: #aaa;
   float: right;
   font-size: 28px;
@@ -31,21 +33,32 @@
   margin-top: -20px;
 }
 
-.modal-close:hover,
-.modal-close:focus {
+.like-modal__content--close:hover,
+.like-modal__content--close:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
 }
+.like-modal__lists {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
 .like-modal__list {
   display: flex;
   align-items: center;
-  margin-bottom: 3px;
-  background-color: beige;
-  width: 100%;
+  margin-bottom: 5px;
+  background-color: white;
+  width: 350px;
+  border: var(--default-border);
   border-radius: 10px;
   padding: 5px;
 }
+.like-modal__list--content a {
+  display: flex;
+}
+
 .likeOwner__img {
   width: 50px;
   height: 50px;
