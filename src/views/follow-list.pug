@@ -1,13 +1,13 @@
 include base
 block content
-    ul.followList-user__lists
+    ul.user-lists
         each user in users
-            li.followList-user__list
+            li.user-lists__list
                 a(href=`/users/${user._id}`)
-                    img(src=`/${user.avatarUrl}`).followList-user__img
+                    img(src=`/${user.avatarUrl}`)
                     span=user.name
                 form(method="POST", action=`/users/${user._id}/follow-confirm`)
-                    input(type="submit", value="Accept", name="confirm").accept
-                    input(type="submit", value="Decline", name="confirm").decline
+                    input(type="submit", value="Accept", name="confirm")
+                    input(type="submit", value="Decline", name="confirm")
         else
-            span.nothing 🙅 Sorry nothing found.
+            span.errorMsg 🙅 Sorry nothing found.

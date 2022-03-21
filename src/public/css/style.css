@@ -8,6 +8,7 @@
 @import "./components/board-form.css";
 @import "./components/comment.css";
 @import "./components/user-form.css";
+@import "./components/user-list.css";
 
 /* screens */
 @import "./screens/profile.css";
