@@ -14,7 +14,7 @@ mixin comments(comment)
                         form(method="POST", action=`/api/comments/${comment._id}/like`)
                             button.comment__box--btns--like
                                 if comment.likeOwner.includes(String(loggedInUser._id))
-                                    i.fas.fa-heart.comment-like
+                                    i.fas.fa-heart.comment-like.heart
                                 else
                                     i.far.fa-heart.comment-like
                     else
@@ -41,7 +41,7 @@ mixin comments(comment)
                                         if !child.likeOwner.includes(String(loggedInUser._id))
                                             i.far.fa-heart.comment-like
                                         else
-                                            i.fas.fa-heart.comment-like
+                                            i.fas.fa-heart.comment-like.heart
                             else
                                 button.comment__box--btns--like
                                     i.far.fa-heart.comment-like

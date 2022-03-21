@@ -59,7 +59,7 @@
   display: flex;
 }
 
-.likeOwner__img {
+.like-modal__list--content--img {
   width: 50px;
   height: 50px;
   border-radius: 10px;

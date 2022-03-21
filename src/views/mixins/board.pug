@@ -15,7 +15,7 @@ mixin boards(board)
                         form(method="POST", action=`/boards/${board._id}/like`)
                             if loggedInUser.likes.includes(String(board._id))
                                 button 
-                                    i.fas.fa-heart
+                                    i.fas.fa-heart.heart
                             else
                                 button 
                                     i.far.fa-heart
@@ -29,7 +29,7 @@ mixin boards(board)
                         form(method="POST", action=`/boards/${board._id}/scrap`)
                             if loggedInUser.scraps.includes(String(board._id))
                                 button 
-                                    i.fas.fa-bookmark
+                                    i.fas.fa-bookmark.scrap
                             else
                                 button 
                                     i.far.fa-bookmark
@@ -47,7 +47,7 @@ mixin boards(board)
                                 li.like-modal__list
                                     div.like-modal__list--content
                                         a(href=`/users/${likeOwner._id}`)
-                                            img(src=`/${likeOwner.avatarUrl}`).likeOwner__img
+                                            img(src=`/${likeOwner.avatarUrl}`).like-modal__list--content--img
                                             span=likeOwner.name
                             else
                                 span.errorMsg 🙅 Sorry nothing found.

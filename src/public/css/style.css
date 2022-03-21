@@ -10,6 +10,8 @@
 @import "./components/user-form.css";
 @import "./components/user-list.css";
 @import "./components/like-modal.css";
+@import "./components/heart.css";
+@import "./components/scrap.css";
 
 /* screens */
 @import "./screens/profile.css";
