@@ -38,16 +38,16 @@ mixin boards(board)
                         button
                             i.far.fa-bookmark
                         span=board.scrapOwner.length
-                div.like-modal
-                    div.like-modal__content
-                        span.like-modal__content--title ❤️ like peoples
-                        span.like-modal__content--close &times;
-                        ul.like-modal__lists 
+                div.modal
+                    div.modal__content
+                        span.modal__content--title ❤️ like peoples
+                        span.modal__content--close &times;
+                        ul.modal__lists 
                             each likeOwner in board.likeOwner
-                                li.like-modal__list
-                                    div.like-modal__list--content
+                                li.modal__list
+                                    div.modal__list--content
                                         a(href=`/users/${likeOwner._id}`)
-                                            img(src=`/${likeOwner.avatarUrl}`).like-modal__list--content--img
+                                            img(src=`/${likeOwner.avatarUrl}`).modal__list--content--img
                                             span=likeOwner.name
                             else
                                 span.errorMsg 🙅 Sorry nothing found.

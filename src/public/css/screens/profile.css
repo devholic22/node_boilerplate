@@ -38,6 +38,10 @@
 .profile__box--info--text div {
   margin-bottom: 10px;
 }
+.profile__box--info--text div span:nth-child(2),
+.profile__box--info--text div span:nth-child(3) {
+  cursor: pointer;
+}
 .profile__box--info--text--number {
   margin-right: 20px;
   font-weight: 600;

@@ -1,9 +1,8 @@
 const btns = document.querySelectorAll(".like-length");
-const spans = document.querySelectorAll(".like-modal__content--close");
+const spans = document.querySelectorAll(".modal__content--close");
 
 const btnModalClick = (event) => {
-  const modalObj =
-    event.target.parentElement.parentElement.querySelector(".like-modal");
+  const modalObj = document.querySelector(".modal");
   modalObj.style.display = "block";
 };
 const spanModalClick = (event) => {

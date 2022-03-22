@@ -1,4 +1,4 @@
-.like-modal {
+.modal {
   display: none;
   position: fixed;
   z-index: 1;
@@ -10,7 +10,7 @@
   background-color: rgb(0, 0, 0);
   background-color: rgba(0, 0, 0, 0.4);
 }
-.like-modal__content {
+.modal__content {
   background-color: #fefefe;
   margin: 15% auto;
   padding: 10px;
@@ -19,13 +19,13 @@
   width: 400px;
   min-height: 200px;
 }
-.like-modal__content--title {
+.modal__content--title {
   font-size: 20px;
   display: flex;
   justify-content: center;
 }
 
-.like-modal__content--close {
+.modal__content--close {
   color: #aaa;
   float: right;
   font-size: 28px;
@@ -33,19 +33,19 @@
   margin-top: -20px;
 }
 
-.like-modal__content--close:hover,
-.like-modal__content--close:focus {
+.modal__content--close:hover,
+.modal__content--close:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
 }
-.like-modal__lists {
+.modal__lists {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 10px;
 }
-.like-modal__list {
+.modal__list {
   display: flex;
   align-items: center;
   margin-bottom: 5px;
@@ -55,11 +55,12 @@
   border-radius: 10px;
   padding: 5px;
 }
-.like-modal__list--content a {
+.modal__list--content a {
   display: flex;
+  align-items: center;
 }
 
-.like-modal__list--content--img {
+.modal__list--content--img {
   width: 50px;
   height: 50px;
   border-radius: 10px;

@@ -103,24 +103,30 @@ block content
                     each board in user.boards
                         li.user-boards__list 
                             a(href=`/boards/${board._id}`)=board.title
-        div.follow-modal
-            div.follow-modal__content
-                span.modal-title follow peoples
-                span.modal-close &times;
-                ul.follow-modal__lists
-                    each followUser in user.followUsers
-                        a(href=`/users/${followUser._id}`)
-                            div.follow-modal__list
-                                img(src=`/${followUser.avatarUrl}`).followUser__img
+    div.modal
+        div.modal__content
+            span.modal__content--title follow peoples
+            span.modal__content--close &times;
+            ul.modal__lists
+                each followUser in user.followUsers
+                    li.modal__list
+                        div.modal__list--content
+                            a(href=`/users/${followUser._id}`)
+                                img(src=`/${followUser.avatarUrl}`).modal__list--content--img
                                 span=followUser.name
-        div.following-modal
-            div.following-modal__content
-                span.modal-title following peoples
-                span.modal-close &times;
-                ul.following-modal__lists
-                    each followingUser in user.followingUsers
-                        a(href=`/users/${followingUser._id}`)
-                            div.following-modal__list
-                                img(src=`/${followingUser.avatarUrl}`).followingUser__img
+                else
+                    span.errorMsg 🙅 Sorry nothing found.
+    div.modal
+        div.modal__content
+            span.modal__content--title following peoples
+            span.modal__content--close &times;
+            ul.modal__lists
+                each followingUser in user.followingUsers
+                    li.modal__list
+                        div.modal__list--content
+                            a(href=`/users/${followingUser._id}`)
+                                img(src=`/${followingUser.avatarUrl}`).modal__list--content--img
                                 span=followingUser.name
+                else
+                    span.errorMsg 🙅 Sorry nothing found.
     script(src="/js/follow.js") 
