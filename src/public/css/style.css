@@ -18,9 +18,6 @@
 @import "./screens/watch.css";
 @import "./screens/change-password.css";
 
-@import "./follow-modal.css";
-@import "./following-modal.css";
-
 html {
   background-color: white;
   padding-top: 100px;
@@ -37,12 +34,6 @@ textarea:focus {
 }
 textarea {
   resize: none;
-}
-.nothing {
-  display: flex;
-  justify-content: center;
-  font-size: 30px;
-  margin-top: 20px;
 }
 .errorMsg {
   font-size: 15px;

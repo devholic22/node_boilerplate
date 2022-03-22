@@ -57,3 +57,10 @@ Node.js 작업 시 주로 사용하는 패키지들을 모아두는 레포지토
 - [ ] 해시태그 추가 및 해시태그로 검색
 - [ ] 시간, 숫자에 대한 view formatting
 - [ ] 댓글에 특정 username 언급 시 강조 및 해당 user profile로 이동될 수 있도록 링크 추가
+
+## 리팩터링 목록
+
+- [x] 디자인: BEM 규칙에 맞게 최대한 작성
+- [] Route: Restful API 규칙에 맞게 구조화
+- [] Controller: 효율적으로 Controller 코드를 작성했는지 점검
+- [] View: 효율적으로 Pug 파일을 작성했는지 점검
