@@ -40,10 +40,26 @@ mixin boards(board)
                         span=board.scrapOwner.length
                 div.modal
                     div.modal__content
-                        span.modal__content--title ❤️ like peoples
-                        span.modal__content--close &times;
+                        div.modal__content--header
+                            span.modal__content--title ❤️ like peoples
+                            span.modal__content--close &times;
                         ul.modal__lists 
                             each likeOwner in board.likeOwner
+                                li.modal__list
+                                    div.modal__list--content
+                                        a(href=`/users/${likeOwner._id}`)
+                                            img(src=`/${likeOwner.avatarUrl}`).modal__list--content--img
+                                            span=likeOwner.name
+                                li.modal__list
+                                    div.modal__list--content
+                                        a(href=`/users/${likeOwner._id}`)
+                                            img(src=`/${likeOwner.avatarUrl}`).modal__list--content--img
+                                            span=likeOwner.name
+                                li.modal__list
+                                    div.modal__list--content
+                                        a(href=`/users/${likeOwner._id}`)
+                                            img(src=`/${likeOwner.avatarUrl}`).modal__list--content--img
+                                            span=likeOwner.name
                                 li.modal__list
                                     div.modal__list--content
                                         a(href=`/users/${likeOwner._id}`)

@@ -6,7 +6,7 @@ const btnModalClick = (event) => {
   modalObj.style.display = "block";
 };
 const spanModalClick = (event) => {
-  const modalObj = event.target.parentElement.parentElement;
+  const modalObj = event.target.parentElement.parentElement.parentElement;
   modalObj.style.display = "none";
 };
 if (btns && spans) {

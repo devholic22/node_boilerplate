@@ -105,8 +105,9 @@ block content
                             a(href=`/boards/${board._id}`)=board.title
     div.modal
         div.modal__content
-            span.modal__content--title follow peoples
-            span.modal__content--close &times;
+            div.modal__content--header
+                span.modal__content--title follow peoples
+                span.modal__content--close &times;
             ul.modal__lists
                 each followUser in user.followUsers
                     li.modal__list
@@ -118,8 +119,9 @@ block content
                     span.errorMsg 🙅 Sorry nothing found.
     div.modal
         div.modal__content
-            span.modal__content--title following peoples
-            span.modal__content--close &times;
+            div.modal__content--header
+                span.modal__content--title following peoples
+                span.modal__content--close &times;
             ul.modal__lists
                 each followingUser in user.followingUsers
                     li.modal__list

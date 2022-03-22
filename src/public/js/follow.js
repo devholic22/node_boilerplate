@@ -17,7 +17,7 @@ const showFollowing = (event) => {
 };
 
 const spanModalClick = (event) => {
-  const modalObj = event.target.parentElement.parentElement;
+  const modalObj = event.target.parentElement.parentElement.parentElement;
   modalObj.style.display = "none";
 };
 
