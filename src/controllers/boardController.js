@@ -2,43 +2,57 @@ import Board from "../models/Board";
 import User from "../models/User";
 import Comment from "../models/Comment";
 
+/* ✅ 1차 수정 완료 */
 export const home = async (req, res) => {
   const boards = await Board.find({}).populate("owner").populate("likeOwner");
+
   if (res.locals.loggedIn) {
     const {
-      user: { _id }
-    } = req.session;
+      session: {
+        user: { _id }
+      }
+    } = req;
+
     const user = await User.findById(_id);
     const sorted = boards.filter(
       (board) => !user.blockUsers.includes(board.owner._id)
     );
-    return res.render("home", { boards: sorted });
-  } else {
-    return res.render("home", { boards });
+
+    return res.status(200).render("home", { boards: sorted });
   }
+
+  return res.status(200).render("home", { boards });
 };
 
+/* ✅ 1차 수정 완료 */
 export const getUpload = (req, res) => {
-  return res.render("upload");
+  return res.status(200).render("upload");
 };
 
+/* ✅ 1차 수정 완료 */
 export const postUpload = async (req, res) => {
-  const { title, content } = req.body;
   const {
-    user: { _id }
-  } = req.session;
+    body: { title, content },
+    session: {
+      user: { _id }
+    }
+  } = req;
+
   const board = await Board.create({
     title,
     content,
     owner: _id
   });
+
   const user = await User.findById(_id);
-  user.boards.push(board.id);
+  user.boards.push(board._id);
   user.save();
   req.session.user = user;
-  return res.redirect("/");
+
+  return res.status(201).redirect("/");
 };
 
+/* 🙅 아직 수정 안 했음 */
 export const watch = async (req, res) => {
   const { id } = req.params;
   const board = await Board.findById(id).populate("owner");
@@ -50,46 +64,46 @@ export const watch = async (req, res) => {
   return res.render("watch", { board, comments, sum });
 };
 
+/* ✅ 1차 수정 완료 */
 export const deleteBoard = async (req, res) => {
-  const { id } = req.params;
   const {
-    user: { _id }
-  } = req.session;
-  const board = await Board.findById(id);
+    params: { id },
+    session: {
+      user: { _id }
+    }
+  } = req;
+
   const user = await User.findById(_id);
-  if (
-    req.session.user &&
-    String(req.session.user._id) !== String(board.owner._id)
-  ) {
-    return res.redirect("/");
-  }
-  const deleteBoard = await Board.findByIdAndDelete(id);
-  user.boards = user.boards.filter((board) => String(board) != deleteBoard._id);
+  await Board.findByIdAndDelete(id);
+
+  user.boards = user.boards.filter((boardId) => boardId != id);
   user.save();
   req.session.user = user;
-  return res.redirect("/");
+
+  return res.status(200).redirect("/");
 };
 
+/* ✅ 1차 수정 완료 */
 export const getEdit = async (req, res) => {
   const { id } = req.params;
   const board = await Board.findById(id).populate("owner");
-  if (
-    req.session.user &&
-    String(req.session.user._id) !== String(board.owner._id)
-  ) {
-    return res.redirect("/");
-  }
-  return res.render("edit", { board });
+
+  return res.status(200).render("edit", { board });
 };
 
+/* ✅ 1차 수정 완료 */
 export const postEdit = async (req, res) => {
-  const { title, content } = req.body;
-  const { id } = req.params;
+  const {
+    body: { title, content },
+    params: { id }
+  } = req;
+
   await Board.findByIdAndUpdate(id, {
     title,
     content
   });
-  return res.redirect("/");
+
+  return res.status(200).redirect("/");
 };
 
 export const boardLike = async (req, res) => {

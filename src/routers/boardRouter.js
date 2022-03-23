@@ -1,5 +1,5 @@
 import express from "express";
-import { onlyLoggedIn, isBoardIdExist } from "../middlewares";
+import { onlyLoggedIn, isBoardIdExist, onlyBoardOwner } from "../middlewares";
 import {
   deleteBoard,
   getUpload,
@@ -20,9 +20,15 @@ boardRouter
 boardRouter.get("/:id", isBoardIdExist, watch);
 boardRouter
   .route("/:id/edit")
-  .get(onlyLoggedIn, getEdit)
-  .post(onlyLoggedIn, postEdit);
-boardRouter.get("/:id/delete", onlyLoggedIn, deleteBoard);
+  .get(isBoardIdExist, onlyLoggedIn, onlyBoardOwner, getEdit)
+  .post(isBoardIdExist, onlyLoggedIn, onlyBoardOwner, postEdit);
+boardRouter.get(
+  "/:id/delete",
+  isBoardIdExist,
+  onlyLoggedIn,
+  onlyBoardOwner,
+  deleteBoard
+);
 boardRouter.post("/:id/like", onlyLoggedIn, boardLike);
 boardRouter.post("/:id/scrap", boardScrap);
 

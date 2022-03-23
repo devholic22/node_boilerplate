@@ -49,13 +49,32 @@ export const isBoardIdExist = async (req, res, next) => {
   try {
     const { id } = req.params;
     const board = await Board.findById(id);
+
     if (!board) {
       return res.redirect("/");
     }
-    next();
   } catch (error) {
     return res.redirect("/");
   }
+
+  next();
+};
+
+export const onlyBoardOwner = async (req, res, next) => {
+  const {
+    params: { id },
+    session: {
+      user: { _id }
+    }
+  } = req;
+
+  const board = await Board.findById(id);
+
+  if (board.owner._id != _id) {
+    return res.redirect("/");
+  }
+
+  next();
 };
 
 export const avatarUpload = multer({ dest: "uploads/avatars" });
