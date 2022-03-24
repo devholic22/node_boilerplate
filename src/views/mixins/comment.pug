@@ -1,16 +1,22 @@
 mixin comments(comment)
     li.comments__lists--list(data-id=comment._id)
-        a(href=`/users/${comment.owner._id}`)
-            img(src=`/${comment.owner.avatarUrl}`)
+        if comment.status == "Exist"
+            a(href=`/users/${comment.owner._id}`)
+                img(src=`/${comment.owner.avatarUrl}`)
+        else
+            img(src="/uploads/avatars/default_avatar.jpeg")
         div.comment__box
             div.comment__box--text
                 div.comment__box--text--info
-                    a(href=`/users/${comment.owner._id}`)
-                        span.comment__box--text--info--name=comment.owner.name
+                    if comment.status == "Exist"
+                        a(href=`/users/${comment.owner._id}`)
+                            span.comment__box--text--info--name=comment.owner.name
+                    else
+                        span.comment__box--text--info--name (삭제)
                     span.comment__box--text--info--date=comment.createdAt
                 span.comment__box--text--value=comment.text
                 div.comment__box--btns
-                    if loggedIn
+                    if loggedIn && comment.status == "Exist"
                         form(method="POST", action=`/api/comments/${comment._id}/like`)
                             button.comment__box--btns--like
                                 if comment.likeOwner.includes(String(loggedInUser._id))
@@ -21,7 +27,7 @@ mixin comments(comment)
                         button.comment__box--btns--like
                             i.far.fa-heart.comment-like
                     span=comment.likeOwner.length
-                    if loggedIn && String(comment.owner._id) === String(loggedInUser._id)
+                    if loggedIn && String(comment.owner._id) === String(loggedInUser._id) && comment.status == "Exist"
                         form(method="POST", action=`/api/comments/${comment._id}/delete`) 
                             input(type="submit", value="❌").comment__box--btns--delete
             each child in comment.childComments
@@ -49,7 +55,7 @@ mixin comments(comment)
                             if loggedIn && String(child.owner._id) === String(loggedInUser._id)
                                 form(method="POST", action=`/api/comments/${child._id}/delete`) 
                                     input(type="submit", value="❌").comment__box--btns--delete
-            if loggedIn    
+            if loggedIn && comment.status == "Exist"   
                 div.small-comment__append
                     span.small-comment__append--title 답글 달기
                     form.small-comment__append--form

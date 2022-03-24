@@ -52,21 +52,24 @@ export const postUpload = async (req, res) => {
   return res.status(201).redirect("/");
 };
 
-/* ✅ 1차 수정 완료 */
+/* ✅ 2차 수정 완료 */
 export const watch = async (req, res) => {
   const {
     params: { id }
   } = req;
   const board = await Board.findById(id).populate("owner");
-  const comments = await Comment.find({ board })
+  const parentComments = await Comment.find({ board, type: "Parent" })
     .populate("owner")
     .populate({ path: "childComments", model: "Comment", populate: "owner" });
-  let sum = comments.length;
-  comments.forEach((comment) => (sum += comment.childComments.length));
-  return res.status(200).render("watch", { board, comments, sum });
+  const boardExistComment = await Comment.find({ board, status: "Exist" });
+  return res.status(200).render("watch", {
+    board,
+    comments: parentComments,
+    sum: boardExistComment.length
+  });
 };
 
-/* ✅ 1차 수정 완료 */
+/* ✅ 2차 수정 완료 */
 export const deleteBoard = async (req, res) => {
   const {
     params: { id },
@@ -75,8 +78,24 @@ export const deleteBoard = async (req, res) => {
     }
   } = req;
 
+  // 1) 스크랩 한 유저들의 스크랩 목록에서 해당 보드 삭제
+  const scrapOwners = await User.find({ scraps: id });
+  scrapOwners.forEach((scrapOwner) => {
+    scrapOwner.scraps = scrapOwner.scraps.filter((scrapId) => scrapId != id);
+    scrapOwner.save();
+  });
+
+  // 2) 좋아요 한 유저들의 좋아요 목록에서 해당 보드 삭제
+  const likeOwners = await User.find({ likes: id });
+  likeOwners.forEach((likeOwner) => {
+    likeOwner.likes = likeOwner.likes.filter((likeId) => likeId != id);
+    likeOwner.save();
+  });
+
+  // 3) 유저의 보드 삭제, 보드 DB에서 삭제, 보드와 연관된 댓글 전부 삭제
   const user = await User.findById(_id);
   await Board.findByIdAndDelete(id);
+  await Comment.find({ board: id }).deleteMany();
 
   user.boards = user.boards.filter((boardId) => boardId != id);
   user.save();
@@ -182,40 +201,49 @@ export const createComment = async (req, res) => {
   const comment = await Comment.create({
     text: value,
     owner: _id,
-    board: id
+    board: id,
+    type: "Parent",
+    status: "Exist"
   });
   board.comments.push(comment._id);
   board.save();
   return res.sendStatus(201);
 };
 
-/* ✅ 1차 수정 완료 */
+/* ✅ 2차 수정 완료 */
 export const deleteComment = async (req, res) => {
   const {
     params: { id }
   } = req;
   const comment = await Comment.findById(id);
-  console.log(comment.board._id);
-  const isExist = comment.parentComment;
-  if (Boolean(isExist)) {
+  const isParentExist = comment.parentComment;
+  if (Boolean(isParentExist)) {
     // 부모 코멘트가 있음 (대댓글임)
     const parent = await Comment.findOne({ childComments: id });
     parent.childComments = parent.childComments.filter(
       (commentId) => commentId != id
     );
     parent.save();
-  } else {
-    // 부모 코멘트가 없음 (자신이 부모 코멘트임)
-    // 자신의 자식 댓글들을 모두 삭제하게 할까? 아니면 에타처럼 삭제된 댓글이라고 표시할까?
-    // 일단 자식 댓글들도 모두 삭제되게 했음
-    await Comment.find({ parentComment: comment }).deleteMany();
-
     const board = await Board.findById(comment.board._id);
     board.comments = board.comments.filter((commentId) => commentId != id);
     board.save();
+    await Comment.findByIdAndDelete(id);
+  } else {
+    // 부모 코멘트가 없음 (자신이 부모 코멘트임)
+    const isChildExist = comment.childComments.length;
+    // 자식 댓글이 있는 경우 삭제되었다고만 표시
+    if (Boolean(isChildExist)) {
+      comment.status = "Deleted";
+      comment.text = "삭제된 댓글입니다.";
+      comment.save();
+    } else {
+      // 자식 댓글이 없는 경우 즉시 삭제되도록 처리
+      const board = await Board.findById(comment.board._id);
+      board.comments = board.comments.filter((commentId) => commentId != id);
+      board.save();
+      await Comment.findByIdAndDelete(id);
+    }
   }
-  comment.deleteOne();
-  await Comment.findByIdAndDelete(id);
   return res.status(200).redirect(req.headers.referer);
 };
 
@@ -240,7 +268,7 @@ export const likeComment = async (req, res) => {
   return res.status(200).redirect(req.headers.referer);
 };
 
-/* ✅ 1차 수정 완료 */
+/* ✅ 2차 수정 완료 */
 export const createSmallComment = async (req, res) => {
   const {
     params: { id },
@@ -250,15 +278,22 @@ export const createSmallComment = async (req, res) => {
     }
   } = req;
 
-  const comment = await Comment.findById(id);
+  const parentComment = await Comment.findById(id).populate("board");
+
   const smallComment = await Comment.create({
     text: value,
     owner: _id,
-    parentComment: comment._id
+    board: parentComment.board._id,
+    parentComment: parentComment._id,
+    type: "Child",
+    status: "Exist"
   });
 
-  comment.childComments.push(smallComment._id);
-  comment.save();
+  parentComment.childComments.push(smallComment._id);
+  parentComment.save();
+
+  parentComment.board.comments.push(smallComment._id);
+  parentComment.board.save();
 
   return res.sendStatus(201);
 };
