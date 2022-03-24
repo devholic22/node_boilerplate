@@ -29,7 +29,7 @@ boardRouter.get(
   onlyBoardOwner,
   deleteBoard
 );
-boardRouter.post("/:id/like", onlyLoggedIn, boardLike);
-boardRouter.post("/:id/scrap", boardScrap);
+boardRouter.post("/:id/like", isBoardIdExist, onlyLoggedIn, boardLike);
+boardRouter.post("/:id/scrap", isBoardIdExist, onlyLoggedIn, boardScrap);
 
 export default boardRouter;

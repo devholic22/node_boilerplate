@@ -66,6 +66,9 @@
   width: 300px;
   word-break: break-all;
 }
+.small-comment__append--title {
+  cursor: pointer;
+}
 .small-comment__append--form input {
   border: none;
   border-bottom: 2px solid #f0f0f0;

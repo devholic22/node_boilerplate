@@ -1,4 +1,5 @@
 import express from "express";
+import { onlyLoggedIn, isBoardIdExist } from "../middlewares";
 import {
   createComment,
   deleteComment,
@@ -8,9 +9,14 @@ import {
 
 const apiRouter = express.Router();
 
-apiRouter.post("/boards/:id/comment", createComment);
-apiRouter.post("/comments/:id/delete", deleteComment);
-apiRouter.post("/comments/:id/like", likeComment);
-apiRouter.post("/comments/:id/comment", createSmallComment);
+apiRouter.post(
+  "/boards/:id/comment",
+  isBoardIdExist,
+  onlyLoggedIn,
+  createComment
+);
+apiRouter.post("/comments/:id/delete", onlyLoggedIn, deleteComment);
+apiRouter.post("/comments/:id/like", onlyLoggedIn, likeComment);
+apiRouter.post("/comments/:id/comment", onlyLoggedIn, createSmallComment);
 
 export default apiRouter;
