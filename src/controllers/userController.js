@@ -2,55 +2,78 @@ import Board from "../models/Board";
 import User from "../models/User";
 import bcrypt from "bcrypt";
 
+/* ✅ 1차 수정 완료 */
 export const getJoin = (req, res) => {
-  return res.render("join");
+  return res.status(200).render("join");
 };
 
+/* ✅ 1차 수정 완료 */
 export const postJoin = async (req, res) => {
-  const { name, email, password, password2 } = req.body;
+  const {
+    body: { name, email, password, password2 }
+  } = req;
+
   const isExist = await User.exists({ email });
   if (isExist) {
-    return res.render("join", { errorMsg: "🙅 This email is already taken!" });
+    return res
+      .status(400)
+      .render("join", { errorMsg: "🙅 This email is already taken!" });
   }
+
   if (password !== password2) {
-    return res.render("join", { errorMsg: "🙅 password not correct!" });
+    return res
+      .status(400)
+      .render("join", { errorMsg: "🙅 password not correct!" });
   }
+
   await User.create({
     name,
     email,
     password: await User.passwordHash(password)
   });
-  return res.redirect("/login");
+
+  return res.status(201).redirect("/login");
 };
 
+/* ✅ 1차 수정 완료 */
 export const getLogin = (req, res) => {
-  return res.render("login");
+  return res.status(200).render("login");
 };
 
+/* ✅ 1차 수정 완료 */
 export const postLogin = async (req, res) => {
-  const { email, password } = req.body;
+  const {
+    body: { email, password }
+  } = req;
+
   const user = await User.findOne({ email });
+
   if (!user) {
-    return res.render("login", {
+    return res.status(400).render("login", {
       errorMsg: "🙅 This username does not exist."
     });
   }
+
   const isPasswordCorrect = Boolean(
     bcrypt.compareSync(password, user.password)
   );
+
   if (!isPasswordCorrect) {
-    return res.render("login", {
+    return res.status(400).render("login", {
       errorMsg: "🙅 Password doesn't correct."
     });
   }
+
   req.session.loggedIn = true;
   req.session.user = user;
-  return res.redirect("/");
+
+  return res.status(200).redirect("/");
 };
 
+/* ✅ 1차 수정 완료 */
 export const logout = (req, res) => {
   req.session.destroy();
-  return res.redirect("/");
+  return res.status(200).redirect("/");
 };
 
 export const userProfile = async (req, res) => {
@@ -81,10 +104,15 @@ export const userProfile = async (req, res) => {
   }
 };
 
+/* ✅ 1차 수정 완료 */
 export const getEditProfile = async (req, res) => {
-  const { user: _id } = req.session;
+  const {
+    session: {
+      user: { _id }
+    }
+  } = req;
   const user = await User.findById(_id);
-  return res.render("edit-profile", { user });
+  return res.status(200).render("edit-profile", { user });
 };
 
 export const postEditProfile = async (req, res) => {
@@ -123,12 +151,15 @@ export const postEditProfile = async (req, res) => {
   }
 };
 
+/* ✅ 1차 수정 완료 */
 export const getChangePassword = async (req, res) => {
   const {
-    user: { _id }
-  } = req.session;
+    session: {
+      user: { _id }
+    }
+  } = req;
   const user = await User.findById(_id);
-  return res.render("change-password", { user });
+  return res.status(200).render("change-password", { user });
 };
 
 export const postChangePassword = async (req, res) => {
@@ -204,10 +235,15 @@ export const userBlock = async (req, res) => {
   return res.redirect(req.headers.referer);
 };
 
+/* ✅ 1차 수정 완료 */
 export const blockedUser = async (req, res) => {
-  const { id } = req.params;
+  const {
+    params: { id }
+  } = req;
+
   const user = await User.findById(id).populate("blockUsers");
-  return res.render("blocked-user", { users: user.blockUsers });
+
+  return res.status(200).render("blocked-user", { users: user.blockUsers });
 };
 
 export const followFunction = async (req, res) => {
@@ -255,13 +291,19 @@ export const followFunction = async (req, res) => {
   return res.redirect(req.headers.referer);
 };
 
+/* ✅ 1차 수정 완료 */
 export const followList = async (req, res) => {
   const {
-    user: { _id }
-  } = req.session;
+    session: {
+      user: { _id }
+    }
+  } = req;
+
   const user = await User.findById(_id).populate("followList");
-  return res.render("follow-list", { users: user.followList });
+
+  return res.status(200).render("follow-list", { users: user.followList });
 };
+
 export const followConfirm = async (req, res) => {
   const { confirm } = req.body;
   const { id } = req.params;
