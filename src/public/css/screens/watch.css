@@ -44,6 +44,21 @@
   padding: 5px;
   border-radius: 5px;
 }
+.watch__contents--else {
+  display: flex;
+  align-items: center;
+  margin: 10px 0px;
+}
+.watch__contents--else button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  padding: 0;
+}
+.watch__contents--else div {
+  margin-right: 10px;
+}
 .watch__contents--else--number {
   margin-left: 5px;
 }
@@ -60,6 +75,10 @@
 .watch__comment--input {
   margin-right: 10px;
   width: 200px;
+}
+.watch__contents--else--like,
+.watch__contents--else--scrap {
+  display: flex;
 }
 .watch__comment--button {
   cursor: pointer;

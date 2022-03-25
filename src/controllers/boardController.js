@@ -2,10 +2,12 @@ import Board from "../models/Board";
 import User from "../models/User";
 import Comment from "../models/Comment";
 
-/* ✅ 1차 수정 완료 */
+/* ✅ 2차 수정 완료 */
 export const home = async (req, res) => {
-  const boards = await Board.find({}).populate("owner").populate("likeOwner");
-
+  const boards = await Board.find({})
+    .populate("owner")
+    .populate("likeOwner")
+    .populate("comments");
   if (res.locals.loggedIn) {
     const {
       session: {

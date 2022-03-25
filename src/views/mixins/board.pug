@@ -11,6 +11,10 @@ mixin boards(board)
                 span.board__info--name=board.owner.name
             div.board__info--btns
                 div.board__info--btns--btn
+                    button
+                        i.far.fa-comments
+                    span=board.comments.filter(comment => comment.status == "Exist").length
+                div.board__info--btns--btn
                     if loggedInUser
                         form(method="POST", action=`/boards/${board._id}/like`)
                             if loggedInUser.likes.includes(String(board._id))

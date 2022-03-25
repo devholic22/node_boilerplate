@@ -246,49 +246,45 @@ export const blockedUser = async (req, res) => {
   return res.status(200).render("blocked-user", { users: user.blockUsers });
 };
 
+/* ✅ 1차 수정 완료 */
 export const followFunction = async (req, res) => {
-  const { id } = req.params;
   const {
-    user: { _id }
-  } = req.session;
+    params: { id },
+    session: {
+      user: { _id }
+    }
+  } = req;
 
   const user = await User.findById(id);
   const wantedUser = await User.findById(_id);
 
-  if (user.needFollowAsk) {
-    if (user.followUsers.includes(String(wantedUser._id))) {
-      user.followUsers = user.followUsers.filter(
-        (list) => String(list) != String(wantedUser._id)
-      );
-      wantedUser.followingUsers = wantedUser.followingUsers.filter(
-        (list) => list != String(user._id)
-      );
-    } else {
-      if (!user.followList.includes(String(wantedUser._id))) {
-        user.followList.push(String(wantedUser._id));
-      } else {
-        user.followList = user.followList.filter(
-          (list) => String(list) != String(wantedUser._id)
-        );
-      }
-    }
+  if (user.followUsers.includes(wantedUser._id)) {
+    user.followUsers = user.followUsers.filter(
+      (listId) => listId != wantedUser._id
+    );
+    wantedUser.followingUsers = wantedUser.followingUsers.filter(
+      (listId) => listId != user._id
+    );
   } else {
-    if (user.followUsers.includes(String(wantedUser._id))) {
-      user.followUsers = user.followUsers.filter(
-        (list) => String(list) != String(wantedUser._id)
-      );
-      wantedUser.followingUsers = wantedUser.followingUsers.filter(
-        (list) => list != String(user._id)
-      );
+    if (Boolean(user.needFollowAsk)) {
+      if (user.followList.includes(wantedUser._id)) {
+        user.followList = user.followList.filter(
+          (listId) => listId != wantedUser._id
+        );
+      } else {
+        user.followList.push(wantedUser._id);
+      }
     } else {
-      user.followUsers.push(String(wantedUser._id));
-      wantedUser.followingUsers.push(String(user._id));
+      user.followUsers.push(wantedUser._id);
+      wantedUser.followingUsers.push(user._id);
     }
   }
+
   user.save();
   wantedUser.save();
   req.session.user = wantedUser;
-  return res.redirect(req.headers.referer);
+
+  return res.status(200).redirect(req.headers.referer);
 };
 
 /* ✅ 1차 수정 완료 */
@@ -304,24 +300,30 @@ export const followList = async (req, res) => {
   return res.status(200).render("follow-list", { users: user.followList });
 };
 
+/* ✅ 1차 수정 완료 */
 export const followConfirm = async (req, res) => {
-  const { confirm } = req.body;
-  const { id } = req.params;
-  const user = await User.findById(id);
   const {
-    user: { _id }
-  } = req.session;
+    params: { id },
+    body: { confirm },
+    session: {
+      user: { _id }
+    }
+  } = req;
+
+  const user = await User.findById(id);
   const listOwner = await User.findById(_id);
 
   if (confirm === "Accept") {
-    listOwner.followUsers.push(String(user._id));
-    user.followingUsers.push(String(listOwner._id));
+    listOwner.followUsers.push(user._id);
+    user.followingUsers.push(listOwner._id);
   }
   listOwner.followList = listOwner.followList.filter(
-    (list) => list != String(user._id)
+    (listId) => listId != user._id
   );
+
   user.save();
   listOwner.save();
   req.session.user = listOwner;
-  return res.redirect(req.headers.referer);
+
+  return res.status(200).redirect(req.headers.referer);
 };

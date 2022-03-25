@@ -14,8 +14,36 @@ block content
                 a(href=`${board._id}/edit`) ✂️ Edit contents
                 a(href=`${board._id}/delete`) 🗑 Delete contents
         div.watch__contents--else
-            i.far.fa-comments
-            span.watch__contents--else--number=sum
+            div.watch__contents--else--comment
+                button
+                    i.far.fa-comments
+                span.watch__contents--else--number=sum
+            div.watch__contents--else--like
+                if loggedInUser
+                    form(method="POST", action=`/boards/${board._id}/like`)
+                        if loggedInUser.likes.includes(String(board._id))
+                            button
+                                i.fas.fa-heart.heart
+                        else
+                            button
+                                i.far.fa-heart
+                else
+                    button
+                        i.far.fa-heart
+                span.watch__contents--else--number=board.likeOwner.length
+            div.watch__contents--else--scrap
+                if loggedInUser
+                    form(method="POST", action=`/boards/${board._id}/scrap`)
+                        if loggedInUser.scraps.includes(String(board._id))
+                            button
+                                i.fas.fa-bookmark.scrap
+                        else
+                            button
+                                i.far.fa-bookmark
+                else
+                    button
+                        i.far.fa-bookmark
+                span.watch__contents--else--number=board.scrapOwner.length
         form.watch__comment--form
             if loggedIn
                 input(type="text", placeholder="Write a comment...", required).watch__comment--input
