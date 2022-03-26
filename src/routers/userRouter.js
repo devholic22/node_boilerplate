@@ -12,11 +12,11 @@ import {
 const userRouter = express.Router();
 
 userRouter.get("/:id", isUserIdExist, userProfile);
-userRouter.get("/:id/scraps", userScrap);
-userRouter.post("/:id/block", userBlock);
+userRouter.get("/:id/scraps", onlyLoggedIn, isUserEqualOwner, userScrap);
+userRouter.post("/:id/block", onlyLoggedIn, isUserEqualOwner, userBlock);
 userRouter.get("/:id/block-users", onlyLoggedIn, isUserEqualOwner, blockedUser);
-userRouter.post("/:id/follow", followFunction);
+userRouter.post("/:id/follow", onlyLoggedIn, followFunction);
 userRouter.get("/:id/follow-list", onlyLoggedIn, isUserEqualOwner, followList);
-userRouter.post("/:id/follow-confirm", followConfirm);
+userRouter.post("/:id/follow-confirm", onlyLoggedIn, followConfirm);
 
 export default userRouter;

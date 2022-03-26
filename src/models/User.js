@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema({
   followList: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   followUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   followingUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }]
+  // status: { type: String, enum: ["Alive", "Death"], default: "Alive" } ➡️ 🛠 현재 작업 중
 });
 
 userSchema.static("passwordHash", async function (password) {

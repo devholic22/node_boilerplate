@@ -77,11 +77,15 @@ export const logout = (req, res) => {
 };
 
 export const userProfile = async (req, res) => {
-  const { id } = req.params;
+  const {
+    params: { id }
+  } = req;
+
   if (res.locals.loggedIn) {
     const {
       user: { _id }
     } = req.session;
+
     if (String(id) != String(_id)) {
       const user = await User.findById(id)
         .populate("boards")
@@ -162,44 +166,91 @@ export const getChangePassword = async (req, res) => {
   return res.status(200).render("change-password", { user });
 };
 
+/* ✅ 1차 수정 완료 */
 export const postChangePassword = async (req, res) => {
   const {
-    user: { _id }
-  } = req.session;
+    session: {
+      user: { _id }
+    },
+    body: { password, password2 }
+  } = req;
   const user = await User.findById(_id);
-  const { password, password2 } = req.body;
   const isPasswordCorrect = Boolean(
     bcrypt.compareSync(password, user.password)
   );
   if (!isPasswordCorrect) {
-    return res.render("change-password", {
+    return res.status(400).render("change-password", {
       errorMsg: "🙅 Origin password doesn't correct!"
     });
   } else {
     const isPasswordExist = Boolean(password === password2);
     if (isPasswordExist) {
-      return res.render("change-password", {
+      return res.status(400).render("change-password", {
         errorMsg: "🙅 Origin password same with new password!"
       });
     } else {
       user.password = await User.passwordHash(password2);
       user.save();
       req.session.destroy();
-      return res.redirect("/");
+      return res.status(200).redirect("/");
     }
   }
 };
 
+/* 🙅 현재 작업 중 */
 export const deleteUser = async (req, res) => {
-  const { user: _id } = req.session;
+  const {
+    session: {
+      user: { _id }
+    }
+  } = req;
+  // 유저 조회
+  const user = await User.findById(_id);
+  // 유저가 스크랩 한 게시물들 : 스크랩 한 게시물들에서 스크랩 한 사람들 목록에서 유저를 제외시킨다.
+  user.scraps.forEach(async (scrapId) => {
+    const scrap = await Board.findById(scrapId);
+    scrap.scrapOwner = scrap.scrapOwner.filter((ownerId) => ownerId != _id);
+    scrap.save();
+  });
+  // 유저가 좋아요 한 게시물들 : 좋아요 한 게시물들에서 좋아요 한 사람들 목록에서 유저를 제외시킨다.
+  user.likes.forEach(async (likeId) => {
+    const like = await Board.findById(likeId);
+    like.likeOwner = like.likeOwner.filter((likeId) => likeId != _id);
+    like.save();
+  });
+  // 유저에게 팔로우 보낸 사람들은 아직 유저를 팔로우 하고 있지 않기 때문에 별다른 작업을 하고 있을 필요가 없다.
+  // 유저가 차단하고 있는 유저 또한 해당 유저에 대한 정보를 가지고 있지 않기 때문에 별다른 작업을 하고 있을 필요가 없다.
+  // followUsers가 자신을 팔로우 하고 있는 사람들이고, followingUsers가 자신이 팔로우 하고 있는 사람들이다. 헷갈리지 말자...
+  // 유저가 팔로우 하고 있는 사람들 : 각자 자신을 팔로우 하고 있는 사람들의 목록에서 유저를 제외시킨다.
+  user.followUsers.forEach(async (followId) => {
+    const follower = await User.findById(followId);
+    follower.followingUsers = follower.followingUsers.filter(
+      (userId) => userId != _id
+    );
+    follower.save();
+  });
+  // 유저가 팔로우 하고 있는 사람들
+  user.followingUsers.forEach(async (followingId) => {
+    const following = await User.findById(followingId);
+    following.followUsers = following.followUsers.filter(
+      (userId) => userId != _id
+    );
+    following.save();
+  });
+
+  /*
   await Board.remove({ owner: _id });
   await User.findByIdAndDelete(_id);
   req.session.destroy();
   return res.redirect("/");
+  */
 };
 
+/* ✅ 1차 수정 완료 */
 export const userScrap = async (req, res) => {
-  const { id } = req.params;
+  const {
+    params: { id }
+  } = req;
   const scraps = [];
   const user = await User.findById(id).populate("scraps");
 
@@ -211,28 +262,33 @@ export const userScrap = async (req, res) => {
     scraps.push(sorted);
   }
 
-  return res.render("scraps", { boards: scraps });
+  return res.status(200).render("scraps", { boards: scraps });
 };
 
+/* ✅ 1차 수정 완료 */
 export const userBlock = async (req, res) => {
-  const { id } = req.params;
   const {
-    user: { _id }
-  } = req.session;
-  if (String(id) !== String(_id)) {
-    const user = await User.findById(_id);
-    const blockUser = await User.findById(id);
-    if (user.blockUsers.includes(String(blockUser._id))) {
-      user.blockUsers = user.blockUsers.filter(
-        (id) => String(id) != String(blockUser._id)
-      );
-    } else {
-      user.blockUsers.push(String(blockUser._id));
+    params: { id },
+    session: {
+      user: { _id }
     }
-    user.save();
-    req.session.user = user;
+  } = req;
+
+  const user = await User.findById(_id);
+  const blockUser = await User.findById(id);
+
+  if (user.blockUsers.includes(blockUser._id)) {
+    user.blockUsers = user.blockUsers.filter(
+      (blockedId) => blockedId != blockUser._id
+    );
+  } else {
+    user.blockUsers.push(blockUser._id);
   }
-  return res.redirect(req.headers.referer);
+
+  user.save();
+  req.session.user = user;
+
+  return res.status(200).redirect(req.headers.referer);
 };
 
 /* ✅ 1차 수정 완료 */
