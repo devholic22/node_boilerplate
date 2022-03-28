@@ -100,9 +100,15 @@ export const getEditProfile = async (req, res) => {
   return res.status(200).render("edit-profile", { user });
 };
 
+/* ✅ 1차 수정 완료 */
 export const postEditProfile = async (req, res) => {
-  const { user: _id } = req.session;
-  const { name, email, protection, needFollowAsk } = req.body;
+  const {
+    session: {
+      user: { _id }
+    },
+    body: { name, email, protection, needFollowAsk }
+  } = req;
+
   if (req.file) {
     const avatarUrl = req.file.path;
     const updatedUser = await User.findByIdAndUpdate(
@@ -117,8 +123,6 @@ export const postEditProfile = async (req, res) => {
       { new: true }
     );
     req.session.user = updatedUser;
-    res.locals.loggedInUser = req.session.user;
-    return res.redirect("/");
   } else {
     const updatedUser = await User.findByIdAndUpdate(
       _id,
@@ -131,9 +135,9 @@ export const postEditProfile = async (req, res) => {
       { new: true }
     );
     req.session.user = updatedUser;
-    res.locals.loggedInUser = req.session.user;
-    return res.redirect("/");
   }
+  res.locals.loggedInUser = req.session.user;
+  return res.status(200).redirect("/");
 };
 
 /* ✅ 1차 수정 완료 */
