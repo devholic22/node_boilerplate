@@ -76,36 +76,17 @@ export const logout = (req, res) => {
   return res.status(200).redirect("/");
 };
 
+/* ✅ 1차 수정 완료 */
 export const userProfile = async (req, res) => {
   const {
     params: { id }
   } = req;
 
-  if (res.locals.loggedIn) {
-    const {
-      user: { _id }
-    } = req.session;
-
-    if (String(id) != String(_id)) {
-      const user = await User.findById(id)
-        .populate("boards")
-        .populate("followUsers")
-        .populate("followingUsers");
-      return res.render("user-profile", { user });
-    } else {
-      const user = await User.findById(_id)
-        .populate("boards")
-        .populate("followUsers")
-        .populate("followingUsers");
-      return res.render("user-profile", { user });
-    }
-  } else {
-    const user = await User.findById(id)
-      .populate("boards")
-      .populate("followUsers")
-      .populate("followingUsers");
-    return res.render("user-profile", { user });
-  }
+  const user = await User.findById(id)
+    .populate("boards")
+    .populate("followUsers")
+    .populate("followingUsers");
+  return res.status(200).render("user-profile", { user });
 };
 
 /* ✅ 1차 수정 완료 */
@@ -197,7 +178,7 @@ export const postChangePassword = async (req, res) => {
   }
 };
 
-/* 🙅 현재 작업 중 */
+/* ✅ 1차 수정 완료 */
 export const deleteUser = async (req, res) => {
   const {
     session: {
@@ -234,7 +215,7 @@ export const deleteUser = async (req, res) => {
     follower.save();
   });
 
-  // 유저가 팔로우 하고 있는 사람들
+  // 유저가 팔로우 하고 있는 사람들 : 각자 자신이 팔로우 하고 있는 사람들의 목록에서 유저를 제외시킨다.
   user.followingUsers.forEach(async (followingId) => {
     const following = await User.findById(followingId);
     following.followUsers = following.followUsers.filter(
