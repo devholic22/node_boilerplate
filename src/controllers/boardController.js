@@ -16,9 +16,19 @@ export const home = async (req, res) => {
     } = req;
 
     const user = await User.findById(_id);
-    const sorted = boards.filter(
-      (board) => !user.blockUsers.includes(board.owner._id)
-    );
+
+    // 작성자가 탈퇴했다면 기존에 다른 유저가 이 유저를 차단했었는지 검사할 때 에러가 생김.
+    // 아직 회원으로 남아 있는 상태의 유저에 한해서만 검사하고, 탈퇴한 유저는 그냥 패스하도록 하게 하고 싶음.
+    const sorted = [];
+    boards.forEach((boardId) => {
+      if (boardId.owner) {
+        if (!user.blockUsers.includes(boardId)) {
+          sorted.push(boardId);
+        }
+      } else {
+        sorted.push(boardId);
+      }
+    });
 
     return res.status(200).render("home", { boards: sorted });
   }

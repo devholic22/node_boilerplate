@@ -1,18 +1,23 @@
 mixin comments(comment)
     li.comments__lists--list(data-id=comment._id)
-        if comment.status == "Exist"
+        if comment.owner && comment.status == "Exist"
             a(href=`/users/${comment.owner._id}`)
                 img(src=`/${comment.owner.avatarUrl}`)
         else
-            img(src="/uploads/avatars/default_avatar.jpeg")
+            a(href="")
+                img(src="/uploads/avatars/default_avatar.jpeg")
         div.comment__box
             div.comment__box--text
                 div.comment__box--text--info
-                    if comment.status == "Exist"
-                        a(href=`/users/${comment.owner._id}`)
-                            span.comment__box--text--info--name=comment.owner.name
+                    if !comment.owner
+                        a(href="")
+                            span.comment__box--text--info--name (알 수 없음)
                     else
-                        span.comment__box--text--info--name (삭제)
+                        if comment.status != "Exist"
+                            span.comment__box--text--info--name (삭제)
+                        else
+                            a(href=`/users/${comment.owner._id}`)
+                                span.comment__box--text--info--name=comment.owner.name
                     span.comment__box--text--info--date=comment.createdAt
                 span.comment__box--text--value=comment.text
                 div.comment__box--btns
@@ -27,17 +32,25 @@ mixin comments(comment)
                         button.comment__box--btns--like
                             i.far.fa-heart.comment-like
                     span=comment.likeOwner.length
-                    if loggedIn && String(comment.owner._id) === String(loggedInUser._id) && comment.status == "Exist"
+                    if loggedIn && comment.owner && String(comment.owner._id) === String(loggedInUser._id) && comment.status == "Exist"
                         form(method="POST", action=`/api/comments/${comment._id}/delete`) 
                             input(type="submit", value="❌").comment__box--btns--delete
             each child in comment.childComments
                 div.comment__box--child
-                    a(href=`/users/${child.owner._id}`)
-                        img.comment__box--child--img(src=`/${child.owner.avatarUrl}`)
+                    if child.owner
+                        a(href=`/users/${child.owner._id}`)
+                            img.comment__box--child--img(src=`/${child.owner.avatarUrl}`)
+                    else
+                        a(href="")
+                            img.comment__box--child--imgimg(src="/uploads/avatars/default_avatar.jpeg")
                     div.comment__box--child--box
                         div.comment__box--child--info
-                            a(href=`/users/${child.owner._id}`)
-                                span.comment__box--child--info--name=child.owner.name
+                            if child.owner
+                                a(href=`/users/${child.owner._id}`)
+                                    span.comment__box--child--info--name=child.owner.name
+                            else
+                                a(href="")
+                                    span.comment__box--child--info--name (알 수 없음)
                             span.comment__box--child--info--date=child.createdAt
                         span.comment__box--child--value=child.text
                         div.comment__box--btns
@@ -52,7 +65,7 @@ mixin comments(comment)
                                 button.comment__box--btns--like
                                     i.far.fa-heart.comment-like
                             span=child.likeOwner.length
-                            if loggedIn && String(child.owner._id) === String(loggedInUser._id)
+                            if loggedIn && child.owner && String(child.owner._id) === String(loggedInUser._id)
                                 form(method="POST", action=`/api/comments/${child._id}/delete`) 
                                     input(type="submit", value="❌").comment__box--btns--delete
             if loggedIn && comment.status == "Exist"   
