@@ -78,9 +78,23 @@ export const logout = (req, res) => {
 
 /* ✅ 1차 수정 완료 */
 export const userProfile = async (req, res) => {
+  const loggedInUserList = [];
+
+  // 왜 await이 적용이 안 되냐...
+  await req.sessionStore.all((error, sessions) => {
+    sessions.forEach((session) => {
+      loggedInUserList.push(session.user._id);
+      console.log("세 번째에 떠야 한다", loggedInUserList);
+    });
+  });
+
   const {
     params: { id }
   } = req;
+
+  console.log("네 번째에 떠야 한다", loggedInUserList);
+  const isUserLogin = Boolean(loggedInUserList.includes(String(id)));
+  console.log("마지막에 떠야 한다", isUserLogin);
 
   const user = await User.findById(id)
     .populate("boards")

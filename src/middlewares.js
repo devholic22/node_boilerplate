@@ -77,4 +77,16 @@ export const onlyBoardOwner = async (req, res, next) => {
   next();
 };
 
+// middleware 상에서도 되지 않는다. Passport.js를 활용해 보는 방법이 있을 것 같다.
+export const isUserLogin = async (req, res, next) => {
+  const loggedInUserList = [];
+  await req.sessionStore.all((error, sessions) => {
+    sessions.forEach((session) => {
+      loggedInUserList.push(session.user._id);
+      console.log("첫 번째로 뜨고 싶다", loggedInUserList);
+    });
+  });
+  console.log("두 번째로 뜨고 싶다", loggedInUserList);
+  next();
+};
 export const avatarUpload = multer({ dest: "uploads/avatars" });
