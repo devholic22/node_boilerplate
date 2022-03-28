@@ -206,21 +206,25 @@ export const deleteUser = async (req, res) => {
   } = req;
   // 유저 조회
   const user = await User.findById(_id);
+
   // 유저가 스크랩 한 게시물들 : 스크랩 한 게시물들에서 스크랩 한 사람들 목록에서 유저를 제외시킨다.
   user.scraps.forEach(async (scrapId) => {
     const scrap = await Board.findById(scrapId);
     scrap.scrapOwner = scrap.scrapOwner.filter((ownerId) => ownerId != _id);
     scrap.save();
   });
+
   // 유저가 좋아요 한 게시물들 : 좋아요 한 게시물들에서 좋아요 한 사람들 목록에서 유저를 제외시킨다.
   user.likes.forEach(async (likeId) => {
     const like = await Board.findById(likeId);
     like.likeOwner = like.likeOwner.filter((likeId) => likeId != _id);
     like.save();
   });
+
   // 유저에게 팔로우 보낸 사람들은 아직 유저를 팔로우 하고 있지 않기 때문에 별다른 작업을 하고 있을 필요가 없다.
   // 유저가 차단하고 있는 유저 또한 해당 유저에 대한 정보를 가지고 있지 않기 때문에 별다른 작업을 하고 있을 필요가 없다.
   // followUsers가 자신을 팔로우 하고 있는 사람들이고, followingUsers가 자신이 팔로우 하고 있는 사람들이다. 헷갈리지 말자...
+
   // 유저가 팔로우 하고 있는 사람들 : 각자 자신을 팔로우 하고 있는 사람들의 목록에서 유저를 제외시킨다.
   user.followUsers.forEach(async (followId) => {
     const follower = await User.findById(followId);
@@ -229,6 +233,7 @@ export const deleteUser = async (req, res) => {
     );
     follower.save();
   });
+
   // 유저가 팔로우 하고 있는 사람들
   user.followingUsers.forEach(async (followingId) => {
     const following = await User.findById(followingId);
@@ -238,12 +243,12 @@ export const deleteUser = async (req, res) => {
     following.save();
   });
 
-  /*
-  await Board.remove({ owner: _id });
+  // 유저가 작성한 게시물들 처리는 컨트롤러에서 안 해도 될 것 같음. 그냥 view에서 검사하여 if문을 활용해 진행하자
+
   await User.findByIdAndDelete(_id);
   req.session.destroy();
-  return res.redirect("/");
-  */
+
+  return res.status(200).redirect("/");
 };
 
 /* ✅ 1차 수정 완료 */

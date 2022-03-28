@@ -5,9 +5,14 @@ block content
         span.watch__title=board.title
         span.watch__date=board.createdAt
         div.watch__owner
-            a(href=`/users/${board.owner._id}`)
-                img.watch__owner--img(src=`/${board.owner.avatarUrl}`)
-                span.watch__owner--name=board.owner.name
+            if board.owner
+                a(href=`/users/${board.owner._id}`)
+                    img.watch__owner--img(src=`/${board.owner.avatarUrl}`)
+                    span.watch__owner--name=board.owner.name
+            else
+                a(href="")
+                    img(src=`/uploads/avatars/default_avatar.jpeg`).watch__owner--img
+                    span.watch__owner--name (알 수 없음)
         span.watch__contents=board.content
         if loggedIn && board.owner._id == loggedInUser._id
             div.watch__btns

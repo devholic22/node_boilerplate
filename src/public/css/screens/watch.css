@@ -18,6 +18,7 @@
 }
 .watch__owner {
   margin-bottom: 20px;
+  display: flex;
 }
 .watch__owner a {
   display: flex;
