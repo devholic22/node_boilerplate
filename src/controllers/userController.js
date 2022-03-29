@@ -384,14 +384,9 @@ export const userList = async (req, res) => {
 
   await new Promise((resolve) => {
     req.sessionStore.all((error, sessions) => {
-      sessions.forEach((session) => {
-        loggedInUserList.push(session.user._id);
-      });
-      /*
       for (const session of sessions) {
         loggedInUserList.push(session.user._id);
       }
-      */
       resolve();
     });
   });
