@@ -14,14 +14,14 @@ html(lang="en")
             ul.header__btns 
                 li.header__btns--btn
                     a(href="") Search
-                li.header__btns--btn
-                    a(href="/user-list") User list
                 if !loggedIn
                     li.header__btns--btn 
                         a(href="/login") Log in
                     li.header__btns--btn 
                         a(href="/join") Sign up
                 else
+                    li.header__btns--btn
+                        a(href="/user-list") User list
                     li.header__btns--btn
                         a(href="/boards/upload") Write Content
                     li.header__btns--btn--img

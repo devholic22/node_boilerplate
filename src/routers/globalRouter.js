@@ -30,5 +30,5 @@ globalRouter
   .route("/change-password")
   .get(onlyLoggedIn, getChangePassword)
   .post(onlyLoggedIn, postChangePassword);
-globalRouter.get("/user-list", userList);
+globalRouter.get("/user-list", onlyLoggedIn, userList);
 export default globalRouter;

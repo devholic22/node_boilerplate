@@ -1,10 +1,5 @@
 import express from "express";
-import {
-  onlyLoggedIn,
-  isUserEqualOwner,
-  isUserIdExist,
-  isUserLogin
-} from "../middlewares";
+import { onlyLoggedIn, isUserEqualOwner, isUserIdExist } from "../middlewares";
 import {
   userProfile,
   userScrap,
@@ -16,7 +11,7 @@ import {
 } from "../controllers/userController";
 const userRouter = express.Router();
 
-userRouter.get("/:id", isUserIdExist, isUserLogin, userProfile);
+userRouter.get("/:id", isUserIdExist, userProfile);
 userRouter.get("/:id/scraps", onlyLoggedIn, isUserEqualOwner, userScrap);
 userRouter.post("/:id/block", onlyLoggedIn, isUserEqualOwner, userBlock);
 userRouter.get("/:id/block-users", onlyLoggedIn, isUserEqualOwner, blockedUser);
