@@ -12,6 +12,7 @@
 @import "./components/modal.css";
 @import "./components/heart.css";
 @import "./components/scrap.css";
+@import "./components/status.css";
 
 /* screens */
 @import "./screens/profile.css";

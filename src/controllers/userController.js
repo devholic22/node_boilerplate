@@ -76,26 +76,12 @@ export const logout = (req, res) => {
   return res.status(200).redirect("/");
 };
 
-/* 🙅 current working */
+/* ✅ 1차 수정 완료 */
 export const userProfile = async (req, res) => {
-  // const loggedInUserList = [];
-
   const {
     params: { id }
   } = req;
 
-  // await not working..
-  /*
-  req.sessionStore.all((error, sessions) => {
-    for (const session of sessions) {
-      loggedInUserList.push(session.user._id);
-    }
-  });
-  console.log("I want second", loggedInUserList);
-  const isUserLogin = Boolean(loggedInUserList.includes(String(id)));
-
-  console.log("I want third", isUserLogin);
-  */
   const user = await User.findById(id)
     .populate("boards")
     .populate("followUsers")
@@ -392,5 +378,23 @@ export const followConfirm = async (req, res) => {
 /* ✅ 1차 수정 완료 */
 export const userList = async (req, res) => {
   const users = await User.find({});
-  return res.status(200).render("user-list", { users });
+
+  // 힘들었던 부분
+  const loggedInUserList = [];
+
+  await new Promise((resolve) => {
+    req.sessionStore.all((error, sessions) => {
+      sessions.forEach((session) => {
+        loggedInUserList.push(session.user._id);
+      });
+      /*
+      for (const session of sessions) {
+        loggedInUserList.push(session.user._id);
+      }
+      */
+      resolve();
+    });
+  });
+
+  return res.status(200).render("user-list", { users, loggedInUserList });
 };
