@@ -387,3 +387,8 @@ export const followConfirm = async (req, res) => {
 
   return res.status(200).redirect(req.headers.referer);
 };
+
+export const userList = async (req, res) => {
+  const users = await User.find({});
+  return res.status(200).render("user-list", { users });
+};

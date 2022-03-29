@@ -10,7 +10,8 @@ import {
   postEditProfile,
   deleteUser,
   getChangePassword,
-  postChangePassword
+  postChangePassword,
+  userList
 } from "../controllers/userController";
 import { home } from "../controllers/boardController";
 
@@ -29,4 +30,5 @@ globalRouter
   .route("/change-password")
   .get(onlyLoggedIn, getChangePassword)
   .post(onlyLoggedIn, postChangePassword);
+globalRouter.get("/user-list", userList);
 export default globalRouter;
