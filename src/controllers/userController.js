@@ -87,7 +87,18 @@ export const userProfile = async (req, res) => {
     .populate("followUsers")
     .populate("followingUsers");
 
-  return res.status(200).render("user-profile", { user });
+  const boards = await Board.find({ owner: user }).populate("owner");
+
+  const followList = user.followList;
+
+  if (!Boolean(followList.length)) {
+    if (!Boolean(boards.length)) {
+      return res.status(200).render("user-profile", { user });
+    }
+    return res.status(200).render("user-profile", { user, boards });
+  }
+
+  return res.status(200).render("user-profile", { user, followList, boards });
 };
 
 /* ✅ 1차 수정 완료 */
@@ -196,14 +207,18 @@ export const deleteUser = async (req, res) => {
   // 유저가 스크랩 한 게시물들 : 스크랩 한 게시물들에서 스크랩 한 사람들 목록에서 유저를 제외시킨다.
   user.scraps.forEach(async (scrapId) => {
     const scrap = await Board.findById(scrapId);
-    scrap.scrapOwner = scrap.scrapOwner.filter((ownerId) => ownerId != _id);
+    scrap.scrapOwner = scrap.scrapOwner.filter(
+      (ownerId) => String(ownerId) != String(_id)
+    );
     scrap.save();
   });
 
   // 유저가 좋아요 한 게시물들 : 좋아요 한 게시물들에서 좋아요 한 사람들 목록에서 유저를 제외시킨다.
   user.likes.forEach(async (likeId) => {
     const like = await Board.findById(likeId);
-    like.likeOwner = like.likeOwner.filter((likeId) => likeId != _id);
+    like.likeOwner = like.likeOwner.filter(
+      (likeId) => String(likeId) != String(_id)
+    );
     like.save();
   });
 
@@ -215,7 +230,7 @@ export const deleteUser = async (req, res) => {
   user.followUsers.forEach(async (followId) => {
     const follower = await User.findById(followId);
     follower.followingUsers = follower.followingUsers.filter(
-      (userId) => userId != _id
+      (userId) => String(userId) != String(_id)
     );
     follower.save();
   });
@@ -224,7 +239,7 @@ export const deleteUser = async (req, res) => {
   user.followingUsers.forEach(async (followingId) => {
     const following = await User.findById(followingId);
     following.followUsers = following.followUsers.filter(
-      (userId) => userId != _id
+      (userId) => String(userId) != String(_id)
     );
     following.save();
   });
@@ -242,8 +257,15 @@ export const userScrap = async (req, res) => {
   const {
     params: { id }
   } = req;
+
   const scraps = [];
   const user = await User.findById(id).populate("scraps");
+
+  if (!Boolean(user.scraps.length)) {
+    return res
+      .status(200)
+      .render("scraps", { errorMsg: "🙅 Sorry nothing found." });
+  }
 
   // 중요 포인트 //
   for (const scrap of user.scraps) {
@@ -267,10 +289,9 @@ export const userBlock = async (req, res) => {
 
   const user = await User.findById(_id);
   const blockUser = await User.findById(id);
-
   if (user.blockUsers.includes(blockUser._id)) {
     user.blockUsers = user.blockUsers.filter(
-      (blockedId) => blockedId != blockUser._id
+      (blockedId) => String(blockedId) != String(blockUser._id)
     );
   } else {
     user.blockUsers.push(blockUser._id);
@@ -290,6 +311,12 @@ export const blockedUser = async (req, res) => {
 
   const user = await User.findById(id).populate("blockUsers");
 
+  if (!Boolean(user.blockUsers.length)) {
+    return res
+      .status(200)
+      .render("blocked-user", { errorMsg: "🙅 Sorry nothing found." });
+  }
+
   return res.status(200).render("blocked-user", { users: user.blockUsers });
 };
 
@@ -307,16 +334,16 @@ export const followFunction = async (req, res) => {
 
   if (user.followUsers.includes(wantedUser._id)) {
     user.followUsers = user.followUsers.filter(
-      (listId) => listId != wantedUser._id
+      (listId) => String(listId) != String(wantedUser._id)
     );
     wantedUser.followingUsers = wantedUser.followingUsers.filter(
-      (listId) => listId != user._id
+      (listId) => String(listId) != String(user._id)
     );
   } else {
     if (Boolean(user.needFollowAsk)) {
       if (user.followList.includes(wantedUser._id)) {
         user.followList = user.followList.filter(
-          (listId) => listId != wantedUser._id
+          (listId) => String(listId) != String(wantedUser._id)
         );
       } else {
         user.followList.push(wantedUser._id);
@@ -344,6 +371,12 @@ export const followList = async (req, res) => {
 
   const user = await User.findById(_id).populate("followList");
 
+  if (!Boolean(user.followList.length)) {
+    return res
+      .status(200)
+      .render("follow-list", { errorMsg: "🙅 Sorry nothing found." });
+  }
+
   return res.status(200).render("follow-list", { users: user.followList });
 };
 
@@ -365,7 +398,7 @@ export const followConfirm = async (req, res) => {
     user.followingUsers.push(listOwner._id);
   }
   listOwner.followList = listOwner.followList.filter(
-    (listId) => listId != user._id
+    (listId) => String(listId) != String(user._id)
   );
 
   user.save();
@@ -378,6 +411,10 @@ export const followConfirm = async (req, res) => {
 /* ✅ 1차 수정 완료 */
 export const userList = async (req, res) => {
   const users = await User.find({});
+
+  if (!Boolean(users.length)) {
+    return res.render("user-list", { errorMsg: "🙅 Sorry nothing found." });
+  }
 
   // 힘들었던 부분
   const loggedInUserList = [];

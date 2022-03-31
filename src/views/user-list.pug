@@ -1,14 +1,15 @@
 include base
 block content
     ul.user-lists
-        each user in users
-            li.user-lists__list
-                a(href=`/users/${user._id}`)
-                    img(src=`/${user.avatarUrl}`)
-                    if loggedInUserList.includes(String(user._id))
-                        div.status__online
-                    else
-                        div.status__offline
-                    span=user.name
+        if users
+            each user in users
+                li.user-lists__list
+                    a(href=`/users/${user._id}`)
+                        img(src=`/${user.avatarUrl}`)
+                        if loggedInUserList.includes(String(user._id))
+                            div.status__online
+                        else
+                            div.status__offline
+                        span=user.name
         else
-            span.errorMsg 🙅 Sorry nothing found.
+            span.errorMsg=errorMsg

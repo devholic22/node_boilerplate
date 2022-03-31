@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   margin: 0px 50px;
+  margin-bottom: 20px;
   padding: 20px 0px;
   border: var(--default-border);
   border-radius: 5px;
@@ -10,7 +11,7 @@
 .profile__box--info {
   display: flex;
   padding: 10px 0px;
-  width: 400px;
+  max-width: 380px;
 }
 .profile__box--info--img {
   width: 100px;
@@ -48,13 +49,14 @@
 }
 .profile__box--btns {
   display: flex;
+  width: 50%;
+  justify-content: space-around;
 }
 .profile__box--btns--btn,
 .profile__box--btns--div {
   background-color: #f0f0f0;
   padding: 5px;
   border-radius: 5px;
-  margin-right: 10px;
 }
 .profile__box--btns--div {
   position: relative;
@@ -105,10 +107,6 @@
   padding: 20px 0px;
   border: var(--default-border);
   border-radius: 5px;
-}
-.profile__box--boards img {
-  width: 250px;
-  height: 250px;
 }
 .profile__box--boards--board {
   display: flex;

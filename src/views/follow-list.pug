@@ -1,13 +1,14 @@
 include base
 block content
     ul.user-lists
-        each user in users
-            li.user-lists__list
-                a(href=`/users/${user._id}`)
-                    img(src=`/${user.avatarUrl}`)
-                    span=user.name
-                form(method="POST", action=`/users/${user._id}/follow-confirm`)
-                    input(type="submit", value="Accept", name="confirm")
-                    input(type="submit", value="Decline", name="confirm")
+        if users
+            each user in users
+                li.user-lists__list
+                    a(href=`/users/${user._id}`)
+                        img(src=`/${user.avatarUrl}`)
+                        span=user.name
+                    form(method="POST", action=`/users/${user._id}/follow-confirm`)
+                        input(type="submit", value="Accept", name="confirm")
+                        input(type="submit", value="Decline", name="confirm")
         else
-            span.errorMsg 🙅 Sorry nothing found.
+            span.errorMsg=errorMsg

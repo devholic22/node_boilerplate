@@ -8,6 +8,11 @@ export const home = async (req, res) => {
     .populate("owner")
     .populate("likeOwner")
     .populate("comments");
+  if (!Boolean(boards.length)) {
+    return res
+      .status(200)
+      .render("home", { errorMsg: "🙅 Sorry nothing found." });
+  }
   if (res.locals.loggedIn) {
     const {
       session: {

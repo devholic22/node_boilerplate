@@ -1,9 +1,10 @@
 include base
 include mixins/board
 block content
-    div.board__list
-        each board in boards
-            +boards(board)
-        else
-            span.errorMsg 🙅 Sorry nothing found.
+    if boards
+        div.board__list
+            each board in boards
+                +boards(board)
+    else
+        span.errorMsg=errorMsg
     script(src="/js/like.js") 

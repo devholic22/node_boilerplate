@@ -7,7 +7,7 @@ block content
             img.profile__box--info--img(src=`/${user.avatarUrl}`)
         div.profile__box--info--text
             span.profile__box--info--text--name=user.name
-            if loggedInUser && user._id == loggedInUser._id
+            if loggedIn && user._id == loggedInUser._id
                 span.profile__box--info--text--btn 
                     a(href="/edit-profile") Edit profile
             div
@@ -15,7 +15,7 @@ block content
                 span.profile__box--info--text--number follow #{user.followUsers.length}
                 span.profile__box--info--text--number following #{user.followingUsers.length}
             span=user.email
-       if loggedInUser
+       if loggedIn
         if user._id == loggedInUser._id
             div.profile__box--btns
                 span.profile__box--btns--btn
@@ -26,8 +26,8 @@ block content
                     a(href=`/users/${user._id}/block-users`) Blocked Users
                 div.profile__box--btns--div
                     a(href=`/users/${user._id}/follow-list`) Follow request users
-                    if user.followList.length >= 1
-                        span.follow-list__number=user.followList.length
+                    if followList
+                        span.follow-list__number=followList.length
         else
             div.profile__box--btns--anon
                 if !loggedInUser.blockUsers.includes(String(user._id))
@@ -56,53 +56,52 @@ block content
                 else
                     form(method="POST", action=`/users/${user._id}/block`).user-container__block
                         button Block Clear
-    ul.profile__box--boards
-        if loggedInUser
-            if user._id == loggedInUser._id
-                each board in user.boards
-                    li.profile__box--boards--board
-                        a(href=`/boards/${board._id}`)
-                            span=board.title
-                        div.profile__box--boards--board--numbers
-                            i.far.fa-heart
-                            span=board.likeOwner.length
-                            i.far.fa-bookmark
-                            span=board.scrapOwner.length
+    if loggedInUser
+        if user._id == loggedInUser._id
+            if boards
+                div.board__list
+                    each board in boards
+                        +boards(board)
+                        +boards(board)
+                        +boards(board)
+                        +boards(board)
             else
-                if user.protection
-                    if user.followUsers.find(x => String(x._id) === String(loggedInUser._id))
-                        each board in user.boards
-                            li.profile__box--boards--board
-                                a(href=`/boards/${board._id}`)
-                                    span=board.title
-                                div.profile__box--boards--board--numbers
-                                    i.far.fa-heart
-                                    span=board.likeOwner.length
-                                    i.far.fa-bookmark
-                                    span=board.scrapOwner.length
-                    else
-                        img(src="/assets/lost.svg")
-                        span.lock-message You need to follow first
-                else
-                    ul.user-boards__lists
-                        each board in user.boards
-                            li.profile__box--boards--board
-                                a(href=`/boards/${board._id}`)
-                                    span=board.title
-                                div.profile__box--boards--board--numbers
-                                    i.far.fa-heart
-                                    span=board.likeOwner.length
-                                    i.far.fa-bookmark
-                                    span=board.scrapOwner.length
+                span.errorMsg=errorMsg
         else
-            if Boolean(user.protection) === true
-                img(src="/assets/lost.svg")
-                span.lock-message You need to follow first
-            else 
+            if user.protection
+                if user.followUsers.find(x => String(x._id) === String(loggedInUser._id))
+                    each board in user.boards
+                        li.profile__box--boards--board
+                            a(href=`/boards/${board._id}`)
+                                span=board.title
+                            div.profile__box--boards--board--numbers
+                                i.far.fa-heart
+                                span=board.likeOwner.length
+                                i.far.fa-bookmark
+                                span=board.scrapOwner.length
+                else
+                    img(src="/assets/lost.svg")
+                    span.lock-message You need to follow first
+            else
                 ul.user-boards__lists
                     each board in user.boards
-                        li.user-boards__list 
-                            a(href=`/boards/${board._id}`)=board.title
+                        li.profile__box--boards--board
+                            a(href=`/boards/${board._id}`)
+                                span=board.title
+                            div.profile__box--boards--board--numbers
+                                i.far.fa-heart
+                                span=board.likeOwner.length
+                                i.far.fa-bookmark
+                                span=board.scrapOwner.length
+    else
+        if Boolean(user.protection) === true
+            img(src="/assets/lost.svg")
+            span.lock-message You need to follow first
+        else 
+            ul.user-boards__lists
+                each board in user.boards
+                    li.user-boards__list 
+                        a(href=`/boards/${board._id}`)=board.title
     div.modal
         div.modal__content
             div.modal__content--header

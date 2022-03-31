@@ -11,7 +11,7 @@ block content
                     span.watch__owner--name=board.owner.name
             else
                 a(href="")
-                    img(src=`/uploads/avatars/default_avatar.jpeg`).watch__owner--img
+                    img(src=process.env.DEFAULT_PROFILE).watch__owner--img
                     span.watch__owner--name (알 수 없음)
         span.watch__contents=board.content
         if loggedIn && board.owner && board.owner._id == loggedInUser._id

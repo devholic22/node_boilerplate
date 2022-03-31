@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import "./db";
 import User from "./models/User";
 import Board from "./models/Board";
@@ -17,7 +18,7 @@ const PORT = 4000;
 
 app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
-
+dotenv.config();
 app.use(morgan("dev"));
 app.use(express.static(__dirname + "/public"));
 app.use("/uploads", express.static("uploads"));
