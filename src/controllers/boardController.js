@@ -57,6 +57,7 @@ export const postUpload = async (req, res) => {
 
   const board = await Board.create({
     title,
+    createdAt: Board.timeFormat(),
     content,
     owner: _id
   });
@@ -219,6 +220,7 @@ export const createComment = async (req, res) => {
     text: value,
     owner: _id,
     board: id,
+    createdAt: Comment.timeFormat(),
     type: "Parent",
     status: "Exist"
   });
@@ -301,6 +303,7 @@ export const createSmallComment = async (req, res) => {
     text: value,
     owner: _id,
     board: parentComment.board._id,
+    createdAt: Comment.timeFormat(),
     parentComment: parentComment._id,
     type: "Child",
     status: "Exist"
