@@ -121,3 +121,36 @@
 .profile__box--boards--board--numbers span {
   margin-left: 5px;
 }
+.user-boards__lists {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  margin: 0px 50px;
+  border-radius: 5px;
+  border: var(--default-border);
+}
+.user-boards__list {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  width: 300px;
+}
+.user-boards__list--header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+.user-boards__list--header--user {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.user-boards__list--header--user img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.user-boards__list--time {
+  color: gray;
+}

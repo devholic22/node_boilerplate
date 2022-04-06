@@ -101,7 +101,12 @@ block content
             ul.user-boards__lists
                 each board in user.boards
                     li.user-boards__list 
-                        a(href=`/boards/${board._id}`)=board.title
+                        div.user-boards__list--header
+                            div.user-boards__list--header--user
+                                img(src=`/${user.avatarUrl}`)
+                                span=user.name
+                            a(href=`/boards/${board._id}`)=board.title
+                        span.user-boards__list--time=board.createdAt
     div.modal
         div.modal__content
             div.modal__content--header

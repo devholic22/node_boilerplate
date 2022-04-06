@@ -88,7 +88,6 @@ export const userProfile = async (req, res) => {
     .populate("followingUsers");
 
   const boards = await Board.find({ owner: user }).populate("owner");
-
   const followList = user.followList;
 
   if (!Boolean(followList.length)) {
