@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
 
-mongoose.connect("mongodb://127.0.0.1:27017/nodeTemplate");
+require("dotenv").config();
+
+mongoose.connect(process.env.DB_URL);
 
 const handleOpen = () => console.log("✅ Connected to DB");
 const handleError = () => console.log("❌ DB Error");
