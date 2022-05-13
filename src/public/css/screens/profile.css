@@ -61,6 +61,15 @@
 .profile__box--btns--div {
   position: relative;
 }
+.lock-message__box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.lock-message__box img {
+  width: 200px;
+  height: 200px;
+}
 .follow-list__number {
   background-color: tomato;
   color: white;
@@ -153,4 +162,5 @@
 }
 .user-boards__list--time {
   color: gray;
+  font-size: 13px;
 }

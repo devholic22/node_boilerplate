@@ -6,14 +6,9 @@ mixin boards(board)
             span.board__contents--time=board.createdAt
             span.board-contents--content=board.content
         div.board__info
-            if board.owner
-                a(href=`/users/${board.owner._id}`) 
-                    img(src=`/${board.owner.avatarUrl}`).board__info--img
-                    span.board__info--name=board.owner.name
-            else
-                a(href="")
-                    img(src=`/uploads/avatars/default_avatar.jpeg`).board__info--img
-                    span.board__info--name (알 수 없음)
+            a(href=`/users/${board.owner._id}`) 
+                img(src=`/${board.owner.avatarUrl}`).board__info--img
+                span.board__info--name=board.owner.name
             div.board__info--btns
                 div.board__info--btns--btn
                     button
@@ -46,18 +41,3 @@ mixin boards(board)
                     else
                         button
                             i.far.fa-bookmark
-                        span=board.scrapOwner.length
-                div.modal
-                    div.modal__content
-                        div.modal__content--header
-                            span.modal__content--title ❤️ like peoples
-                            span.modal__content--close &times;
-                        ul.modal__lists 
-                            each likeOwner in board.likeOwner
-                                li.modal__list
-                                    div.modal__list--content
-                                        a(href=`/users/${likeOwner._id}`)
-                                            img(src=`/${likeOwner.avatarUrl}`).modal__list--content--img
-                                            span=likeOwner.name
-                            else
-                                span.errorMsg 🙅 Sorry nothing found.

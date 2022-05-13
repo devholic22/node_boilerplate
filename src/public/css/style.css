@@ -9,10 +9,10 @@
 @import "./components/comment.css";
 @import "./components/user-form.css";
 @import "./components/user-list.css";
-@import "./components/modal.css";
 @import "./components/heart.css";
 @import "./components/scrap.css";
 @import "./components/status.css";
+@import "./components/modal.css";
 
 /* screens */
 @import "./screens/profile.css";

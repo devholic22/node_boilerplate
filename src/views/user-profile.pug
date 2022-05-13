@@ -67,69 +67,53 @@ block content
         else
             if user.protection
                 if user.followUsers.find(x => String(x._id) === String(loggedInUser._id))
-                    each board in user.boards
-                        li.profile__box--boards--board
-                            a(href=`/boards/${board._id}`)
-                                span=board.title
-                            div.profile__box--boards--board--numbers
-                                i.far.fa-heart
-                                span=board.likeOwner.length
-                                i.far.fa-bookmark
-                                span=board.scrapOwner.length
+                    div.board__list
+                        each board in user.boards
+                            +boards(board)
                 else
-                    img(src="/assets/lost.svg")
-                    span.lock-message You need to follow first
+                    div.lock-message__box
+                        img(src="/assets/lost.svg")
+                        span.lock-message You need to follow first
             else
-                ul.user-boards__lists
-                    each board in user.boards
-                        li.profile__box--boards--board
-                            a(href=`/boards/${board._id}`)
-                                span=board.title
-                            div.profile__box--boards--board--numbers
-                                i.far.fa-heart
-                                span=board.likeOwner.length
-                                i.far.fa-bookmark
-                                span=board.scrapOwner.length
+                div.board__list
+                    each board in boards
+                        +boards(board)
     else
-        if Boolean(user.protection) === true
-            img(src="/assets/lost.svg")
-            span.lock-message You need to follow first
+        if user.protection
+            div.lock-message__box
+                img(src="/assets/lost.svg")
+                span.lock-message You need to follow first
         else 
-            ul.user-boards__lists
-                each board in user.boards
-                    li.user-boards__list 
-                        div.user-boards__list--header
-                            div.user-boards__list--header--user
-                                img(src=`/${user.avatarUrl}`)
-                                span=user.name
-                            a(href=`/boards/${board._id}`)=board.title
-                        span.user-boards__list--time=board.createdAt
-    div.modal
-        div.modal__content
-            div.modal__content--header
-                span.modal__content--title follow peoples
-                span.modal__content--close &times;
-            ul.modal__lists
+            div.board__list
+                each board in boards
+                    +boards(board)
+    div.followModal.modal
+        div.followModal.modal__content
+            div.followModal.modal__content--header
+                span.followModal.modal__content--header--title follow peoples
+                span.followModal.modal__content--close &times;
+            ul.followModal.modal__lists 
                 each followUser in user.followUsers
-                    li.modal__list
-                        div.modal__list--content
+                    li.followModal.modal__list 
+                        div.followModal.modal__list--content
                             a(href=`/users/${followUser._id}`)
-                                img(src=`/${followUser.avatarUrl}`).modal__list--content--img
+                                img(src=`/${followUser.avatarUrl}`).followModal.modal__list--content--img
                                 span=followUser.name
                 else
                     span.errorMsg 🙅 Sorry nothing found.
-    div.modal
-        div.modal__content
-            div.modal__content--header
-                span.modal__content--title following peoples
-                span.modal__content--close &times;
-            ul.modal__lists
+    div.followingModal.modal
+        div.followingModal.modal__content
+            div.followingModal.modal__content--header
+                span.followingModal.modal__content--header--title following peoples
+                span.followingModal.modal__content--close &times;
+            ul.followingModal.modal__lists 
                 each followingUser in user.followingUsers
-                    li.modal__list
-                        div.modal__list--content
+                    li.followingModal.modal__list 
+                        div.followingModal.modal__list--content
                             a(href=`/users/${followingUser._id}`)
-                                img(src=`/${followingUser.avatarUrl}`).modal__list--content--img
+                                img(src=`/${followingUser.avatarUrl}`).followingModal.modal__list--content--img
                                 span=followingUser.name
                 else
                     span.errorMsg 🙅 Sorry nothing found.
-    script(src="/js/follow.js") 
+    script(src="/js/followModal.js")
+    script(src="/js/followingModal.js") 
